@@ -1,5 +1,7 @@
 package org.eiti.java.pang.gui;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 public class GameWindow extends JFrame {
@@ -8,8 +10,11 @@ public class GameWindow extends JFrame {
 
 	public GameWindow() {
 		setTitle("Pang");
-		setSize(400, 300);
+		setSize(650, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setLayout(new BorderLayout());
+		getContentPane().add(new GamePanel(), BorderLayout.CENTER);
 	}
 	
 }

@@ -2,15 +2,20 @@ package org.eiti.java.pang.model.weapons;
 
 import java.awt.Point;
 
-import org.eiti.java.pang.model.GameObject;
+import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.shapes.Shape;
 
-public abstract class Weapon extends GameObject {
+public abstract class Weapon extends ExtraObject {
 
 	protected Weapon(Shape shape) {
 		super(shape);
+	}
+	
+	@Override
+	public void interactWith(PlayerAvatar player) {
+		player.setWeapon(this);
 	}
 	
 	public abstract Missile shoot(PlayerAvatar shooter);

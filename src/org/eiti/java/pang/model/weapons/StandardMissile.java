@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
+import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class StandardMissile extends Missile {
 	
@@ -12,7 +13,7 @@ public class StandardMissile extends Missile {
 	public final static int STANDARD_MISSILE_HEIGHT = 20;
 
 	public StandardMissile(Point position) {
-		super(position);
+		super(new Rectangle(position, STANDARD_MISSILE_WIDTH, STANDARD_MISSILE_HEIGHT));
 	}
 
 	@Override

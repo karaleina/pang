@@ -1,5 +1,6 @@
 package org.eiti.java.pang.model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -22,7 +23,13 @@ public class Ball extends GameObject {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
+		int radius = getRadius(level);
+		g.setColor(Color.BLUE);
+		g.fillOval(
+			shape.getPosition().x,
+			shape.getPosition().y,
+			radius * 2,
+			radius * 2);
 	}
 	
 	private static int getRadius(int ballLevel) {

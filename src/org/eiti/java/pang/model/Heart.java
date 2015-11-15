@@ -2,13 +2,29 @@ package org.eiti.java.pang.model;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
 
 import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class Heart extends ExtraObject {
 
-	private final static int HEART_WIDTH = 40;
-	private final static int HEART_HEIGHT = 40;
+	public static int HEART_WIDTH;
+	public static int HEART_HEIGHT;
+	
+	private static BufferedImage heartImage;
+	
+	static {
+		try {
+			heartImage = ImageIO.read(new FileInputStream("res/images/heart.png"));
+		} catch(Exception exc) {
+			exc.printStackTrace();
+		}
+		HEART_WIDTH = heartImage.getWidth();
+		HEART_HEIGHT = heartImage.getHeight();
+	}
 	
 	public Heart(Point position) {
 		super(new Rectangle(
@@ -19,7 +35,7 @@ public class Heart extends ExtraObject {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
+		g.drawImage(heartImage, shape.getPosition().x, shape.getPosition().y, null);
 	}
 
 	@Override

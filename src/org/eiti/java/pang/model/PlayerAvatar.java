@@ -2,6 +2,10 @@ package org.eiti.java.pang.model;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
 
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.weapons.Missile;
@@ -13,8 +17,20 @@ public class PlayerAvatar extends GameObject {
 	private int lives;
 	private Weapon weapon;
 	
-	private final static int PLAYER_AVATAR_WIDTH = 50;
-	private final static int PLAYER_AVATAR_HEIGHT = 100;
+	public static int PLAYER_AVATAR_WIDTH;
+	public static int PLAYER_AVATAR_HEIGHT;
+	
+	private static BufferedImage playerImage;
+	
+	static {
+		try {
+			playerImage = ImageIO.read(new FileInputStream("res/images/player.png"));
+		} catch(Exception exc) {
+			exc.printStackTrace();
+		}
+		PLAYER_AVATAR_WIDTH = playerImage.getWidth();
+		PLAYER_AVATAR_HEIGHT = playerImage.getHeight();
+	}
 	
 	public PlayerAvatar(Point position, int initialLives) {
 		super(new Rectangle(
@@ -51,7 +67,7 @@ public class PlayerAvatar extends GameObject {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
+		g.drawImage(playerImage, shape.getPosition().x, shape.getPosition().y, null);
 	}
 
 }
