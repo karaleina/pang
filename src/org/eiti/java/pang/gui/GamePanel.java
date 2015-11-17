@@ -1,8 +1,8 @@
 package org.eiti.java.pang.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -14,12 +14,9 @@ public class GamePanel extends JPanel {
 	
 	private Game game;
 	
-	private final static int WIDTH = 500;
-	private final static int HEIGHT = 300;
-	
 	public GamePanel() {
 		setBackground(Color.WHITE);
-		game = new Game(new Dimension(WIDTH, HEIGHT));
+		game = new Game();
 		game.nextLevel();
 		game.start();
 	}
@@ -27,10 +24,19 @@ public class GamePanel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawRect(0, 0, WIDTH, HEIGHT);
+		Graphics2D g2 = (Graphics2D) g;
 		if(game.getLevel() != null) {
-			game.getLevel().draw(g);
+			g2.scale(getScaleX(), getScaleY());
+			game.getLevel().draw(g2);
 		}
+	}
+	
+	private double getScaleX() {
+		return getWidth() / game.getLevel().getGameWorldSize().getWidth();
+	}
+	
+	private double getScaleY() {
+		return getHeight() / game.getLevel().getGameWorldSize().getHeight();
 	}
 
 }

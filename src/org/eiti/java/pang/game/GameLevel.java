@@ -15,8 +15,7 @@ public class GameLevel implements Drawable {
 
 	private int levelNumber;
 
-	private int windowWidth;
-	private int windowHeight;
+	private Dimension gameWorldSize;
 
 	private PlayerAvatar playerAvatar;
 
@@ -29,12 +28,10 @@ public class GameLevel implements Drawable {
 	public GameLevel(
 			int levelNumber,
 			GameLevelConfiguration configuration,
-			PlayerAvatar playerAvatar,
-			Dimension windowSize) {
+			PlayerAvatar playerAvatar) {
 		
 		this.levelNumber = levelNumber;
-		this.windowWidth = windowSize.width;
-		this.windowHeight = windowSize.height;
+		this.gameWorldSize = configuration.getGameWorldSize();
 		this.playerAvatar = playerAvatar;
 		
 		balls = new LinkedList<Ball>();
@@ -60,12 +57,8 @@ public class GameLevel implements Drawable {
 		return extraObjects;
 	}
 	
-	public int getWindowWidth() {
-		return windowWidth;
-	}
-	
-	public int getWindowHeight() {
-		return windowHeight;
+	public Dimension getGameWorldSize() {
+		return gameWorldSize;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.eiti.java.pang.game;
 
+import java.awt.Dimension;
 import java.awt.Point;
 
 import org.eiti.java.pang.gui.ImageLoader;
@@ -9,13 +10,13 @@ import org.eiti.java.pang.model.weapons.Missile;
 import org.eiti.java.pang.model.weapons.SuperMissile;
 import org.eiti.java.pang.model.weapons.SuperWeapon;
 
-//TO DO parsowanie pliku konfiguracyjnego
+// TODO parsowanie pliku konfiguracyjnego
 public class ExampleGameLevelConfiguration implements GameLevelConfiguration {
 	
 	@Override
 	public void loadObjects(GameLevel level) {
 		
-		int windowHeight = level.getWindowHeight();
+		int windowHeight = level.getGameWorldSize().height;
 		
 		Ball ball = new Ball(new Point(100, 30), 8);
 		level.getBalls().add(ball);
@@ -29,6 +30,11 @@ public class ExampleGameLevelConfiguration implements GameLevelConfiguration {
 		Missile missile = new SuperMissile(new Point(60, 100));
 		level.getMissiles().add(missile);
 		
+	}
+
+	@Override
+	public Dimension getGameWorldSize() {
+		return new Dimension(800, 450);
 	}
 
 }

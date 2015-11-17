@@ -16,21 +16,20 @@ public class Game {
 	
 	private long score;
 	
-	private Dimension windowSize;
-	
 	public final static int STARTING_LIVES = 5;
+	
+	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
 	
 	private GameLevelConfiguration[] configurations = new GameLevelConfiguration[] {
 		new ExampleGameLevelConfiguration()
 	};
 	
-	public Game(Dimension windowSize) {
-		this.windowSize = windowSize;
+	public Game() {
 		status = GameStatus.NOT_STARTED;
 		playerAvatar = new PlayerAvatar(
 			new Point(
-				windowSize.width / 2 - ImageLoader.playerAvatarImage.getWidth() / 2,
-				windowSize.height - ImageLoader.playerAvatarImage.getHeight()),
+				GAME_WORLD_SIZE.width / 2 - ImageLoader.playerAvatarImage.getWidth() / 2,
+				GAME_WORLD_SIZE.height - ImageLoader.playerAvatarImage.getHeight()),
 			STARTING_LIVES);
 	}
 	
@@ -60,7 +59,10 @@ public class Game {
 	}
 	
 	private GameLevel getGameLevel(int levelNumber) {
-		return new GameLevel(levelNumber, configurations[levelNumber - 1], playerAvatar, windowSize);
+		return new GameLevel(
+			levelNumber,
+			configurations[levelNumber - 1],
+			playerAvatar);
 	}
 
 }
