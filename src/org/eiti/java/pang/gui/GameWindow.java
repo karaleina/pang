@@ -10,7 +10,7 @@ public class GameWindow extends JFrame {
 
 	public GameWindow() {
 		setTitle("Pang");
-		setSize(650, 400);
+		setSize(650, 400);//TO DO skalowanie? size narzucony z góry 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setLayout(new BorderLayout());
