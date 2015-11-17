@@ -2,11 +2,8 @@ package org.eiti.java.pang.model;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 
-import javax.imageio.ImageIO;
-
+import org.eiti.java.pang.gui.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.weapons.Missile;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
@@ -17,26 +14,13 @@ public class PlayerAvatar extends GameObject {
 	private int lives;
 	private Weapon weapon;
 	
-	public static int PLAYER_AVATAR_WIDTH;
-	public static int PLAYER_AVATAR_HEIGHT;
-	
-	private static BufferedImage playerImage;
-	
-	static {
-		try {
-			playerImage = ImageIO.read(new FileInputStream("res/images/player.png"));
-		} catch(Exception exc) {
-			exc.printStackTrace();
-		}
-		PLAYER_AVATAR_WIDTH = playerImage.getWidth();
-		PLAYER_AVATAR_HEIGHT = playerImage.getHeight();
-	}
 	
 	public PlayerAvatar(Point position, int initialLives) {
 		super(new Rectangle(
 				position,
-				PLAYER_AVATAR_WIDTH,
-				PLAYER_AVATAR_HEIGHT));
+				ImageLoader.playerAvatarImage.getWidth(),
+				ImageLoader.playerAvatarImage.getHeight()));
+		
 		this.lives = initialLives;
 		this.weapon = new StandardWeapon(position);
 	}
@@ -67,7 +51,7 @@ public class PlayerAvatar extends GameObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(playerImage, shape.getPosition().x, shape.getPosition().y, null);
+		g.drawImage(ImageLoader.playerAvatarImage, shape.getPosition().x, shape.getPosition().y, null);
 	}
 
 }

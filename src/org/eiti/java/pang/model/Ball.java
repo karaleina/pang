@@ -8,22 +8,22 @@ import org.eiti.java.pang.model.shapes.Sphere;
 
 public class Ball extends GameObject {
 
-	private int level;
+	private int ballLevel;
 	
-	public Ball(Point position, int level) {
+	public Ball(Point position, int ballLevel) {
 		super(new Sphere(
 				position,
-				getRadius(level)));
-		this.level = level;
+				getRadius(ballLevel)));
+		this.ballLevel = ballLevel;
 	}
 	
 	public int getLevel() {
-		return level;
+		return ballLevel;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		int radius = getRadius(level);
+		int radius = getRadius(ballLevel);
 		g.setColor(Color.BLUE);
 		g.fillOval(
 			shape.getPosition().x,
