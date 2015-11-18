@@ -20,7 +20,7 @@ public class BestScoresDialog extends JDialog {
         JTextArea listOfBestScores = new JTextArea(20, 150);
         JScrollPane scrollPane = new JScrollPane(listOfBestScores);
         panel.add(scrollPane);
-        JButton ok =new JButton("OK");
+        JButton ok = new JButton("OK");
         panel.add(ok);
 
     }

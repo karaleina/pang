@@ -15,7 +15,7 @@ public class GamePanel extends JPanel {
 	private Game game;
 	
 	public GamePanel() {
-		setBackground(Color.WHITE);
+		setBackground(new Color(0xffeecc));
 		game = new Game();
 		game.nextLevel();
 		game.start();
@@ -25,6 +25,13 @@ public class GamePanel extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(
+			ImageLoader.background,
+			0,
+			0,
+			getWidth(),
+			getHeight(),
+			null);
 		if(game.getLevel() != null) {
 			g2.scale(getScaleX(), getScaleY());
 			game.getLevel().draw(g2);

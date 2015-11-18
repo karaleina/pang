@@ -24,7 +24,7 @@ public class Ball extends GameObject {
 	@Override
 	public void draw(Graphics g) {
 		int radius = getRadius(ballLevel);
-		g.setColor(Color.BLUE);
+		g.setColor(new Color(0xaa8030));
 		g.fillOval(
 			shape.getPosition().x,
 			shape.getPosition().y,

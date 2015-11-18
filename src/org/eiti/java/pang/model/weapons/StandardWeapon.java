@@ -7,21 +7,15 @@ import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class StandardWeapon extends Weapon {
-
-	private final static int STANDARD_WEAPON_WIDTH = 40;
-	private final static int STANDARD_WEAPON_HEIGHT = 40;
 	
 	public StandardWeapon(Point position) {
 		super(new Rectangle(
-			position,
-			STANDARD_WEAPON_WIDTH,
-			STANDARD_WEAPON_HEIGHT));
+			position, 0, 0));
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		throw new RuntimeException("Standard weapon should not be drawn!");
 	}
 
 	@Override
@@ -29,8 +23,8 @@ public class StandardWeapon extends Weapon {
 		return new StandardMissile(
 			calculateMissilePosition(
 				shooter,
-				StandardMissile.STANDARD_MISSILE_WIDTH,
-				StandardMissile.STANDARD_MISSILE_HEIGHT));
+				StandardMissile.getWidth(),
+				StandardMissile.getHeight()));
 	}
 
 }

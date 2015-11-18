@@ -9,17 +9,30 @@ import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class SuperWeapon extends Weapon {
 
+	public static int getWidth() {
+		return 90;
+	}
+	
+	public static int getHeight() {
+		return 60;
+	}
 	
 	public SuperWeapon(Point position) {
 		super(new Rectangle(
 				position,
-				ImageLoader.superWeaponImage.getWidth(),
-				ImageLoader.superWeaponImage.getHeight()));
+				getWidth(),
+				getHeight()));
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(ImageLoader.superWeaponImage, shape.getPosition().x, shape.getPosition().y, null);
+		g.drawImage(
+			ImageLoader.superWeaponImage,
+			shape.getPosition().x,
+			shape.getPosition().y,
+			getWidth(),
+			getHeight(),
+			null);
 	}
 
 	@Override
@@ -27,8 +40,8 @@ public class SuperWeapon extends Weapon {
 		return new SuperMissile(
 			calculateMissilePosition(
 				shooter,
-				ImageLoader.superMissileImage.getWidth(),
-				ImageLoader.superMissileImage.getHeight()));
+				SuperMissile.getWidth(),
+				SuperMissile.getHeight()));
 	}
 
 }

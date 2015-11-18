@@ -7,6 +7,7 @@ import org.eiti.java.pang.gui.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Heart;
 import org.eiti.java.pang.model.weapons.Missile;
+import org.eiti.java.pang.model.weapons.StandardMissile;
 import org.eiti.java.pang.model.weapons.SuperMissile;
 import org.eiti.java.pang.model.weapons.SuperWeapon;
 
@@ -21,14 +22,17 @@ public class ExampleGameLevelConfiguration implements GameLevelConfiguration {
 		Ball ball = new Ball(new Point(100, 30), 8);
 		level.getBalls().add(ball);
 		
-		Heart heart = new Heart(new Point(180, windowHeight - ImageLoader.heartImage.getHeight()));
+		Heart heart = new Heart(new Point(180, windowHeight - Heart.getHeight()));
 		level.getExtraObjects().add(heart);
 		
-		SuperWeapon weapon = new SuperWeapon(new Point(40, windowHeight - ImageLoader.superWeaponImage.getHeight()));
+		SuperWeapon weapon = new SuperWeapon(new Point(40, windowHeight - SuperWeapon.getHeight()));
 		level.getExtraObjects().add(weapon);
 		
 		Missile missile = new SuperMissile(new Point(60, 100));
 		level.getMissiles().add(missile);
+		
+		Missile oldMissile = new StandardMissile(new Point(60, 300));
+		level.getMissiles().add(oldMissile);
 		
 	}
 

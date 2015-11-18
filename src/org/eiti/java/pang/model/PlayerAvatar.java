@@ -13,13 +13,20 @@ public class PlayerAvatar extends GameObject {
 	
 	private int lives;
 	private Weapon weapon;
-	
+
+	public static int getWidth() {
+		return 60;
+	}
+
+	public static int getHeight() {
+		return 160;
+	}
 	
 	public PlayerAvatar(Point position, int initialLives) {
 		super(new Rectangle(
 				position,
-				ImageLoader.playerAvatarImage.getWidth(),
-				ImageLoader.playerAvatarImage.getHeight()));
+				getWidth(),
+				getHeight()));
 		
 		this.lives = initialLives;
 		this.weapon = new StandardWeapon(position);
@@ -51,7 +58,13 @@ public class PlayerAvatar extends GameObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(ImageLoader.playerAvatarImage, shape.getPosition().x, shape.getPosition().y, null);
+		g.drawImage(
+			ImageLoader.playerAvatarImage,
+			shape.getPosition().x,
+			shape.getPosition().y,
+			getWidth(),
+			getHeight(),
+			null);
 	}
 
 }

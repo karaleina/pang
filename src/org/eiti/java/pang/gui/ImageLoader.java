@@ -7,7 +7,11 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 	
+	public static BufferedImage background;
+	
 	public static BufferedImage playerAvatarImage;
+	
+	public static BufferedImage standardMissileImage;
 	
 	public static BufferedImage superMissileImage;
 	
@@ -17,11 +21,12 @@ public class ImageLoader {
 		
 	static {
 		try {
-			
+			background = ImageIO.read(new FileInputStream("res/images/background.jpg"));
 			heartImage = ImageIO.read(new FileInputStream("res/images/heart.png"));
 			playerAvatarImage = ImageIO.read(new FileInputStream("res/images/player.png"));
-			superMissileImage = ImageIO.read(new FileInputStream("res/images/bullet.png"));
-			superWeaponImage = ImageIO.read(new FileInputStream("res/images/mauser.jpg"));
+			standardMissileImage = ImageIO.read(new FileInputStream("res/images/old-bullet.png"));
+			superMissileImage = ImageIO.read(new FileInputStream("res/images/super-bullet.png"));
+			superWeaponImage = ImageIO.read(new FileInputStream("res/images/mauser.png"));
 			
 		} catch(Exception exc) {
 			exc.printStackTrace();

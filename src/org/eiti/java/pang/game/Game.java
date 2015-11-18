@@ -3,7 +3,6 @@ package org.eiti.java.pang.game;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import org.eiti.java.pang.gui.ImageLoader;
 import org.eiti.java.pang.model.PlayerAvatar;
 
 public class Game {
@@ -28,8 +27,8 @@ public class Game {
 		status = GameStatus.NOT_STARTED;
 		playerAvatar = new PlayerAvatar(
 			new Point(
-				GAME_WORLD_SIZE.width / 2 - ImageLoader.playerAvatarImage.getWidth() / 2,
-				GAME_WORLD_SIZE.height - ImageLoader.playerAvatarImage.getHeight()),
+				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
+				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
 			STARTING_LIVES);
 	}
 	
