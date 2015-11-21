@@ -15,6 +15,11 @@ import org.eiti.java.pang.model.weapons.Missile;
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
+	
+	/**
+	 * Time left to level end, measured in seconds.
+	 */
+	private int timeLeft;
 
 	private Dimension gameWorldSize;
 
@@ -32,6 +37,7 @@ public class GameLevel implements Drawable {
 			PlayerAvatar playerAvatar) {
 		
 		this.levelNumber = levelNumber;
+		this.timeLeft = configuration.getTimeForLevel();
 		this.gameWorldSize = configuration.getGameWorldSize();
 		this.playerAvatar = playerAvatar;
 		
@@ -44,6 +50,10 @@ public class GameLevel implements Drawable {
 	
 	public int getLevelNumber() {
 		return levelNumber;
+	}
+	
+	public int getTimeLeft() {
+		return timeLeft;
 	}
 	
 	public Collection<Ball> getBalls() {
@@ -78,6 +88,7 @@ public class GameLevel implements Drawable {
 		drawLives(g);
 	}
 
+	
 	private void drawLives(Graphics g) {
 		final int heartSize = 25;
 		final int offset = 5;

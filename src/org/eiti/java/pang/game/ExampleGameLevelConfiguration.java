@@ -41,4 +41,9 @@ public class ExampleGameLevelConfiguration implements GameLevelConfiguration {
 		return new Dimension(800, 450);
 	}
 
+	@Override
+	public int getTimeForLevel() {
+		return 60;
+	}
+
 }

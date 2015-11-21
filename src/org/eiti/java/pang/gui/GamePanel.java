@@ -14,11 +14,9 @@ public class GamePanel extends JPanel {
 	
 	private Game game;
 	
-	public GamePanel() {
+	public GamePanel(Game game) {
+		this.game = game;
 		setBackground(new Color(0xffeecc));
-		game = new Game();
-		game.nextLevel();
-		game.start();
 	}
 	
 	@Override

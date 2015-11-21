@@ -8,4 +8,6 @@ public interface GameLevelConfiguration {
 	
 	public void loadObjects(GameLevel level);
 
+	public int getTimeForLevel();
+
 }
