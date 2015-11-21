@@ -1,8 +1,7 @@
 package org.eiti.java.pang.gui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * Created by S. H.  on 17.11.15.
@@ -20,10 +19,12 @@ public class MenuBar extends JMenuBar {
 
 
         JMenuItem newGame = new JMenuItem("New Game");
-        newGame.setAccelerator(KeyStroke.getKeyStroke("ctrl n"));
+        KeyStroke ctrlN = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK);
+        newGame.setAccelerator(ctrlN);
         gameMenu.add(newGame);
         JMenuItem pause = new JMenuItem("Pause");
-        pause.setAccelerator(KeyStroke.getKeyStroke("ctrl p"));
+        KeyStroke ctrlP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
+        pause.setAccelerator(ctrlP);
         gameMenu.add(pause);
         gameMenu.addSeparator();
 
@@ -34,7 +35,8 @@ public class MenuBar extends JMenuBar {
         gameMenu.addSeparator();
 
         JMenuItem quitGame = new JMenuItem("Quit");
-        quitGame.setAccelerator(KeyStroke.getKeyStroke("ctrl q"));
+        KeyStroke ctrlQ = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK);
+        quitGame.setAccelerator(ctrlQ);
         gameMenu.add(quitGame);
 
 
@@ -56,9 +58,12 @@ public class MenuBar extends JMenuBar {
         settMenu.add(viMode);
 
         JMenuItem help = new JMenuItem("Help");
-        help.setAccelerator(KeyStroke.getKeyStroke("f1"));
+        KeyStroke f1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);
+        help.setAccelerator(f1);
         helpMenu.add(help);
         JMenuItem aboutPang = new JMenuItem("About Pang");
+        KeyStroke f2 = KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0);
+        aboutPang.setAccelerator(f2);
         helpMenu.add(aboutPang);
 
         //actions

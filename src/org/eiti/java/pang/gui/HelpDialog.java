@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by S. H. on 17.11.15.
  */
-public class HelpDialog extends JDialog{
+public class HelpDialog extends JFrame{
     public HelpDialog(){
         setTitle("Help");
         setSize(300, 100);
@@ -14,7 +14,7 @@ public class HelpDialog extends JDialog{
         JPanel panel = new JPanel();
         add(panel);
 
-        JTextField helpText = new JTextField("tu bedzie cos", 100);
+        JLabel helpText = new JLabel("tu bedzie cos");
         panel.add(helpText);
         JButton ok =new JButton("OK");
         panel.add(ok);
