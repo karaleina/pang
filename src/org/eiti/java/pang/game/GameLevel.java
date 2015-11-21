@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.eiti.java.pang.gui.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
 import org.eiti.java.pang.model.ExtraObject;
@@ -73,6 +74,22 @@ public class GameLevel implements Drawable {
 			e.draw(g);
 		}
 		playerAvatar.draw(g);
+		
+		drawLives(g);
 	}
 
+	private void drawLives(Graphics g) {
+		final int heartSize = 25;
+		final int offset = 5;
+		for(int i = 0; i < playerAvatar.getLives(); i++){
+			g.drawImage(
+				ImageLoader.heartImage,
+				gameWorldSize.width - (i + 1) * (heartSize + offset),
+				offset,
+				heartSize,
+				heartSize,
+				null);
+			
+		}
+	}
 }
