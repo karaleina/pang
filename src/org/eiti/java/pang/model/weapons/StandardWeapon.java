@@ -3,14 +3,16 @@ package org.eiti.java.pang.model.weapons;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class StandardWeapon extends Weapon {
 	
 	public StandardWeapon(Point position) {
-		super(new Rectangle(
-			position, 0, 0));
+		super(
+			ExtraObjectType.standardWeapon,
+			new Rectangle(position, 0, 0));
 	}
 
 	@Override

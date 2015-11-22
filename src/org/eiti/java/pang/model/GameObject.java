@@ -14,6 +14,10 @@ public abstract class GameObject implements Drawable {
 		shape.moveBy(dx, dy);
 	}
 	
+	public void moveTo(int x, int y) {
+		shape.moveTo(x, y);
+	}
+	
 	public boolean collidesWith(GameObject o) {
 		return shape.collidesWith(o.shape);
 	}

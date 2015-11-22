@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import org.eiti.java.pang.gui.ImageLoader;
+import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
@@ -18,7 +19,9 @@ public class SuperWeapon extends Weapon {
 	}
 	
 	public SuperWeapon(Point position) {
-		super(new Rectangle(
+		super(
+			ExtraObjectType.superWeapon,
+			new Rectangle(
 				position,
 				getWidth(),
 				getHeight()));

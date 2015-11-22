@@ -22,6 +22,8 @@ public class GameLevel implements Drawable {
 	private int timeLeft;
 
 	private Dimension gameWorldSize;
+	
+	private ExtraObjectsCreator extraObjectsCreator;
 
 	private PlayerAvatar playerAvatar;
 
@@ -38,6 +40,7 @@ public class GameLevel implements Drawable {
 		
 		this.levelNumber = levelNumber;
 		this.timeLeft = configuration.getTimeForLevel();
+		this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
 		this.gameWorldSize = configuration.getGameWorldSize();
 		this.playerAvatar = playerAvatar;
 		
@@ -70,6 +73,14 @@ public class GameLevel implements Drawable {
 	
 	public Dimension getGameWorldSize() {
 		return gameWorldSize;
+	}
+	
+	public PlayerAvatar getPlayerAvatar() {
+		return playerAvatar;
+	}
+	
+	public void spawnExtraObjects() {
+		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
 	}
 
 	@Override

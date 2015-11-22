@@ -3,14 +3,15 @@ package org.eiti.java.pang.model.weapons;
 import java.awt.Point;
 
 import org.eiti.java.pang.model.ExtraObject;
+import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.shapes.Shape;
 
 public abstract class Weapon extends ExtraObject {
 
-	protected Weapon(Shape shape) {
-		super(shape);
+	protected Weapon(ExtraObjectType type, Shape shape) {
+		super(type, shape);
 	}
 	
 	@Override

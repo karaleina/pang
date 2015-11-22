@@ -19,5 +19,9 @@ public abstract class Shape implements Collidable {
 	public void moveBy(int dx, int dy) {
 		position.setLocation(position.getX() + dx, position.getY() + dy);
 	}
+	
+	public void moveTo(int x, int y) {
+		position.setLocation(x, y);
+	}
 
 }

@@ -17,7 +17,9 @@ public class Heart extends ExtraObject {
 	}
 	
 	public Heart(Point position) {
-		super(new Rectangle(
+		super(
+			ExtraObjectType.heart,
+			new Rectangle(
 				position,
 				getWidth(),
 				getHeight()));

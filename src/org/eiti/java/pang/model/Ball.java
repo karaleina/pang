@@ -10,15 +10,22 @@ public class Ball extends GameObject {
 
 	private int ballLevel;
 	
-	public Ball(Point position, int ballLevel) {
+	private double[] initialSpeedVector;
+	
+	public Ball(Point position, int ballLevel, double[] initialSpeedVector) {
 		super(new Sphere(
 				position,
 				getRadius(ballLevel)));
 		this.ballLevel = ballLevel;
+		this.initialSpeedVector = initialSpeedVector;
 	}
 	
 	public int getLevel() {
 		return ballLevel;
+	}
+	
+	public double[] getInitialSpeedVector() {
+		return initialSpeedVector;
 	}
 
 	@Override

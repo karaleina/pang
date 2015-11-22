@@ -2,7 +2,7 @@ package org.eiti.java.pang.game;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.Properties;
+import java.io.File;
 
 import org.eiti.java.pang.model.PlayerAvatar;
 
@@ -19,12 +19,6 @@ public class Game {
 	public final static int STARTING_LIVES = 5;
 	
 	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
-
-
-	//do zastapienia
-	private GameLevelConfiguration[] configurations = new GameLevelConfiguration[] {
-		new ExampleGameLevelConfiguration()
-	};
 	
 	public Game() {
 		status = GameStatus.NOT_STARTED;
@@ -61,10 +55,14 @@ public class Game {
 	}
 	
 	private GameLevel getGameLevel(int levelNumber) {
-		return new GameLevel(
-			levelNumber,
-			configurations[levelNumber - 1],
-			playerAvatar);
+		try {
+			return new GameLevel(
+				levelNumber,
+				new XMLGameLevelConfiguration(new File("res/levels/level1.xml")),
+				playerAvatar);
+		} catch(Exception exc) {
+			throw new RuntimeException("Failed to load configuration file!", exc);
+		}
 	}
 
 }
