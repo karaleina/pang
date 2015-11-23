@@ -57,7 +57,7 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 	private Element root;
 
 	/**
-	* @param gameLevelDescriptionFile plik opisujący dany poziom.
+	* @param gameLevelDescriptionFile Plik opisujący dany poziom.
 	*/
 
 	public XMLGameLevelConfiguration(File gameLevelDescriptionFile) throws Exception {
@@ -79,7 +79,7 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 	}
 
 	/**
-	 *
+	 * Metoda wczytująca kulki i awatar, por. loadBalls i loadAvatar.
 	 * @param level
      */
 	@Override
@@ -87,7 +87,11 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		loadBalls(level);
 		setupPlayerAvatar(level);
 	}
-	
+
+	/**
+	 *
+	 * @param level
+     */
 	private void loadBalls(GameLevel level) {
 		List<Node> balls = filterChildrenElements(findChildByName(root, "balls").getChildNodes());
 		
@@ -110,7 +114,11 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 					new double[] { ballSpeedX, ballSpeedY }));
 		}
 	}
-	
+
+	/**
+	 *
+	 * @param level
+     */
 	private void setupPlayerAvatar(GameLevel level) {
 		Dimension gameLevelSize = getGameWorldSize();
 		PlayerAvatar avatar = level.getPlayerAvatar();
@@ -132,12 +140,20 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+     */
 	@Override
 	public int getTimeForLevel() {
 		Node timeNode = findChildByName(root, "time");
 		return Integer.parseInt(timeNode.getTextContent());
 	}
-	
+
+	/**
+	 *
+	 * @return
+     */
 	@Override
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
@@ -156,7 +172,13 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		
 		return probabilities;
 	}
-	
+
+	/**
+	 * Metoda wyszukuje pojedynczy element.
+	 * @param parent Element nadrzędny (rodzic)
+	 * @param childName Nazwa elementu podrzędnego.
+     * @return Element (węzeł) o zadanej nazwie.
+     */
 	private Node findChildByName(Node parent, String childName) {
 		NodeList children = parent.getChildNodes();
 		for(int i = 0; i < children.getLength(); i++) {
@@ -167,7 +189,12 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		}
 		return null;
 	}
-	
+
+	/**
+	 *
+	 * @param children
+	 * @return
+     */
 	private List<Node> filterChildrenElements(NodeList children) {
 		List<Node> filteredNodes = new ArrayList<Node>();
 		for(int i = 0; i < children.getLength(); i++) {
