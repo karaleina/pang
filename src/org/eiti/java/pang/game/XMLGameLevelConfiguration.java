@@ -17,13 +17,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Moduł wczytujący pik XML opisujący poziom. Składnia według wzoru:
+ * 	<level>
+ *		<number>1</number>
+ *		<time>120</time>
+ *		<gameWorldSize>
+ *			<width>800</width>
+ *			<height>450</height>
+ *		</gameWorldSize>
+ *		<player>
+ *			<!-- left, center, right -->
+ *			<position>left</position>
+ *		</player>
+ *		<balls>
+ *			<ball>
+ *				<position>
+ *					<x>20</x>
+ *					 <y>100</y>
+ *		 		</position>
+ *		 		<level>2</level>
+ *				 <speed>
+ *				 <x>0</x>
+ *					 <y>-5</y>
+ *				 </speed>
+ *		 	</ball>
+ *		 </balls>
+ *		 <extraObjects>
+ *		 <!-- probabilities of appearance per minute -->
+ *		 	<heart>1.0</heart>
+ *			 <superWeapon>1.0</superWeapon>
+ *		 </extraObjects>
+ *		 </level>
+ */
 
 public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 	
 	private Document xmlDocument;
 	private Element root;
-	
+
+	/**
+	* @param gameLevelDescriptionFile plik opisujący dany poziom.
+	*/
+
 	public XMLGameLevelConfiguration(File gameLevelDescriptionFile) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -31,6 +67,9 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		root = xmlDocument.getDocumentElement();
 	}
 
+	/**
+	 * @return Wymiary planszy ("świata gry"). Wymiary poziomu wplywają na poziom trudności.
+     */
 	@Override
 	public Dimension getGameWorldSize() {
 		Node gameWorldSize = findChildByName(root, "gameWorldSize");
@@ -39,6 +78,10 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		return new Dimension(gameWorldWidth, gameWorldHeight);
 	}
 
+	/**
+	 *
+	 * @param level
+     */
 	@Override
 	public void loadObjects(GameLevel level) {
 		loadBalls(level);

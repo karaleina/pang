@@ -8,7 +8,8 @@ import java.awt.*;
  */
 public class HelpDialog extends JFrame{
     /**
-     * @param helpText Informacja do wyświetenia.
+     *
+     * @param helpText Informacja do wyświetlenia
      */
     public HelpDialog(String helpText){
         setTitle("Help");

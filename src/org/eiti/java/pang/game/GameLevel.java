@@ -12,6 +12,9 @@ import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.Missile;
 
+/**
+ * Klasa rysująca dany poziom.
+ */
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
@@ -33,6 +36,13 @@ public class GameLevel implements Drawable {
 	
 	private Collection<ExtraObject> extraObjects;
 
+	/**
+	 * Konstruktor w naszym przypadku wywołuje obiekt klasy Game
+	 * @param levelNumber
+	 * @param configuration Obiekt klasy implementującej interfejs GameLevelConfiguration,
+	 *                         czyli w obecnym momencie klasy XMLGame Configuration.
+	 * @param playerAvatar
+     */
 	public GameLevel(
 			int levelNumber,
 			GameLevelConfiguration configuration,
@@ -50,11 +60,18 @@ public class GameLevel implements Drawable {
 		
 		configuration.loadObjects(this);
 	}
-	
+
+	/**
+	 * @return
+     */
 	public int getLevelNumber() {
 		return levelNumber;
 	}
-	
+
+	/**
+	 *
+	 * @return
+     */
 	public int getTimeLeft() {
 		return timeLeft;
 	}

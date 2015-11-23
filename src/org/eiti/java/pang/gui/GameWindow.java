@@ -16,8 +16,8 @@ public class GameWindow extends JFrame {
 	public GameWindow() {
 		setTitle("Pang");
 		setSize(650, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 		setLayout(new BorderLayout());
 		setJMenuBar(new MenuBar());
 		
