@@ -3,8 +3,10 @@ package org.eiti.java.pang.gui;
 import javax.swing.*;
 import java.awt.event.*;
 
+
 /**
- * Created by S. H.  on 17.11.15.
+ * Obiekt MenuBar tworzy rozwijane menu slużące do wywoływania wszystkich akcji związanych raczej z oknem glównym,
+ * niż z panelem, na którym toczy się rozgrywka.
  */
 public class MenuBar extends JMenuBar {
 
@@ -39,12 +41,13 @@ public class MenuBar extends JMenuBar {
         quitGame.setAccelerator(ctrlQ);
         gameMenu.add(quitGame);
 
-
+        /*
         JMenuItem sound = new JMenuItem("Sound");
         settMenu.add(sound);
         JMenuItem mute = new JMenuItem("Mute");
         settMenu.add(mute);
         settMenu.addSeparator();
+        */
 
         JMenuItem theme1 = new JMenuItem("Theme 1");
         settMenu.add(theme1);
@@ -85,10 +88,25 @@ public class MenuBar extends JMenuBar {
             }
         });
 
+        quitGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         help.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HelpDialog helpDialog = new HelpDialog();
+                HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
+                helpDialog.setVisible(true);
+            }
+        });
+
+        aboutPang.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HelpDialog helpDialog = new HelpDialog("O programie");
                 helpDialog.setVisible(true);
             }
         });

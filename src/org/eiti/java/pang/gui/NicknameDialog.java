@@ -3,7 +3,7 @@ package org.eiti.java.pang.gui;
 import javax.swing.*;
 
 /**
- * Created by S.H. on 17.11.15.
+ * Obiekt NicknameDialog będzie służył do wprowadzania nawwy gracza, możliwej do wyświetllenia na liście wyników.
  */
 public class NicknameDialog extends JDialog {
     public NicknameDialog(){

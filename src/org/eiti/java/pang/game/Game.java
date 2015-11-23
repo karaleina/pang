@@ -56,9 +56,13 @@ public class Game {
 	
 	private GameLevel getGameLevel(int levelNumber) {
 		try {
+			String levelPath = "res/levels/level";
+			levelPath += levelNumber;
+			levelPath += ".xml";
+
 			return new GameLevel(
 				levelNumber,
-				new XMLGameLevelConfiguration(new File("res/levels/level1.xml")),
+				new XMLGameLevelConfiguration(new File(levelPath)),
 				playerAvatar);
 		} catch(Exception exc) {
 			throw new RuntimeException("Failed to load configuration file!", exc);

@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 	
 	private Document xmlDocument;
@@ -70,7 +72,7 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		Dimension gameLevelSize = getGameWorldSize();
 		PlayerAvatar avatar = level.getPlayerAvatar();
 		Node playerNode = findChildByName(root, "player");
-		String playerPosition = findChildByName(playerNode, "position").getTextContent().toLowerCase();
+		String playerPosition = findChildByName(playerNode, "position").getTextContent();
 		
 		if(playerPosition.equals("left")) {
 			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());

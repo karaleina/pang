@@ -6,6 +6,9 @@ import javax.swing.*;
 
 import org.eiti.java.pang.game.Game;
 
+/**
+ * Główne okno gry.
+ */
 public class GameWindow extends JFrame {
 
 	private static final long serialVersionUID = -8792460779215020552L;

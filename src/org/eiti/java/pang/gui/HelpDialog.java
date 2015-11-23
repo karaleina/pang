@@ -1,23 +1,27 @@
 package org.eiti.java.pang.gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
- * Created by S. H. on 17.11.15.
+ * Okno HelpDialog wyświetla (krótki) tekst pomocy lub informacje o programie.
  */
 public class HelpDialog extends JFrame{
-    public HelpDialog(){
+    /**
+     * @param helpText Informacja do wyświetenia.
+     */
+    public HelpDialog(String helpText){
         setTitle("Help");
-        setSize(300, 100);
+        setSize(120, 100);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         add(panel);
 
-        JLabel helpText = new JLabel("tu bedzie cos");
-        panel.add(helpText);
+        JLabel helpText1 = new JLabel(helpText, JLabel.CENTER);
+        panel.add(helpText1, BorderLayout.CENTER);
         JButton ok =new JButton("OK");
-        panel.add(ok);
+        panel.add(ok, BorderLayout.SOUTH);
 
     }
 }
