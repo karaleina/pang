@@ -1,5 +1,6 @@
-package org.eiti.java.pang.game;
+package org.eiti.java.pang.config;
 
+import org.eiti.java.pang.config.XMLParser;
 import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,17 +14,19 @@ import java.io.FileInputStream;
  */
 public class XMLGlobalConfiguration extends XMLParser {
 
-    public String getTitle(){
-        Node titleNode = findChildByName(root, "title");
-        String title = titleNode.getTextContent();
-        return title;
-    }
+
 
     public XMLGlobalConfiguration(File configurationFile) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         xmlDocument = builder.parse(new FileInputStream(configurationFile));
         root = xmlDocument.getDocumentElement();
+    }
+
+    public String getTitle(){
+        Node titleNode = findChildByName(root, "title");
+        String title = titleNode.getTextContent();
+        return title;
     }
 
     public Dimension getGameWindowSize() {

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 
+import org.eiti.java.pang.config.XMLGameLevelConfiguration;
 import org.eiti.java.pang.model.PlayerAvatar;
 
 public class Game {

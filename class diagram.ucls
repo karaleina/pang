@@ -28,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="org.eiti.java.pang.game.GameLevelConfiguration" project="pang" 
+  <interface id="4" language="java" name="org.eiti.java.pang.config.GameLevelConfiguration" project="pang"
     file="/pang/src/org/eiti/java/pang/game/GameLevelConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1398" y="486"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

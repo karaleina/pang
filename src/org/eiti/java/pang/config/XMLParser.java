@@ -1,4 +1,4 @@
-package org.eiti.java.pang.game;
+package org.eiti.java.pang.config;
 
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.ExtraObjectType;

@@ -1,9 +1,10 @@
-package org.eiti.java.pang.game;
+package org.eiti.java.pang.config;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 
+import org.eiti.java.pang.game.GameLevel;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
