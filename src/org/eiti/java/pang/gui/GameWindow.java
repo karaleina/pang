@@ -34,7 +34,9 @@ public class GameWindow extends JFrame {
 		getContentPane().add(new GamePanel(game), BorderLayout.CENTER);
 		getContentPane().add(new InfoPanel(game), BorderLayout.NORTH);
 
-		//Cała obsługa menu - później być może popakuje to w klasy, jedna oddzielna kasa MenuBar byłachybionym pomysłem.
+
+
+		//TODO Cała obsługa menu - później być może popakuje to w klasy, jedna oddzielna kasa MenuBar byłachybionym pomysłem.
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		JMenu gameMenu = new JMenu("Game");

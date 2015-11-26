@@ -22,6 +22,7 @@ public class Game {
 	
 	public Game() {
 		status = GameStatus.NOT_STARTED;
+		level = null;
 		playerAvatar = new PlayerAvatar(
 			new Point(
 				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
@@ -42,12 +43,13 @@ public class Game {
 	}
 	
 	public void nextLevel() {
+
 		if(level == null) {
 			level = getGameLevel(1);
 		} else {
 			level = getGameLevel(level.getLevelNumber() + 1);
 		}
-		status = GameStatus.NOT_STARTED;
+		status = GameStatus.RUNNING;
 	}
 	
 	public void start() {
@@ -56,7 +58,7 @@ public class Game {
 	
 	private GameLevel getGameLevel(int levelNumber) {
 		try {
-			String levelPath = "res/levels/level";
+			String levelPath = "res/config/level";
 			levelPath += levelNumber;
 			levelPath += ".xml";
 

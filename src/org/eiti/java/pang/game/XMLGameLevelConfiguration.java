@@ -12,7 +12,6 @@ import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,19 +50,12 @@ import java.util.Map;
  *		 </level>
  */
 
-public class XMLGameLevelConfiguration implements GameLevelConfiguration {
-	
-	private Document xmlDocument;
-	private Element root;
+public class XMLGameLevelConfiguration extends XMLParser implements GameLevelConfiguration {
 
-	/**
-	* @param gameLevelDescriptionFile Plik opisujący dany poziom.
-	*/
-
-	public XMLGameLevelConfiguration(File gameLevelDescriptionFile) throws Exception {
+	public XMLGameLevelConfiguration(File configurationFile) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		xmlDocument = builder.parse(new FileInputStream(gameLevelDescriptionFile));
+		xmlDocument = builder.parse(new FileInputStream(configurationFile));
 		root = xmlDocument.getDocumentElement();
 	}
 
@@ -171,38 +163,6 @@ public class XMLGameLevelConfiguration implements GameLevelConfiguration {
 		}
 		
 		return probabilities;
-	}
-
-	/**
-	 * Metoda wyszukuje pojedynczy element.
-	 * @param parent Element nadrzędny (rodzic)
-	 * @param childName Nazwa elementu podrzędnego.
-     * @return Element (węzeł) o zadanej nazwie.
-     */
-	private Node findChildByName(Node parent, String childName) {
-		NodeList children = parent.getChildNodes();
-		for(int i = 0; i < children.getLength(); i++) {
-			Node child = children.item(i);
-			if(child.getNodeName().equals(childName)) {
-				return child;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 *
-	 * @param children
-	 * @return
-     */
-	private List<Node> filterChildrenElements(NodeList children) {
-		List<Node> filteredNodes = new ArrayList<Node>();
-		for(int i = 0; i < children.getLength(); i++) {
-			if(children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-				filteredNodes.add(children.item(i));
-			}
-		}
-		return filteredNodes;
 	}
 
 }

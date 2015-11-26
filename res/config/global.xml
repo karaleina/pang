@@ -1,0 +1,8 @@
+<global>
+    <title>Pang</title>
+    <gameWindowSize>
+        <width>650</width>
+        <height>400</height>
+    </gameWindowSize>
+    <lives>5</lives>
+</global>
