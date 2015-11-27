@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import org.eiti.java.pang.game.Game;
+import org.eiti.java.pang.loaders.ImageLoader;
 
 public class GamePanel extends JPanel {
 

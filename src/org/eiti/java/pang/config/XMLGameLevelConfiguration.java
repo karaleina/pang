@@ -2,7 +2,6 @@ package org.eiti.java.pang.config;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.File;
 
 import org.eiti.java.pang.game.GameLevel;
 import org.eiti.java.pang.model.Ball;
@@ -53,10 +52,10 @@ import java.util.Map;
 
 public class XMLGameLevelConfiguration extends XMLParser {
 
-	public XMLGameLevelConfiguration(File configurationFile) throws Exception {
+	public XMLGameLevelConfiguration(String configurationFilePath) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		xmlDocument = builder.parse(new FileInputStream(configurationFile));
+		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
 		root = xmlDocument.getDocumentElement();
 	}
 
@@ -70,20 +69,8 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		return new Dimension(gameWorldWidth, gameWorldHeight);
 	}
 
-	/**
-	 * Metoda wczytująca kulki i awatar, por. loadBalls i loadAvatar.
-	 * @param level
-     */
-	public void loadObjects(GameLevel level) {
-		loadBalls(level);
-		setupPlayerAvatar(level);
-	}
 
-	/**
-	 *
-	 * @param level
-     */
-	private void loadBalls(GameLevel level) {
+	public void loadBalls(GameLevel level) {
 		List<Node> balls = filterChildrenElements(findChildByName(root, "balls").getChildNodes());
 		
 		for(Node ballNode : balls) {
@@ -110,7 +97,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	 *
 	 * @param level
      */
-	private void setupPlayerAvatar(GameLevel level) {
+	public void setupPlayerAvatar(GameLevel level) {
 		Dimension gameLevelSize = getGameWorldSize();
 		PlayerAvatar avatar = level.getPlayerAvatar();
 		Node playerNode = findChildByName(root, "player");

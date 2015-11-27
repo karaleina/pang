@@ -5,7 +5,6 @@ import org.w3c.dom.Node;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
-import java.io.File;
 import java.io.FileInputStream;
 
 /**
@@ -15,17 +14,16 @@ public class XMLGlobalConfiguration extends XMLParser {
 
 
 
-    public XMLGlobalConfiguration(File configurationFile) throws Exception {
+    public XMLGlobalConfiguration(String configurationFilePath) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        xmlDocument = builder.parse(new FileInputStream(configurationFile));
+        xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
         root = xmlDocument.getDocumentElement();
     }
 
     public String getTitle(){
         Node titleNode = findChildByName(root, "title");
-        String title = titleNode.getTextContent();
-        return title;
+        return titleNode.getTextContent();
     }
 
     public Dimension getGameWindowSize() {
@@ -37,7 +35,6 @@ public class XMLGlobalConfiguration extends XMLParser {
 
      public int getLives(){
          Node livesNode = findChildByName(root, "lives");
-         int lives = Integer.parseInt(livesNode.getTextContent());
-         return lives;
+         return Integer.parseInt(livesNode.getTextContent());
      }
 }

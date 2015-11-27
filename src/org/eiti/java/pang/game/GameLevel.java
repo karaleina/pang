@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
-import org.eiti.java.pang.gui.ImageLoader;
+import org.eiti.java.pang.loaders.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
 import org.eiti.java.pang.model.ExtraObject;
@@ -19,10 +19,7 @@ import org.eiti.java.pang.model.weapons.Missile;
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
-	
-	/**
-	 * Time left to level end, measured in seconds.
-	 */
+
 	private int timeLeft;
 
 	private Dimension gameWorldSize;
@@ -37,13 +34,7 @@ public class GameLevel implements Drawable {
 	
 	private Collection<ExtraObject> extraObjects;
 
-	/**
-	 * Konstruktor w naszym przypadku wywołuje obiekt klasy Game
-	 * @param levelNumber
-	 * @param configuration Obiekt klasy implementującej interfejs GameLevelConfiguration,
-	 *                         czyli w obecnym momencie klasy XMLGame Configuration.
-	 * @param playerAvatar
-     */
+
 	public GameLevel(
 			int levelNumber,
 			XMLGameLevelConfiguration configuration,
@@ -59,7 +50,9 @@ public class GameLevel implements Drawable {
 		missiles = new LinkedList<Missile>();
 		extraObjects = new LinkedList<ExtraObject>();
 		
-		configuration.loadObjects(this);
+		//configuration.loadObjects(this);
+		configuration.loadBalls(this);
+		configuration.setupPlayerAvatar(this);
 	}
 
 	/**

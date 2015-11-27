@@ -20,7 +20,7 @@ public class HelpDialog extends JFrame{
         add(panel);
 
         JLabel helpText1 = new JLabel(helpText, JLabel.CENTER);
-        panel.add(helpText1, BorderLayout.CENTER);
+        panel.add(helpText1, new GridLayout(2,1));
         JButton ok =new JButton("OK");
         panel.add(ok, BorderLayout.SOUTH);
 

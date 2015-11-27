@@ -2,7 +2,6 @@ package org.eiti.java.pang.config;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.io.FileInputStream;
 
 import org.w3c.dom.Node;
@@ -12,32 +11,41 @@ import org.w3c.dom.Node;
  */
 public class XMLImagePaths extends XMLParser{
 
-	public XMLImagePaths(File configurationFile) throws Exception {
+	public XMLImagePaths(String configurationFilePath) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		xmlDocument = builder.parse(new FileInputStream(configurationFile));
+		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
 		root = xmlDocument.getDocumentElement();
 	}
 
 	public String getBackgroundPath(){
-		Node backgroundNode = findChildByName(root, "backgroundImage");
-		String backgroundPath = backgroundNode.getTextContent();
-		return backgroundPath;
+		Node backgroundNode = findChildByName(root, "background");
+		return backgroundNode.getTextContent();
 	}
 
 	public String getHeartImagePath(){
 		Node heartImageNode = findChildByName(root, "heartImage");
-		String heartImagePath = heartImageNode.getTextContent();
-		return heartImagePath;
+		return heartImageNode.getTextContent();
 	}
 
 	public String getPlayerAvatarImage(){
 		Node playerAvatarImageNode = findChildByName(root, "playerAvatarImage");
-		String playerAvatarImagePath = playerAvatarImageNode.getTextContent();
-		return playerAvatarImagePath;
+		return playerAvatarImageNode.getTextContent();
 	}
 
-	//TODO reszta ścieżek
+	public String getStandardMissileImage(){
+		Node standardMissileImageNode = findChildByName(root, "standardMissileImage");
+		return standardMissileImageNode.getTextContent();
+	}
 
+	public String getSuperMissileImage(){
+		Node superMissileImageNode = findChildByName(root, "superMissileImage");
+		return superMissileImageNode.getTextContent();
+	}
+
+	public String getSuperWeaponImage(){
+		Node superWeaponImage = findChildByName(root, "superWeaponImage");
+		return superWeaponImage.getTextContent();
+	}
 
 }

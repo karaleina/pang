@@ -2,7 +2,6 @@ package org.eiti.java.pang.game;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.File;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
 import org.eiti.java.pang.model.PlayerAvatar;
@@ -65,12 +64,12 @@ public class Game {
 
 			return new GameLevel(
 				levelNumber,
-				new XMLGameLevelConfiguration(new File(levelPath)),
+				new XMLGameLevelConfiguration(levelPath),
 				playerAvatar);
 		} catch(Exception exc) {
 			throw new RuntimeException("Failed to load configuration file!", exc);
 		}
 	}
 
-	//TODO private GobalVariables
+	//TODO private GlobalVariables
 }
