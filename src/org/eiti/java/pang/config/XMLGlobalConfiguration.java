@@ -1,6 +1,5 @@
 package org.eiti.java.pang.config;
 
-import org.eiti.java.pang.config.XMLParser;
 import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;

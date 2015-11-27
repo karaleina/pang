@@ -51,7 +51,7 @@ import java.util.Map;
  *		 </level>
  */
 
-public class XMLGameLevelConfiguration extends XMLParser implements GameLevelConfiguration {
+public class XMLGameLevelConfiguration extends XMLParser {
 
 	public XMLGameLevelConfiguration(File configurationFile) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -63,7 +63,6 @@ public class XMLGameLevelConfiguration extends XMLParser implements GameLevelCon
 	/**
 	 * @return Wymiary planszy ("świata gry"). Wymiary poziomu wplywają na poziom trudności.
      */
-	@Override
 	public Dimension getGameWorldSize() {
 		Node gameWorldSize = findChildByName(root, "gameWorldSize");
 		int gameWorldWidth = Integer.parseInt(findChildByName(gameWorldSize, "width").getTextContent());
@@ -75,7 +74,6 @@ public class XMLGameLevelConfiguration extends XMLParser implements GameLevelCon
 	 * Metoda wczytująca kulki i awatar, por. loadBalls i loadAvatar.
 	 * @param level
      */
-	@Override
 	public void loadObjects(GameLevel level) {
 		loadBalls(level);
 		setupPlayerAvatar(level);
@@ -137,7 +135,6 @@ public class XMLGameLevelConfiguration extends XMLParser implements GameLevelCon
 	 *
 	 * @return
      */
-	@Override
 	public int getTimeForLevel() {
 		Node timeNode = findChildByName(root, "time");
 		return Integer.parseInt(timeNode.getTextContent());
@@ -147,7 +144,6 @@ public class XMLGameLevelConfiguration extends XMLParser implements GameLevelCon
 	 *
 	 * @return
      */
-	@Override
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
 		

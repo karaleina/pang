@@ -1,0 +1,8 @@
+<imagepaths>
+    <background>res/images/background.jpg</background>
+    <heartImage>res/images/heart.png</heartImage>
+    <playerAvatarImage>res/images/player.png</playerAvatarImage>
+    <standardMissileImage>res/images/old-bullet.png</standardMissileImage>
+    <superMissileImage>res/images/super-bullet.png</superMissileImage>
+    <superWeaponImage>res/images/mauser.png</superWeaponImage>
+</imagepaths>

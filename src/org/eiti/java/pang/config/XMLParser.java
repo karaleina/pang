@@ -1,34 +1,21 @@
 package org.eiti.java.pang.config;
 
-import org.eiti.java.pang.model.Ball;
-import org.eiti.java.pang.model.ExtraObjectType;
-import org.eiti.java.pang.model.PlayerAvatar;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class XMLParser {
+public abstract class XMLParser {
 
 	protected Document xmlDocument;
 	protected Element root;
 
 
-	public XMLParser() {
-		xmlDocument = null;
-		root = null;
-	}
+	public XMLParser() {}
 
 
 	/**

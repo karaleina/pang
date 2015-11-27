@@ -72,4 +72,5 @@ public class Game {
 		}
 	}
 
+	//TODO private GobalVariables
 }

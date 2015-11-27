@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.eiti.java.pang.config.GameLevelConfiguration;
+import org.eiti.java.pang.config.XMLGameLevelConfiguration;
 import org.eiti.java.pang.gui.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
@@ -46,7 +46,7 @@ public class GameLevel implements Drawable {
      */
 	public GameLevel(
 			int levelNumber,
-			GameLevelConfiguration configuration,
+			XMLGameLevelConfiguration configuration,
 			PlayerAvatar playerAvatar) {
 		
 		this.levelNumber = levelNumber;
