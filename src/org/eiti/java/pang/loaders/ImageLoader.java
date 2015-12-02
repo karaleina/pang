@@ -1,7 +1,7 @@
 package org.eiti.java.pang.loaders;
 
 
-import org.eiti.java.pang.config.XMLImagePaths;
+import org.eiti.java.pang.config.XMLImageLoader;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ public class ImageLoader {
 		
 	static {
 		try {
-			XMLImagePaths paths = new XMLImagePaths("res/config/imagepaths.xml");
+			XMLImageLoader paths = new XMLImageLoader("res/config/imagepaths.xml");
 			background = 		ImageIO.read(new FileInputStream(paths.getBackgroundPath()));
 			heartImage = 		ImageIO.read(new FileInputStream(paths.getHeartImagePath()));
 			playerAvatarImage = ImageIO.read(new FileInputStream(paths.getPlayerAvatarImage()));

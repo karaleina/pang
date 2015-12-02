@@ -10,6 +10,7 @@ import org.eiti.java.pang.model.PlayerAvatar;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
+import javax.xml.xpath.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -53,19 +54,22 @@ import java.util.Map;
 public class XMLGameLevelConfiguration extends XMLParser {
 
 	public XMLGameLevelConfiguration(String configurationFilePath) throws Exception {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
+
+		xpath = XPathFactory.newInstance().newXPath();
+
 		root = xmlDocument.getDocumentElement();
 	}
 
 	/**
 	 * @return Wymiary planszy ("świata gry"). Wymiary poziomu wplywają na poziom trudności.
      */
-	public Dimension getGameWorldSize() {
-		Node gameWorldSize = findChildByName(root, "gameWorldSize");
-		int gameWorldWidth = Integer.parseInt(findChildByName(gameWorldSize, "width").getTextContent());
-		int gameWorldHeight = Integer.parseInt(findChildByName(gameWorldSize, "height").getTextContent());
+	public Dimension getGameWorldSize() throws XPathExpressionException {
+
+		int gameWorldWidth  = Integer.parseInt(xpath.compile("//gameWorldSize/width").evaluate(xmlDocument));
+		int gameWorldHeight = Integer.parseInt(xpath.compile("//gameWorldSize/height").evaluate(xmlDocument));
+
 		return new Dimension(gameWorldWidth, gameWorldHeight);
 	}
 
@@ -97,7 +101,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	 *
 	 * @param level
      */
-	public void setupPlayerAvatar(GameLevel level) {
+	public void setupPlayerAvatar(GameLevel level) throws XPathExpressionException {
 		Dimension gameLevelSize = getGameWorldSize();
 		PlayerAvatar avatar = level.getPlayerAvatar();
 		Node playerNode = findChildByName(root, "player");
@@ -122,9 +126,9 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	 *
 	 * @return
      */
-	public int getTimeForLevel() {
-		Node timeNode = findChildByName(root, "time");
-		return Integer.parseInt(timeNode.getTextContent());
+	public int getTimeForLevel() throws XPathExpressionException {
+
+		return Integer.parseInt(xpath.compile("//time").evaluate(xmlDocument));
 	}
 
 	/**

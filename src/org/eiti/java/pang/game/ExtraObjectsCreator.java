@@ -1,3 +1,4 @@
+/*
 package org.eiti.java.pang.game;
 
 import java.awt.Point;
@@ -64,3 +65,4 @@ public class ExtraObjectsCreator {
 	}
 
 }
+*/

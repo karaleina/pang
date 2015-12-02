@@ -2,6 +2,8 @@ package org.eiti.java.pang.config;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
 import java.io.FileInputStream;
 
 import org.w3c.dom.Node;
@@ -9,13 +11,14 @@ import org.w3c.dom.Node;
 /**
  * Created by Stefan Hennel on 27.11.15.
  */
-public class XMLImagePaths extends XMLParser{
+public class XMLImageLoader extends XMLParser{
 
-	public XMLImagePaths(String configurationFilePath) throws Exception {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+	public XMLImageLoader(String configurationFilePath) throws Exception {
+		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = domFactory.newDocumentBuilder();
 		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
 		root = xmlDocument.getDocumentElement();
+		XPath xpath = XPathFactory.newInstance().newXPath();
 	}
 
 	public String getBackgroundPath(){

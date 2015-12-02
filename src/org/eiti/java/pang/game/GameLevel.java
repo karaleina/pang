@@ -13,6 +13,8 @@ import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.Missile;
 
+import javax.xml.xpath.XPathExpressionException;
+
 /**
  * Klasa rysująca dany poziom.
  */
@@ -24,7 +26,7 @@ public class GameLevel implements Drawable {
 
 	private Dimension gameWorldSize;
 	
-	private ExtraObjectsCreator extraObjectsCreator;
+	//private ExtraObjectsCreator extraObjectsCreator;
 
 	private PlayerAvatar playerAvatar;
 
@@ -41,9 +43,18 @@ public class GameLevel implements Drawable {
 			PlayerAvatar playerAvatar) {
 		
 		this.levelNumber = levelNumber;
-		this.timeLeft = configuration.getTimeForLevel();
-		this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
-		this.gameWorldSize = configuration.getGameWorldSize();
+		try {
+			this.timeLeft = configuration.getTimeForLevel();
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		}
+		//this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
+		try {
+			this.gameWorldSize = configuration.getGameWorldSize();
+		} catch (XPathExpressionException e) {
+			System.out.println("Invalid level%.xml file");
+			e.printStackTrace();
+		}
 		this.playerAvatar = playerAvatar;
 		
 		balls = new LinkedList<Ball>();
@@ -52,7 +63,11 @@ public class GameLevel implements Drawable {
 		
 		//configuration.loadObjects(this);
 		configuration.loadBalls(this);
-		configuration.setupPlayerAvatar(this);
+		try {
+			configuration.setupPlayerAvatar(this);
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -90,9 +105,9 @@ public class GameLevel implements Drawable {
 		return playerAvatar;
 	}
 	
-	public void spawnExtraObjects() {
-		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
-	}
+	//public void spawnExtraObjects() {
+	//	extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
+	//}
 
 	@Override
 	public void draw(Graphics g) {

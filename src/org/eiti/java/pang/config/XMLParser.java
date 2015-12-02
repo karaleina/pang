@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.xpath.XPath;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,7 @@ public abstract class XMLParser {
 
 	protected Document xmlDocument;
 	protected Element root;
-
-
-	public XMLParser() {}
-
+	protected XPath xpath;
 
 	/**
 	 * Metoda wyszukuje pojedynczy element.

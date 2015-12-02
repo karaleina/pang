@@ -29,7 +29,7 @@ public class GameWindow extends JFrame {
 		game.start();
 		
 		// TODO temporary, to show creation of extra objects
-		game.getLevel().spawnExtraObjects();
+		//game.getLevel().spawnExtraObjects();
 		
 		getContentPane().add(new GamePanel(game), BorderLayout.CENTER);
 		getContentPane().add(new InfoPanel(game), BorderLayout.NORTH);
