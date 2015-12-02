@@ -74,20 +74,19 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 
-	public void loadBalls(GameLevel level) {
-		List<Node> balls = filterChildrenElements(findChildByName(root, "balls").getChildNodes());
-		
-		for(Node ballNode : balls) {
+	void loadBalls(GameLevel level) throws XPathExpressionException {
+		//List<Node> balls = filterChildrenElements(findChildByName(root, "balls").getChildNodes());
+		NodeList balls = (NodeList) xpath.compile("//balls/ball").evaluate(xmlDocument, XPathConstants.NODESET);
+
+		for(int i = 0; i<balls.getLength(); i++) {	//foreach loop does not work for NodeList interface
+
+			int ballPositionX = Integer.parseInt(xpath.compile("./position/x").evaluate(xmlDocument));
+			int ballPositionY = Integer.parseInt(xpath.compile("./position/y").evaluate(xmlDocument));
+
+			double ballSpeedX = Double.parseDouble(xpath.compile("./speed/x").evaluate(xmlDocument));
+			double ballSpeedY = Double.parseDouble(xpath.compile("./speed/y").evaluate(xmlDocument));
 			
-			Node ballPosition = findChildByName(ballNode, "position");
-			int ballPositionX = Integer.parseInt(findChildByName(ballPosition, "x").getTextContent());
-			int ballPositionY = Integer.parseInt(findChildByName(ballPosition, "y").getTextContent());
-			
-			Node ballSpeed = findChildByName(ballNode, "speed");
-			double ballSpeedX = Double.parseDouble(findChildByName(ballSpeed, "x").getTextContent());
-			double ballSpeedY = Double.parseDouble(findChildByName(ballSpeed, "y").getTextContent());
-			
-			int ballLevel = Integer.parseInt(findChildByName(ballNode, "level").getTextContent());
+			int ballLevel = Integer.parseInt(xpath.compile("./level").evaluate(xmlDocument));
 			
 			level.getBalls().add(
 				new Ball(
