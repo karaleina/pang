@@ -59,8 +59,6 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
 
 		xpath = XPathFactory.newInstance().newXPath();
-
-		root = xmlDocument.getDocumentElement();
 	}
 
 	/**
@@ -81,7 +79,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
         int ballsNumber = xmlDocument.getElementsByTagName("ball").getLength();
 
 		for (int i = 1; i <= ballsNumber; i++) {	//foreach loop does not work for NodeList interface
-            String ballPath = "/level/balls/ball[" + i + "]";
+            String ballPath = "//balls/ball[" + i + "]";
 
             int ballPositionX = Integer.parseInt(xpath.compile(ballPath + "/position/x").evaluate(xmlDocument));
 			int ballPositionY = Integer.parseInt(xpath.compile(ballPath + "/position/y").evaluate(xmlDocument));
@@ -108,8 +106,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	public void setupPlayerAvatar(GameLevel level) throws XPathExpressionException {
 		Dimension gameLevelSize = getGameWorldSize();
 		PlayerAvatar avatar = level.getPlayerAvatar();
-		Node playerNode = findChildByName(root, "player");
-		String playerPosition = findChildByName(playerNode, "position").getTextContent();
+		String playerPosition = xpath.compile("//player/position").evaluate(xmlDocument);
 
 		if(playerPosition.equals("left")) {
 			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());
@@ -139,18 +136,20 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	 *
 	 * @return
      */
-	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() {
+	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() throws XPathExpressionException {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
 
-		List<Node> probabilityNodes = filterChildrenElements(findChildByName(root, "extraObjects").getChildNodes());
+        int extraObjectsNumber = xmlDocument.getElementsByTagName("extraObjects").getLength();
+        for (int i = 1; i <= extraObjectsNumber; i++) {	//foreach loop does not work for NodeList interface
+			String i_thExtraObjectPath = "//extraObjects/*[" + i + "]";
 
-		for(Node probabilityNode : probabilityNodes) {
-			double probability = Double.valueOf(probabilityNode.getTextContent());
+            double probability = Double.parseDouble(xpath.compile(i_thExtraObjectPath).evaluate(xmlDocument));
 			if(probability < 0.0 || probability > 1.0) {
 				throw new RuntimeException("Probability " + probability + " out of range [0, 1]!");
 			}
+            String extraObjectName = xpath.compile("name(" + i_thExtraObjectPath +")").evaluate(xmlDocument);
 			probabilities.put(
-				ExtraObjectType.valueOf(probabilityNode.getNodeName()),
+				ExtraObjectType.valueOf(extraObjectName),
 				probability);
 		}
 		
