@@ -13,6 +13,7 @@ import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,26 +75,30 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 
-	void loadBalls(GameLevel level) throws XPathExpressionException {
-		//List<Node> balls = filterChildrenElements(findChildByName(root, "balls").getChildNodes());
-		NodeList balls = (NodeList) xpath.compile("//balls/ball").evaluate(xmlDocument, XPathConstants.NODESET);
+	public List<Ball> getBalls() throws XPathExpressionException {
 
-		for(int i = 0; i<balls.getLength(); i++) {	//foreach loop does not work for NodeList interface
+        List<Ball> ballList = new ArrayList<>();
+        int ballsNumber = xmlDocument.getElementsByTagName("ball").getLength();
 
-			int ballPositionX = Integer.parseInt(xpath.compile("./position/x").evaluate(xmlDocument));
-			int ballPositionY = Integer.parseInt(xpath.compile("./position/y").evaluate(xmlDocument));
+		for (int i = 1; i <= ballsNumber; i++) {	//foreach loop does not work for NodeList interface
+            String ballPath = "/level/balls/ball[" + i + "]";
 
-			double ballSpeedX = Double.parseDouble(xpath.compile("./speed/x").evaluate(xmlDocument));
-			double ballSpeedY = Double.parseDouble(xpath.compile("./speed/y").evaluate(xmlDocument));
+            int ballPositionX = Integer.parseInt(xpath.compile(ballPath + "/position/x").evaluate(xmlDocument));
+			int ballPositionY = Integer.parseInt(xpath.compile(ballPath + "/position/y").evaluate(xmlDocument));
+
+			double ballSpeedX = Double.parseDouble(xpath.compile(ballPath + "/speed/x").evaluate(xmlDocument));
+			double ballSpeedY = Double.parseDouble(xpath.compile(ballPath + "/speed/y").evaluate(xmlDocument));
 			
-			int ballLevel = Integer.parseInt(xpath.compile("./level").evaluate(xmlDocument));
+			int ballLevel = Integer.parseInt(xpath.compile(ballPath + "/level").evaluate(xmlDocument));
 			
-			level.getBalls().add(
+			ballList.add(
 				new Ball(
 					new Point(ballPositionX, ballPositionY),
 					ballLevel,
 					new double[] { ballSpeedX, ballSpeedY }));
 		}
+
+        return ballList;
 	}
 
 	/**
@@ -105,7 +110,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		PlayerAvatar avatar = level.getPlayerAvatar();
 		Node playerNode = findChildByName(root, "player");
 		String playerPosition = findChildByName(playerNode, "position").getTextContent();
-		
+
 		if(playerPosition.equals("left")) {
 			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());
 		} else if(playerPosition.equals("center")) {
@@ -136,9 +141,9 @@ public class XMLGameLevelConfiguration extends XMLParser {
      */
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
-		
+
 		List<Node> probabilityNodes = filterChildrenElements(findChildByName(root, "extraObjects").getChildNodes());
-		
+
 		for(Node probabilityNode : probabilityNodes) {
 			double probability = Double.valueOf(probabilityNode.getTextContent());
 			if(probability < 0.0 || probability > 1.0) {

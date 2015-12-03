@@ -62,8 +62,9 @@ public class GameLevel implements Drawable {
 		extraObjects = new LinkedList<ExtraObject>();
 		
 		//configuration.loadObjects(this);
-		configuration.loadBalls(this);
+
 		try {
+			configuration.getBalls();
 			configuration.setupPlayerAvatar(this);
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();

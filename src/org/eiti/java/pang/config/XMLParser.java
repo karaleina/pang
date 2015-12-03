@@ -33,12 +33,7 @@ public abstract class XMLParser {
 		return null;
 	}
 
-	/**
-	 * Tej metody nie ogarniam, zamirzam ją napisać od początku
-	 * (nie by poprawić, ale żeby zrozumieć)
-	 * @param children
-	 * @return
-     */
+
 	protected List<Node> filterChildrenElements(NodeList children) {
 		List<Node> filteredNodes = new ArrayList<Node>();
 		for(int i = 0; i < children.getLength(); i++) {
