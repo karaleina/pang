@@ -21,19 +21,11 @@ import javax.xml.xpath.XPathExpressionException;
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
-
 	private int timeLeft;
-
 	private Dimension gameWorldSize;
-	
-	//private ExtraObjectsCreator extraObjectsCreator;
-
 	private PlayerAvatar playerAvatar;
-
 	private Collection<Ball> balls;
-
 	private Collection<Missile> missiles;
-	
 	private Collection<ExtraObject> extraObjects;
 
 
@@ -42,46 +34,34 @@ public class GameLevel implements Drawable {
 			XMLGameLevelConfiguration configuration,
 			PlayerAvatar playerAvatar) {
 		
-		this.levelNumber = levelNumber;
+		this.levelNumber = levelNumber; //TODO to też powinno być parsowane
 		try {
-			this.timeLeft = configuration.getTimeForLevel();
-		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-		}
-		//this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
-		try {
-			this.gameWorldSize = configuration.getGameWorldSize();
+			timeLeft = configuration.getTimeForLevel();
+			gameWorldSize = configuration.getGameWorldSize();
+			balls = configuration.getBalls();
+			this.playerAvatar = playerAvatar;
+			configuration.setupPlayerAvatar(this);
+
+
 		} catch (XPathExpressionException e) {
 			System.out.println("Invalid level%.xml file");
 			e.printStackTrace();
 		}
-		this.playerAvatar = playerAvatar;
-		
-		balls = new LinkedList<Ball>();
+		//this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
+
+
+
 		missiles = new LinkedList<Missile>();
 		extraObjects = new LinkedList<ExtraObject>();
 		
-		//configuration.loadObjects(this);
 
-		try {
-			configuration.getBalls();
-			configuration.setupPlayerAvatar(this);
-		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-		}
 	}
 
-	/**
-	 * @return
-     */
+
 	public int getLevelNumber() {
 		return levelNumber;
 	}
 
-	/**
-	 *
-	 * @return
-     */
 	public int getTimeLeft() {
 		return timeLeft;
 	}
