@@ -12,9 +12,11 @@ public class Game {
 	
 	private GameLevel level;
 	
+	private GameThread gameThread;
+	
 	private PlayerAvatar playerAvatar;
 	
-	private long score;
+	private GameScore score;
 	
 	public final static int STARTING_LIVES = 5;
 	
@@ -23,6 +25,7 @@ public class Game {
 	public Game() {
 		status = GameStatus.NOT_STARTED;
 		level = null;
+		score = new GameScore();
 		playerAvatar = new PlayerAvatar(
 			new Point(
 				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
@@ -38,21 +41,24 @@ public class Game {
 		return level;
 	}
 	
-	public long getScore() {
+	public GameScore getScore() {
 		return score;
 	}
 	
 	public void nextLevel() {
-
 		if(level == null) {
 			level = getGameLevel(1);
 		} else {
 			level = getGameLevel(level.getLevelNumber() + 1);
 		}
-		status = GameStatus.RUNNING;
+		if(gameThread != null) {
+			gameThread.interrupt();
+		}
+		gameThread = new GameThread(level, score);
 	}
 	
 	public void start() {
+		gameThread.start();
 		status = GameStatus.RUNNING;
 	}
 	
