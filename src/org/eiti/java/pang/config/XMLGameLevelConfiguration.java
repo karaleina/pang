@@ -93,7 +93,8 @@ public class XMLGameLevelConfiguration extends XMLParser {
 				new Ball(
 					new Point(ballPositionX, ballPositionY),
 					ballLevel,
-					new double[] { ballSpeedX, ballSpeedY }));
+					new double[] { ballSpeedX, ballSpeedY },
+					this.getGameWorldSize()));
 		}
 
         return ballList;

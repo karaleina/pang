@@ -1,4 +1,4 @@
-package org.eiti.java.pang.loaders;
+package org.eiti.java.pang.globalConstants;
 
 
 import org.eiti.java.pang.config.XMLImageLoader;

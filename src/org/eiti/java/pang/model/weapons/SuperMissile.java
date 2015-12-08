@@ -3,7 +3,7 @@ package org.eiti.java.pang.model.weapons;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import org.eiti.java.pang.loaders.ImageLoader;
+import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
 import org.eiti.java.pang.model.shapes.Rectangle;

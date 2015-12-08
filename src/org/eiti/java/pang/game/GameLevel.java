@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
-import org.eiti.java.pang.loaders.ImageLoader;
+import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
 import org.eiti.java.pang.model.ExtraObject;

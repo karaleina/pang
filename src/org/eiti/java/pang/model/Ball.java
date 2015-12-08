@@ -1,31 +1,39 @@
 package org.eiti.java.pang.model;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 
+import org.eiti.java.pang.globalConstants.GlobalConfigLoader;
 import org.eiti.java.pang.model.shapes.Sphere;
 
 public class Ball extends GameObject {
 
 	private int ballLevel;
+	private double[] speedVector;
+	double acceleration;		//gravitational acceleration (positive or negative)
+	private Dimension gameWorldSize; //please do _not_ call a GameLevel method
 	
-	private double[] initialSpeedVector;
-	
-	public Ball(Point position, int ballLevel, double[] initialSpeedVector) {
+	public Ball(
+			Point position,
+			int ballLevel,
+			double[] initialSpeedVector,
+			Dimension gameWorldSize) {
+
 		super(new Sphere(
 				position,
 				getRadius(ballLevel)));
+
 		this.ballLevel = ballLevel;
-		this.initialSpeedVector = initialSpeedVector;
+		this.speedVector = initialSpeedVector;
+		this.gameWorldSize = gameWorldSize;
+		acceleration = GlobalConfigLoader.gravity;
 	}
+
+	public void move() {
+		//TODO
+	};
 	
-	public int getLevel() {
+	public int getBallLevel() {
 		return ballLevel;
-	}
-	
-	public double[] getInitialSpeedVector() {
-		return initialSpeedVector;
 	}
 
 	@Override

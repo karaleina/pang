@@ -29,12 +29,16 @@ public class XMLGlobalConfiguration extends XMLParser {
     }
 
     public Dimension getGameWindowSize() throws XPathExpressionException {
-        int gameWindowWidth  = (int) xpath.compile("//gameWindowSize/width").evaluate(xmlDocument, XPathConstants.NUMBER);
-        int gameWindowHeight = (int) xpath.compile("//gameWindowSize/height").evaluate(xmlDocument, XPathConstants.NUMBER);
+        int gameWindowWidth  = Integer.parseInt(xpath.compile("//gameWindowSize/width").evaluate(xmlDocument));
+        int gameWindowHeight = Integer.parseInt(xpath.compile("//gameWindowSize/height").evaluate(xmlDocument));
         return new Dimension(gameWindowWidth, gameWindowHeight);
     }
 
      public int getLives() throws XPathExpressionException {
-         return (int) (xpath.compile("//lives").evaluate(xmlDocument, XPathConstants.NUMBER));
+         return Integer.parseInt((xpath.compile("//lives").evaluate(xmlDocument)));
      }
+
+    public double getGravity() throws XPathExpressionException {
+        return Double.parseDouble(xpath.compile("//gravity").evaluate(xmlDocument));
+    }
 }
