@@ -12,7 +12,7 @@ public abstract class GameObject implements Drawable {
 		this.shape = shape;
 	}
 
-	public void move(){}
+	public void move(){} //implementacja jest opcjonalna dla klasy, dlatego nie "abstract"
 
 	
 	public boolean collidesWith(GameObject o) {
