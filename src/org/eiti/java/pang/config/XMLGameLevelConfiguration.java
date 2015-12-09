@@ -104,24 +104,8 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	 *
 	 * @param level
      */
-	public void setupPlayerAvatar(GameLevel level) throws XPathExpressionException {
-		Dimension gameLevelSize = getGameWorldSize();
-		PlayerAvatar avatar = level.getPlayerAvatar();
-		String playerPosition = xpath.compile("//player/position").evaluate(xmlDocument);
-
-		if(playerPosition.equals("left")) {
-			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());
-		} else if(playerPosition.equals("center")) {
-			avatar.moveTo(
-				gameLevelSize.width / 2 - PlayerAvatar.getWidth() / 2,
-				gameLevelSize.height - PlayerAvatar.getHeight());
-		} else if(playerPosition.equals("right")) {
-			avatar.moveTo(
-				gameLevelSize.width - PlayerAvatar.getWidth(),
-				gameLevelSize.height - PlayerAvatar.getHeight());
-		} else {
-			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
-		}
+	public String getPlayerAvatarPosition() throws XPathExpressionException {
+		return xpath.compile("//player/position").evaluate(xmlDocument);
 	}
 
 	/**

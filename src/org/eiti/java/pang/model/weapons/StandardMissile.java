@@ -34,6 +34,10 @@ public class StandardMissile extends Missile {
 	}
 
 	@Override
+	public void move(){
+		//TODO napisać
+	}
+	@Override
 	public CollisionOutcome collisionOutcome(Ball b) {
 		return CollisionOutcome.SPLIT;
 	}

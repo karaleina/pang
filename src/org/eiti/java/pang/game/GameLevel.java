@@ -40,7 +40,8 @@ public class GameLevel implements Drawable {
 			gameWorldSize = configuration.getGameWorldSize();
 			balls = configuration.getBalls();
 			this.playerAvatar = playerAvatar;
-			configuration.setupPlayerAvatar(this);
+			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
+			setupPayerAvatar(playerAvatarPosition, playerAvatar);
 
 
 		} catch (XPathExpressionException e) {
@@ -56,7 +57,24 @@ public class GameLevel implements Drawable {
 		
 
 	}
+	private void setupPayerAvatar(String playerPosition, PlayerAvatar avatar) {
 
+		Dimension gameLevelSize = getGameWorldSize();
+
+		if(playerPosition.equals("left")) {
+			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());
+		} else if(playerPosition.equals("center")) {
+			avatar.moveTo(
+					gameLevelSize.width / 2 - PlayerAvatar.getWidth() / 2,
+					gameLevelSize.height - PlayerAvatar.getHeight());
+		} else if(playerPosition.equals("right")) {
+			avatar.moveTo(
+					gameLevelSize.width - PlayerAvatar.getWidth(),
+					gameLevelSize.height - PlayerAvatar.getHeight());
+		} else {
+			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
+		}
+	}
 
 	public int getLevelNumber() {
 		return levelNumber;

@@ -57,6 +57,15 @@ public class PlayerAvatar extends GameObject {
 	}
 
 	@Override
+	public void move() {
+		//TODO napisć
+	}
+
+	public void moveTo(double X, double Y) {
+		shape.moveTo(X, Y);
+	}
+
+	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
 			ImageLoader.playerAvatarImage,

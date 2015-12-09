@@ -2,6 +2,8 @@ package org.eiti.java.pang.model;
 
 import org.eiti.java.pang.model.shapes.Shape;
 
+import java.awt.*;
+
 public abstract class GameObject implements Drawable {
 	
 	protected Shape shape;
@@ -10,13 +12,8 @@ public abstract class GameObject implements Drawable {
 		this.shape = shape;
 	}
 
-	public void moveBy(int dx, int dy) {
-		shape.moveBy(dx, dy);
-	}
-	
-	public void moveTo(int x, int y) {
-		shape.moveTo(x, y);
-	}
+	public void move(){}
+
 	
 	public boolean collidesWith(GameObject o) {
 		return shape.collidesWith(o.shape);

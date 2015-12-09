@@ -16,6 +16,10 @@ public class StandardWeapon extends Weapon {
 	}
 
 	@Override
+	public void move(){
+		//TODO ...
+	}
+	@Override
 	public void draw(Graphics g) {
 		throw new RuntimeException("Standard weapon should not be drawn!");
 	}
