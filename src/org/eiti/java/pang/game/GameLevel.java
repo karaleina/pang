@@ -27,6 +27,7 @@ public class GameLevel implements Drawable {
 	private Collection<Ball> balls;
 	private Collection<Missile> missiles;
 	private Collection<ExtraObject> extraObjects;
+	private ExtraObjectsCreator extraObjectsCreator;
 
 
 	public GameLevel(
@@ -42,13 +43,14 @@ public class GameLevel implements Drawable {
 			this.playerAvatar = playerAvatar;
 			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
 			setupPayerAvatar(playerAvatarPosition, playerAvatar);
+			this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
 
 
 		} catch (XPathExpressionException e) {
-			System.out.println("Invalid level%.xml file");
+			String errorMessage = "invalid level" + levelNumber + ".xml file";
+			System.out.println(errorMessage);
 			e.printStackTrace();
 		}
-		//this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
 
 
 
@@ -104,9 +106,20 @@ public class GameLevel implements Drawable {
 		return playerAvatar;
 	}
 	
-	//public void spawnExtraObjects() {
-	//	extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
-	//}
+	public void spawnExtraObjects() {
+		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
+	}
+
+	public void update(){
+		for (Ball b : balls)
+			b.move();
+		for (Missile m : missiles)
+			m.move();
+		playerAvatar.move();
+	}
+
+
+
 
 	@Override
 	public void draw(Graphics g) {

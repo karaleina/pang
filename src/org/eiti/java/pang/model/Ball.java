@@ -33,10 +33,15 @@ public class Ball extends GameObject {
 
 	@Override
 	public void move() {
-		double newX = this.shape.getExactX();
-		double newY = this.shape.getExactY();
-		newX += speedVector[0];
-		newY += speedVector[1];
+		double newX;
+		double newY;
+		double oldX;
+		double oldY;
+
+		oldX = this.shape.getExactX();
+		oldY = this.shape.getExactY();
+		newX = oldX + speedVector[0];
+		newY = oldY + speedVector[1];
 
 		speedVector[1] += acceleration; //vertical
 
@@ -47,9 +52,26 @@ public class Ball extends GameObject {
 
 		if (newX > minX && newX < maxX && newY > minY && newY <maxY){
 			shape.moveTo(newX, newY);
-		} //else ...
+		} else {
+			//ball reach bound of permitted area
+			//move direction separated to avoid mess in case when ball reach corner of a panel
+			if (newX <= minX) {
+				shape.moveTo(minX, oldY);
+				speedVector[0] *= -1;		//odbicie od sciany
+			}
+			else if (newX >= maxX) {
+				shape.moveTo(maxX, oldY);
+				speedVector[0] *= -1;		//odbicie od sciany
+			}
+			if (newY <= minY) {
+				shape.moveTo(oldX, minY);
+				speedVector[1] *= -1;		//odbicie od podlogi
+			} else if (newY >= maxY) {
+				shape.moveTo(oldX, maxY);
+				speedVector[1] *= -1;		//odbicie od sufitu
+			}
 
-
+		}
 	}
 	
 	public int getBallLevel() {

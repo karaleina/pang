@@ -17,6 +17,8 @@ public class GameThread extends Thread {
 	public void run() {
 		while(!isInterrupted()) {
 			updateGameState();
+			//level.update();
+			//level.draw();
 			try {
 				Thread.sleep(UPDATE_INTERVAL_MILIS);
 			} catch (InterruptedException e) {
