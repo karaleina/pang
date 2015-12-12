@@ -3,9 +3,12 @@ package org.eiti.java.pang.game;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
@@ -29,6 +32,7 @@ public class GameLevel implements Drawable {
 	private Collection<ExtraObject> extraObjects;
 	private ExtraObjectsCreator extraObjectsCreator;
 
+	private Set<GameLevelUpdateListener> changeListeners = new HashSet<>();
 
 	public GameLevel(
 			int levelNumber,
@@ -36,6 +40,7 @@ public class GameLevel implements Drawable {
 			PlayerAvatar playerAvatar) {
 		
 		this.levelNumber = levelNumber; //TODO to też powinno być parsowane
+		
 		try {
 			timeLeft = configuration.getTimeForLevel();
 			gameWorldSize = configuration.getGameWorldSize();
@@ -44,20 +49,14 @@ public class GameLevel implements Drawable {
 			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
 			setupPayerAvatar(playerAvatarPosition, playerAvatar);
 			this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
-
-
 		} catch (XPathExpressionException e) {
 			String errorMessage = "invalid level" + levelNumber + ".xml file";
 			System.out.println(errorMessage);
 			e.printStackTrace();
 		}
 
-
-
 		missiles = new LinkedList<Missile>();
 		extraObjects = new LinkedList<ExtraObject>();
-		
-
 	}
 	private void setupPayerAvatar(String playerPosition, PlayerAvatar avatar) {
 
@@ -110,16 +109,23 @@ public class GameLevel implements Drawable {
 		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
 	}
 
-	public void update(){
-		for (Ball b : balls)
-			b.move();
-		for (Missile m : missiles)
-			m.move();
-		playerAvatar.move();
+	public void update(double dt) {
+		for (Ball b : balls) {
+			b.move(dt);
+		}
+		for (Missile m : missiles) {
+			m.move(dt);
+		}
+		fireGameLevelChangedEvent();
 	}
-
-
-
+	
+	public void addGameLevelUpdatedListener(GameLevelUpdateListener listener) {
+		changeListeners.add(listener);
+	}
+	
+	public void removeGameLevelUpdatedListener(GameLevelUpdateListener listener) {
+		changeListeners.remove(listener);
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -137,6 +143,11 @@ public class GameLevel implements Drawable {
 		drawLives(g);
 	}
 
+	private void fireGameLevelChangedEvent() {
+		for(GameLevelUpdateListener listener : changeListeners) {
+			listener.onGameLevelUpdated();
+		}
+	}
 	
 	private void drawLives(Graphics g) {
 		final int heartSize = 25;
@@ -149,7 +160,6 @@ public class GameLevel implements Drawable {
 				heartSize,
 				heartSize,
 				null);
-			
 		}
 	}
 }

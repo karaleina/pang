@@ -34,7 +34,7 @@ public class StandardMissile extends Missile {
 	}
 
 	@Override
-	public void move(){
+	public void move(double dt){
 		//TODO napisać
 	}
 	@Override

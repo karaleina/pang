@@ -17,25 +17,30 @@ public class GameWindow extends JFrame {
 
 	private static final long serialVersionUID = -8792460779215020552L;
 
+	private Game game;
+
 	public GameWindow() {
 		setTitle("Pang");
 		setSize(650, 400);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		setLayout(new BorderLayout());
-		
-		Game game = new Game();
-		game.nextLevel();
-		game.start();
-		
+
+		game = new Game();
+
 		// TODO temporary, to show creation of extra objects
 		//game.getLevel().spawnExtraObjects();
-		
+
 		getContentPane().add(new GamePanel(game), BorderLayout.CENTER);
 		getContentPane().add(new InfoPanel(game), BorderLayout.NORTH);
 
+		setupMenu();
 
+		game.nextLevel();
+		game.start();
+	}
 
+	private void setupMenu() {
 		//TODO Cała obsługa menu - później być może popakuje to w klasy, jedna oddzielna kasa MenuBar byłachybionym pomysłem.
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);

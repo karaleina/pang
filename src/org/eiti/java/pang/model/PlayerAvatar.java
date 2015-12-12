@@ -57,7 +57,7 @@ public class PlayerAvatar extends GameObject {
 	}
 
 	@Override
-	public void move() {
+	public void move(double dt) {
 		//TODO napisć
 	}
 

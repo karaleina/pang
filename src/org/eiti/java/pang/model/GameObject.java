@@ -12,7 +12,14 @@ public abstract class GameObject implements Drawable {
 		this.shape = shape;
 	}
 
-	public void move(){} //implementacja jest opcjonalna dla klasy, dlatego nie "abstract"
+	/**
+	 * A game object can become moveable by overriding
+	 * this method. Method move(dt) should change object's
+	 * location after given time interval.
+	 * 
+	 * @param dt time interval (milliseconds)
+	 */
+	public void move(double dt) {}
 
 	
 	public boolean collidesWith(GameObject o) {

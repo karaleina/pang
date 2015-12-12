@@ -23,34 +23,28 @@ public class Ball extends GameObject {
 		super(new Sphere(position));
 
 		this.ballLevel = ballLevel;
-		speedVector = initialSpeedVector;
 		this.gameWorldSize = gameWorldSize;
+		speedVector = initialSpeedVector;
 		acceleration = GlobalConfigLoader.gravity;
-
-		setRadius(ballLevel);
-
+		radius = radiusForBallLevel(ballLevel);
 	}
 
 	@Override
-	public void move() {
-		double newX;
-		double newY;
-		double oldX;
-		double oldY;
+	public void move(double dt) {
 
-		oldX = this.shape.getExactX();
-		oldY = this.shape.getExactY();
-		newX = oldX + speedVector[0];
-		newY = oldY + speedVector[1];
+		double oldX = this.shape.getExactX();
+		double oldY = this.shape.getExactY();
+		double newX = oldX + speedVector[0] * dt;
+		double newY = oldY + speedVector[1] * dt + acceleration * dt * dt / 2;
 
-		speedVector[1] += acceleration; //vertical
+		speedVector[1] += acceleration * dt; //vertical
 
-		double minX = radius;
-		double minY = radius;
-		double maxX = gameWorldSize.getWidth()  - radius;
-		double maxY = gameWorldSize.getHeight() - radius;
+		double minX = 0;
+		double minY = 0;
+		double maxX = gameWorldSize.getWidth() - radius * 2;
+		double maxY = gameWorldSize.getHeight() - radius * 2;
 
-		if (newX > minX && newX < maxX && newY > minY && newY <maxY){
+		if (newX > minX && newX < maxX && newY > minY && newY < maxY){
 			shape.moveTo(newX, newY);
 		} else {
 			//ball reach bound of permitted area
@@ -58,8 +52,7 @@ public class Ball extends GameObject {
 			if (newX <= minX) {
 				shape.moveTo(minX, oldY);
 				speedVector[0] *= -1;		//odbicie od sciany
-			}
-			else if (newX >= maxX) {
+			} else if (newX >= maxX) {
 				shape.moveTo(maxX, oldY);
 				speedVector[0] *= -1;		//odbicie od sciany
 			}
@@ -70,7 +63,6 @@ public class Ball extends GameObject {
 				shape.moveTo(oldX, maxY);
 				speedVector[1] *= -1;		//odbicie od sufitu
 			}
-
 		}
 	}
 	
@@ -80,7 +72,7 @@ public class Ball extends GameObject {
 
 	@Override
 	public void draw(Graphics g){
-		g.setColor(new Color(0xaa8030));
+		g.setColor(new Color(0x2020aa));
 		g.fillOval(
 			shape.getPosition().x,
 			shape.getPosition().y,
@@ -89,7 +81,7 @@ public class Ball extends GameObject {
 		);
 	}
 	
-	private void   setRadius(int ballLevel) { radius = 10 + ballLevel * 3; }
-	private double getRadius() { return radius; }
-
+	private double radiusForBallLevel(int ballLevel) { 
+		return 10 + ballLevel * 3;
+	}
 }

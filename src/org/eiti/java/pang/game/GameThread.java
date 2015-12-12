@@ -6,7 +6,9 @@ public class GameThread extends Thread {
 	
 	private final GameScore score;
 	
-	private static final int UPDATE_INTERVAL_MILIS = 100;
+	private long previousUpdateTimestamp;
+	
+	private static final int UPDATE_INTERVAL_MILIS = 25;
 	
 	public GameThread(GameLevel level, GameScore score) {
 		this.level = level;
@@ -16,9 +18,9 @@ public class GameThread extends Thread {
 	@Override
 	public void run() {
 		while(!isInterrupted()) {
-			updateGameState();
-			//level.update();
-			//level.draw();
+			double dt = getTimeDiff();
+			score.updateScore(1);
+			level.update(dt);
 			try {
 				Thread.sleep(UPDATE_INTERVAL_MILIS);
 			} catch (InterruptedException e) {
@@ -26,9 +28,19 @@ public class GameThread extends Thread {
 			}
 		}
 	}
-
-	private void updateGameState() {
-		// TODO real game state update
-		score.updateScore(1);
+	
+	private double getTimeDiff() {
+		
+		long currentTimestamp = System.currentTimeMillis();
+		double dt = 0;
+		
+		if(previousUpdateTimestamp == 0) {
+			dt = UPDATE_INTERVAL_MILIS;
+		} else {
+			dt = currentTimestamp - previousUpdateTimestamp;
+		}
+		
+		previousUpdateTimestamp = currentTimestamp;
+		return dt;
 	}
 }

@@ -2,8 +2,11 @@ package org.eiti.java.pang.game;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.model.PlayerAvatar;
 
 public class Game {
@@ -17,6 +20,8 @@ public class Game {
 	private PlayerAvatar playerAvatar;
 	
 	private GameScore score;
+	
+	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
 	
 	public final static int STARTING_LIVES = 5;
 	
@@ -55,11 +60,22 @@ public class Game {
 			gameThread.interrupt();
 		}
 		gameThread = new GameThread(level, score);
+		fireGameLevelChanged();
 	}
-	
+
 	public void start() {
 		gameThread.start();
 		status = GameStatus.RUNNING;
+	}
+	
+	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
+		gameLevelChangedListeners.add(listener);
+	}
+	
+	public void fireGameLevelChanged() {
+		for(GameLevelChangedListener listener : gameLevelChangedListeners) {
+			listener.onGameLevelChanged(level);
+		}
 	}
 	
 	private GameLevel getGameLevel(int levelNumber) {
