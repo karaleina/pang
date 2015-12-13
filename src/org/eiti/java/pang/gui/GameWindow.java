@@ -122,7 +122,7 @@ public class GameWindow extends JFrame {
 
 		//actions
 		
-		newGame.addActionListener(e -> {
+		newGame.addActionListener(e -> { 		//e is an ActionListener
 			if(game.getStatus().equals(GameStatus.NOT_STARTED) ||
 					game.getStatus().equals(GameStatus.FINISHED)) {
 				game.reset();

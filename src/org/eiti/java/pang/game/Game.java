@@ -12,6 +12,8 @@ import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.NoBallsLeftListener;
 import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 import org.eiti.java.pang.game.events.PlayerHitByBallListener;
+import org.eiti.java.pang.global.GlobalConstantsLoader;
+import org.eiti.java.pang.gui.NicknameDialog;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
 
@@ -30,7 +32,7 @@ public class Game {
 	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
 	private Set<GameFinishedListener> gameFinishedListeners = new HashSet<>();
 	
-	public final static int STARTING_LIVES = 5;
+	private int startingLives = GlobalConstantsLoader.initialLives;
 	
 	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
 	
@@ -47,7 +49,7 @@ public class Game {
 			new Point2D.Double(
 				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
 				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
-			STARTING_LIVES,
+			startingLives,
 			GAME_WORLD_SIZE);
 	}
 	
