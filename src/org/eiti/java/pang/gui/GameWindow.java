@@ -119,14 +119,10 @@ public class GameWindow extends JFrame {
 
 		//actions
 
-		nickname.addActionListener(new ActionListener() {
-			//IDE sugeruje uzycie funkcji lambda zamiast klasy anonimowej, ale w mojej ksiazce tego nie ma
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				NicknameDialog nicknameDialog = new NicknameDialog();
-				nicknameDialog.setVisible(true);
-			}
-		});
+		nickname.addActionListener(e -> {		//e is an ActionListener
+            NicknameDialog nicknameDialog = new NicknameDialog();
+            nicknameDialog.setVisible(true);
+        });
 
 		bestScores.addActionListener(new ActionListener() {
 			@Override

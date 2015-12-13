@@ -14,7 +14,7 @@ public class Game {
 	private GameStatus status;
 	
 	private GameLevel level;
-	
+
 	private GameThread gameThread;
 	
 	private PlayerAvatar playerAvatar;

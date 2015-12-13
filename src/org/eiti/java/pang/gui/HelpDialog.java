@@ -24,5 +24,7 @@ public class HelpDialog extends JFrame{
         JButton ok =new JButton("OK");
         panel.add(ok, BorderLayout.SOUTH);
 
+        ok.addActionListener(e -> this.dispose());
+
     }
 }
