@@ -15,6 +15,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.ExtraObjectType;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Moduł wczytujący pik XML opisujący poziom. Składnia według wzoru:
@@ -122,7 +125,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() throws XPathExpressionException {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
 
-        int extraObjectsNumber = xmlDocument.getElementsByTagName("extraObjects").getLength();
+        int extraObjectsNumber = getChildrenCountForUniqueTagName(xmlDocument, "extraObjects");
         for (int i = 1; i <= extraObjectsNumber; i++) {	//foreach loop does not work for NodeList interface
 			String i_thExtraObjectPath = "//extraObjects/*[" + i + "]";
 
@@ -137,6 +140,20 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		}
 		
 		return probabilities;
+	}
+	
+	private int getChildrenCountForUniqueTagName(Document document, String tagName) {
+		int counter = 0;
+		NodeList elementsWithTagName = document.getElementsByTagName(tagName);
+		assert(elementsWithTagName.getLength() == 1);
+		NodeList children = elementsWithTagName.item(0).getChildNodes();
+		for(int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			if(child.getNodeType() == Node.ELEMENT_NODE) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 }
