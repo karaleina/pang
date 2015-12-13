@@ -1,13 +1,9 @@
 package org.eiti.java.pang.globalConstants;
 
 
-import org.eiti.java.pang.config.XMLGlobalConfiguration;
-import org.eiti.java.pang.config.XMLImageLoader;
+import java.awt.Dimension;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
+import org.eiti.java.pang.config.XMLGlobalConfiguration;
 
 public class GlobalConfigLoader {
 	

@@ -1,14 +1,12 @@
 package org.eiti.java.pang.config;
 
-import org.w3c.dom.Node;
+import java.awt.Dimension;
+import java.io.FileInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.awt.*;
-import java.io.FileInputStream;
 
 /**
  * Created by Stefan Hennel on 26.11.15.

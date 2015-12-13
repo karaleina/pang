@@ -2,7 +2,7 @@ package org.eiti.java.pang.model.weapons;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
@@ -10,7 +10,7 @@ import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class StandardWeapon extends Weapon {
 	
-	public StandardWeapon(Point position, Dimension gameWorldSize) {
+	public StandardWeapon(Point2D position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.standardWeapon,
 			new Rectangle(position, 0, 0),

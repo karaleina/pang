@@ -1,7 +1,13 @@
 package org.eiti.java.pang.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Okno HelpDialog wyświetla (krótki) tekst pomocy lub informacje o programie.

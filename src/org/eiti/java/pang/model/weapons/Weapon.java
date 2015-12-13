@@ -1,7 +1,7 @@
 package org.eiti.java.pang.model.weapons;
 
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.ExtraObjectType;
@@ -22,7 +22,7 @@ public abstract class Weapon extends ExtraObject {
 	
 	public abstract Missile shoot(PlayerAvatar shooter);
 	
-	protected Point calculateMissilePosition(
+	protected Point2D calculateMissilePosition(
 			PlayerAvatar shooter, int missileWidth, int missileHeight) {
 		
 		// these offsets allow the bullet to appear in front of gun barrel
@@ -36,7 +36,7 @@ public abstract class Weapon extends ExtraObject {
 		int missileY = (int) shooterRectangle.getPosition().getY() -
 				missileHeight + offsetY;
 		
-		return new Point(missileX, missileY);
+		return new Point2D.Double(missileX, missileY);
 	}
 
 }

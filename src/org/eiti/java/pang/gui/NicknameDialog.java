@@ -1,6 +1,9 @@
 package org.eiti.java.pang.gui;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Obiekt NicknameDialog będzie służył do wprowadzania nawwy gracza, możliwej do wyświetllenia na liście wyników.

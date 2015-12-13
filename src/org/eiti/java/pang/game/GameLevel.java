@@ -8,20 +8,21 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import javax.xml.xpath.XPathExpressionException;
+
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.game.events.MissileWindowExitListener;
 import org.eiti.java.pang.globalConstants.GlobalConfigLoader;
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.Ball;
+import org.eiti.java.pang.model.CollisionOutcome;
 import org.eiti.java.pang.model.Drawable;
 import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.GameObject;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.Missile;
 import org.eiti.java.pang.utils.KeyboardMonitor;
-
-import javax.xml.xpath.XPathExpressionException;
 
 /**
  * Klasa rysująca dany poziom.
@@ -127,10 +128,50 @@ public class GameLevel implements Drawable {
 		for (Missile m : missiles) {
 			m.move(dt);
 		}
+		checkForCollisions();
 		removeMarkedMissiles();
 		shootMissile();
 		movePlayerAvatar(dt);
 		fireGameLevelChangedEvent();
+	}
+	
+	private void checkForCollisions() {
+		
+		Set<Ball> ballsForSplitting = new HashSet<>();
+		Set<Ball> ballsForRemoval = new HashSet<>();
+		
+		for(Missile m : missiles) {
+			for(Ball b : balls) {
+				if(m.collidesWith(b)) {
+					markForRemoval(m);
+					CollisionOutcome outcome = m.collisionOutcome(b);
+					switch(outcome) {
+					case DESTROY:
+						ballsForRemoval.add(b);
+						break;
+					case SPLIT:
+						ballsForSplitting.add(b);
+						break;
+					default:
+						throw new RuntimeException("Unrecognized collision outcome!");
+					}
+				}
+			}
+		}
+		
+		balls.removeAll(ballsForRemoval);
+		splitBalls(ballsForSplitting);
+		removeMarkedMissiles();
+	}
+	
+	private void splitBalls(Collection<Ball> ballsForSplitting) {
+		for(Ball baseBall : ballsForSplitting) {
+			balls.remove(baseBall);
+			int baseBallLevel = baseBall.getBallLevel();
+			if(baseBallLevel > 1) {
+				balls.addAll(baseBall.split());
+			}
+		}
 	}
 	
 	private void markForRemoval(Missile missile) {
@@ -182,6 +223,12 @@ public class GameLevel implements Drawable {
 	public void removeGameLevelUpdatedListener(GameLevelUpdateListener listener) {
 		changeListeners.remove(listener);
 	}
+	
+	private void fireGameLevelChangedEvent() {
+		for(GameLevelUpdateListener listener : changeListeners) {
+			listener.onGameLevelUpdated();
+		}
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -198,12 +245,6 @@ public class GameLevel implements Drawable {
 		}
 		
 		drawLives(g);
-	}
-
-	private void fireGameLevelChangedEvent() {
-		for(GameLevelUpdateListener listener : changeListeners) {
-			listener.onGameLevelUpdated();
-		}
 	}
 	
 	private void drawLives(Graphics g) {
