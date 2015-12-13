@@ -8,8 +8,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.util.HashMap;
 
-public class GlobalConfigLoader {
+public class GlobalConstantsLoader {
 	
 	public static String title;
 	public static Dimension gameWindowSize;
@@ -17,6 +18,7 @@ public class GlobalConfigLoader {
     public static double gravity;
     public static double playerVelocity;
     public static long minTimeBetweenShots;
+	public static String bestScoresPath;
 		
 	static {
 		try {
@@ -27,6 +29,7 @@ public class GlobalConfigLoader {
             gravity = configuration.getGravity();
 			playerVelocity = configuration.getPlayerVelocity();
 			minTimeBetweenShots = configuration.getMinTimeBetweenShots();
+			bestScoresPath = configuration.getBestScoresPath();
 		} catch(Exception exc) {
 			exc.printStackTrace();
 		}

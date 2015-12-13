@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bestscores>
+    <maxEntryNumber>10</maxEntryNumber>
+    <player name="maurycy">
+        3000
+    </player>
+    <player name="julian">
+        2016
+    </player>
+    <player name = "krul">
+        490
+    </player>
+</bestscores>

@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.awt.*;
 import java.io.FileInputStream;
+import java.util.HashMap;
 
 /**
  * Created by Stefan Hennel on 26.11.15.
@@ -49,4 +50,8 @@ public class XMLGlobalConfiguration extends XMLParser {
 	public long getMinTimeBetweenShots() throws XPathExpressionException {
 		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
 	}
+
+    public String getBestScoresPath() throws XPathExpressionException {
+        return xpath.compile("//bestScoresPath").evaluate(xmlDocument);
+    }
 }
