@@ -130,8 +130,13 @@ public class GameWindow extends JFrame {
         });
 
 		bestScores.addActionListener(e -> {
-            BestScoresDialog bestScoresDialog = new BestScoresDialog();
-            bestScoresDialog.setVisible(true);
+			BestScoresDialog bestScoresDialog = null;
+			try {
+				bestScoresDialog = new BestScoresDialog();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			bestScoresDialog.setVisible(true);
         });
 
 		quitGame.addActionListener(e -> this.dispose());  //e is an ActionListener

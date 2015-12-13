@@ -13,6 +13,7 @@ public class GlobalConstantsLoader {
     public static double gravity;
     public static double playerVelocity;
     public static long minTimeBetweenShots;
+	public static String bestScoresPath;
 		
 	static {
 		try {
@@ -23,6 +24,7 @@ public class GlobalConstantsLoader {
             gravity = configuration.getGravity();
 			playerVelocity = configuration.getPlayerVelocity();
 			minTimeBetweenShots = configuration.getMinTimeBetweenShots();
+			bestScoresPath = configuration.getBestScoresPath();
 		} catch(Exception exc) {
 			exc.printStackTrace();
 		}

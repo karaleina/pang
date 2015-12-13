@@ -47,4 +47,8 @@ public class XMLGlobalConfiguration extends XMLParser {
 	public long getMinTimeBetweenShots() throws XPathExpressionException {
 		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
 	}
+
+    public String getBestScoresPath() throws XPathExpressionException {
+        return xpath.compile("//bestScoresPath").evaluate(xmlDocument);
+    }
 }
