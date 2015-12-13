@@ -15,18 +15,18 @@ import org.eiti.java.pang.model.weapons.SuperWeapon;
 
 public class ExtraObjectsCreator {
 	
-	private Map<ExtraObjectType, Double> probabilities;
+	private Map<ExtraObjectType, Double> probabilitiesPerSecond;
 	
 	private Random randomGenerator = new Random();
 	
 	public ExtraObjectsCreator(Map<ExtraObjectType, Double> probabilities) {
-		this.probabilities = probabilities;
+		this.probabilitiesPerSecond = probabilities;
 	}
 	
 	public List<ExtraObject> tryToCreateExtraObjects(GameLevel level) {
 		List<ExtraObject> createdObjects = new ArrayList<ExtraObject>();
-		for(ExtraObjectType type : probabilities.keySet()) {
-			if(randomGenerator.nextDouble() < probabilities.get(type)) {
+		for(ExtraObjectType type : probabilitiesPerSecond.keySet()) {
+			if(randomGenerator.nextDouble() < probabilitiesPerSecond.get(type)) {
 				createdObjects.add(createObject(type, level));
 			}
 		}

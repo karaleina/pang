@@ -11,10 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import org.eiti.java.pang.game.Game;
+import org.eiti.java.pang.game.GameStatus;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
@@ -42,10 +44,6 @@ public class GameWindow extends JFrame {
 		getContentPane().add(new InfoPanel(game), BorderLayout.NORTH);
 
 		setupMenu();
-
-		game.nextLevel();
-		game.start();
-		
 		bindKeyboardEvents();
 	}
 	
@@ -123,6 +121,22 @@ public class GameWindow extends JFrame {
 		helpMenu.add(aboutPang);
 
 		//actions
+		
+		newGame.addActionListener(e -> {
+			if(game.getStatus().equals(GameStatus.NOT_STARTED) ||
+					game.getStatus().equals(GameStatus.FINISHED)) {
+				game.reset();
+				try {
+					game.nextLevel();
+					game.start();
+				} catch(Exception exc) {
+					JOptionPane.showMessageDialog(
+						GameWindow.this,
+						"Cannot load configuration for level 1!");
+					System.exit(1);
+				}
+			}
+		});
 
 		nickname.addActionListener(e -> {		//e is an ActionListener
             NicknameDialog nicknameDialog = new NicknameDialog();

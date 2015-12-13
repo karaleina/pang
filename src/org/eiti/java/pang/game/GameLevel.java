@@ -11,10 +11,14 @@ import java.util.Set;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.game.events.MissileWindowExitListener;
 import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.global.ImageLoader;
+import org.eiti.java.pang.game.events.NoBallsLeftListener;
+import org.eiti.java.pang.game.events.TimeLeftChangedListener;
+import org.eiti.java.pang.game.events.PlayerHitByBallListener;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
 import org.eiti.java.pang.model.Drawable;
@@ -30,7 +34,9 @@ import org.eiti.java.pang.utils.KeyboardMonitor;
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
+	private int timeForLevel;
 	private int timeLeft;
+	
 	private Dimension gameWorldSize;
 	
 	private PlayerAvatar playerAvatar;
@@ -45,6 +51,10 @@ public class GameLevel implements Drawable {
 	private ExtraObjectsCreator extraObjectsCreator;
 
 	private Set<GameLevelUpdateListener> changeListeners = new HashSet<>();
+	private Set<NoBallsLeftListener> noBallsLeftListeners = new HashSet<>();
+	private Set<BallDestroyedListener> ballDestroyedListeners = new HashSet<>();
+	private Set<PlayerHitByBallListener> playerHitListeners = new HashSet<>();
+	private Set<TimeLeftChangedListener> noTimeLeftListeners = new HashSet<>();
 
 	public GameLevel(
 			int levelNumber,
@@ -54,13 +64,14 @@ public class GameLevel implements Drawable {
 		this.levelNumber = levelNumber; //TODO to też powinno być parsowane
 		
 		try {
-			timeLeft = configuration.getTimeForLevel();
+			timeForLevel = configuration.getTimeForLevel();
+			timeLeft = timeForLevel;
 			gameWorldSize = configuration.getGameWorldSize();
 			balls = configuration.getBalls();
 			this.playerAvatar = playerAvatar;
 			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
 			setupPayerAvatar(playerAvatarPosition, playerAvatar);
-			this.extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
+			extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
 		} catch (XPathExpressionException e) {
 			String errorMessage = "invalid level" + levelNumber + ".xml file";
 			System.out.println(errorMessage);
@@ -69,6 +80,13 @@ public class GameLevel implements Drawable {
 
 		missiles = new LinkedList<Missile>();
 		extraObjects = new LinkedList<ExtraObject>();
+		
+		addTimeLeftChangedListener(new TimeLeftChangedListener() {
+			@Override
+			public void onTimeLeftChanged(int timeLeft) {
+				extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(GameLevel.this));
+			}
+		});
 	}
 	private void setupPayerAvatar(String playerPosition, PlayerAvatar avatar) {
 
@@ -93,8 +111,19 @@ public class GameLevel implements Drawable {
 		return levelNumber;
 	}
 
+	public int getTimeForLevel() {
+		return timeForLevel;
+	}
+	
 	public int getTimeLeft() {
 		return timeLeft;
+	}
+	
+	public void setTimeLeft(int timeLeft) {
+		if(this.timeLeft != timeLeft) {
+			this.timeLeft = timeLeft;
+			fireTimeLeftChangedEvent();
+		}
 	}
 	
 	public Collection<Ball> getBalls() {
@@ -128,14 +157,35 @@ public class GameLevel implements Drawable {
 		for (Missile m : missiles) {
 			m.move(dt);
 		}
+		
 		checkForCollisions();
+		
 		removeMarkedMissiles();
 		shootMissile();
+		
 		movePlayerAvatar(dt);
+		
 		fireGameLevelChangedEvent();
+		
+		if(balls.isEmpty()) {
+			fireNoBallsLeftEvent();
+		}
 	}
 	
 	private void checkForCollisions() {
+		checkPlayerWithBallCollisions();
+		checkMissileWithBallCollisions();
+	}
+	
+	private void checkPlayerWithBallCollisions() {
+		for(Ball b : balls) {
+			if(playerAvatar.collidesWith(b)) {
+				firePlayerHitByBallEvent();
+			}
+		}
+	}
+	
+	private void checkMissileWithBallCollisions() {
 		
 		Set<Ball> ballsForSplitting = new HashSet<>();
 		Set<Ball> ballsForRemoval = new HashSet<>();
@@ -160,6 +210,10 @@ public class GameLevel implements Drawable {
 		}
 		
 		balls.removeAll(ballsForRemoval);
+		for(Ball removedBall : ballsForRemoval) {
+			fireBallDestroyedEvent(removedBall);
+		}
+		
 		splitBalls(ballsForSplitting);
 		removeMarkedMissiles();
 	}
@@ -167,6 +221,7 @@ public class GameLevel implements Drawable {
 	private void splitBalls(Collection<Ball> ballsForSplitting) {
 		for(Ball baseBall : ballsForSplitting) {
 			balls.remove(baseBall);
+			fireBallDestroyedEvent(baseBall);
 			int baseBallLevel = baseBall.getBallLevel();
 			if(baseBallLevel > 1) {
 				balls.addAll(baseBall.split());
@@ -227,6 +282,62 @@ public class GameLevel implements Drawable {
 	private void fireGameLevelChangedEvent() {
 		for(GameLevelUpdateListener listener : changeListeners) {
 			listener.onGameLevelUpdated();
+		}
+	}
+	
+	public void addNoBallsLeftListener(NoBallsLeftListener listener) {
+		noBallsLeftListeners.add(listener);
+	}
+	
+	public void removeNoBallsLeftListener(NoBallsLeftListener listener) {
+		noBallsLeftListeners.remove(listener);
+	}
+	
+	private void fireNoBallsLeftEvent() {
+		for(NoBallsLeftListener listener : noBallsLeftListeners) {
+			listener.onNoBallsLeft();
+		}
+	}
+	
+	public void addBallDestroyedListener(BallDestroyedListener listener) {
+		ballDestroyedListeners.add(listener);
+	}
+	
+	public void removeBallDestroyedListener(BallDestroyedListener listener) {
+		ballDestroyedListeners.remove(listener);
+	}
+	
+	private void fireBallDestroyedEvent(Ball destroyedBall) {
+		for(BallDestroyedListener listener : ballDestroyedListeners) {
+			listener.onBallDestroyed(destroyedBall);
+		}
+	}
+	
+	public void addPlayerHitByBallListener(PlayerHitByBallListener listener) {
+		playerHitListeners.add(listener);
+	}
+	
+	public void removePlayerHitByBallListener(PlayerHitByBallListener listener) {
+		playerHitListeners.remove(listener);
+	}
+	
+	private void firePlayerHitByBallEvent() {
+		for(PlayerHitByBallListener listener : playerHitListeners) {
+			listener.onPlayerHitByBall();
+		}
+	}
+	
+	public void addTimeLeftChangedListener(TimeLeftChangedListener listener) {
+		noTimeLeftListeners.add(listener);
+	}
+	
+	public void removeTimeLeftChangedListener(TimeLeftChangedListener listener) {
+		noTimeLeftListeners.remove(listener);
+	}
+	
+	private void fireTimeLeftChangedEvent() {
+		for(TimeLeftChangedListener listener : noTimeLeftListeners) {
+			listener.onTimeLeftChanged(timeLeft);
 		}
 	}
 

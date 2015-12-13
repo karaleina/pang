@@ -20,6 +20,10 @@ public class GameScore {
 		fireScoreChangedEvent();
 	}
 	
+	public void clear() {
+		score = 0;
+	}
+	
 	public long getNumericScore() {
 		return score;
 	}
