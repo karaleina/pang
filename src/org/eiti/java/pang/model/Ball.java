@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eiti.java.pang.globalConstants.GlobalConfigLoader;
+import org.eiti.java.pang.globalConstants.GlobalConstantsLoader;
 import org.eiti.java.pang.model.shapes.Sphere;
 
 public class Ball extends GameObject {
@@ -27,7 +27,7 @@ public class Ball extends GameObject {
 		this.ballLevel = ballLevel;
 		this.gameWorldSize = gameWorldSize;
 		speedVector = initialSpeedVector;
-		acceleration = GlobalConfigLoader.gravity;
+		acceleration = GlobalConstantsLoader.gravity;
 	}
 
 	@Override

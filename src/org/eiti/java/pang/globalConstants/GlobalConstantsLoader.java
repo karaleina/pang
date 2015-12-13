@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import org.eiti.java.pang.config.XMLGlobalConfiguration;
 
-public class GlobalConfigLoader {
+public class GlobalConstantsLoader {
 	
 	public static String title;
 	public static Dimension gameWindowSize;
