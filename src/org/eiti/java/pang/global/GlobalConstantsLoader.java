@@ -1,4 +1,4 @@
-package org.eiti.java.pang.globalConstants;
+package org.eiti.java.pang.global;
 
 
 import java.awt.Dimension;

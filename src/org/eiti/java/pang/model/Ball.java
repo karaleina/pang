@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eiti.java.pang.globalConstants.GlobalConstantsLoader;
+import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.model.shapes.Sphere;
 
 public class Ball extends GameObject {

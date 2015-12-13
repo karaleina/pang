@@ -11,7 +11,7 @@ import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameLevel;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
-import org.eiti.java.pang.globalConstants.ImageLoader;
+import org.eiti.java.pang.global.ImageLoader;
 
 public class GamePanel extends JPanel {
 

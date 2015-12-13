@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
-import org.eiti.java.pang.globalConstants.ImageLoader;
+import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
