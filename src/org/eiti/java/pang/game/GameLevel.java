@@ -175,6 +175,7 @@ public class GameLevel implements Drawable {
 	private void checkForCollisions() {
 		checkPlayerWithBallCollisions();
 		checkMissileWithBallCollisions();
+		checkPlayerWithExtraObjectCollisions();
 	}
 	
 	private void checkPlayerWithBallCollisions() {
@@ -183,6 +184,17 @@ public class GameLevel implements Drawable {
 				firePlayerHitByBallEvent();
 			}
 		}
+	}
+	
+	private void checkPlayerWithExtraObjectCollisions() {
+		Set<ExtraObject> markedForRemoval = new HashSet<>();
+		for(ExtraObject extraObject : extraObjects) {
+			if(extraObject.collidesWith(playerAvatar)) {
+				extraObject.interactWith(playerAvatar);
+				markedForRemoval.add(extraObject);
+			}
+		}
+		extraObjects.removeAll(markedForRemoval);
 	}
 	
 	private void checkMissileWithBallCollisions() {

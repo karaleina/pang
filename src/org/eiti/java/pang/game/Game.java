@@ -16,6 +16,7 @@ import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.gui.NicknameDialog;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
+import org.eiti.java.pang.model.weapons.StandardWeapon;
 
 public class Game {
 	
@@ -72,6 +73,7 @@ public class Game {
 			level = getGameLevel(level.getLevelNumber() + 1);
 		}
 		setupLevel();
+		playerAvatar.setWeapon(new StandardWeapon(new Point2D.Double(0, 0), GAME_WORLD_SIZE));
 	}
 	
 	private void setupLevel() {
@@ -96,8 +98,23 @@ public class Game {
 		level.addBallDestroyedListener(new BallDestroyedListener() {
 			@Override
 			public void onBallDestroyed(Ball b) {
-				// 2 ^ ballLevel * levelNumber
-				score.updateScore((1 << b.getBallLevel()) * level.getLevelNumber());
+				int ballLevel = b.getBallLevel();
+				long pointsForBall = powerOf2(ballLevel);
+				if(playerAvatar.getWeapon() instanceof StandardWeapon) {
+					// 2 ^ ballLevel * levelNumber
+					score.updateScore(pointsForBall * level.getLevelNumber());
+				} else {
+					// Ball was destroyed by super weapon, player gets all points he
+					// would get by destroying the ball and all its "children balls"
+					// plus some bonus.
+					long ballAndChildrenEquivalent = pointsForBall * ballLevel * level.getLevelNumber();
+					final long bonus = 10;
+					score.updateScore(ballAndChildrenEquivalent + bonus);
+				}
+			}
+			
+			private long powerOf2(int x) {
+				return 1 << x;
 			}
 		});
 		level.addNoBallsLeftListener(new NoBallsLeftListener() {
