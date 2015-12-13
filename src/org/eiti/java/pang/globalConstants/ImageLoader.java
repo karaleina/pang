@@ -1,11 +1,12 @@
 package org.eiti.java.pang.globalConstants;
 
 
-import org.eiti.java.pang.config.XMLImageLoader;
-
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+
 import javax.imageio.ImageIO;
+
+import org.eiti.java.pang.config.XMLImageLoader;
 
 public class ImageLoader {
 	

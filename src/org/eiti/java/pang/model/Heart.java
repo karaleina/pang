@@ -2,7 +2,7 @@ package org.eiti.java.pang.model;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
@@ -17,7 +17,7 @@ public class Heart extends ExtraObject {
 		return 60;
 	}
 	
-	public Heart(Point position, Dimension gameWorldSize) {
+	public Heart(Point2D position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.heart,
 			new Rectangle(
@@ -32,8 +32,8 @@ public class Heart extends ExtraObject {
 	public void draw(Graphics g) {
 		g.drawImage(
 			ImageLoader.heartImage,
-			shape.getPosition().x,
-			shape.getPosition().y,
+			shape.getIntX(),
+			shape.getIntY(),
 			getWidth(),
 			getHeight(),
 			null);

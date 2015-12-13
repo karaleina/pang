@@ -7,7 +7,12 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 
 import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.utils.KeyboardMonitor;

@@ -1,28 +1,38 @@
 package org.eiti.java.pang.model.shapes;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.model.Collidable;
 
 public abstract class Shape implements Collidable {
 	
-	Point position;					//położenie w intach raczej nie potrzebna, ale zachowaem by zmieniać jak najmniej
-	private double exactX;			//położenie w doublach
-	private double exactY;
+	private Point2D position;
 	
-	protected Shape(Point startPosition) {
+	protected Shape(Point2D startPosition) {
 		position = startPosition;
-		exactX = startPosition.getX();
-		exactY = startPosition.getY();
+	}
+	
+	public Point2D getPosition() {
+		return position;
+	}
+	
+	public double getExactX() {
+		return position.getX();
+	}
+	
+	public double getExactY() {
+		return position.getY();
+	}
+	
+	public int getIntX() {
+		return (int) Math.round(position.getX());
+	}
+	
+	public int getIntY() {
+		return (int) Math.round(position.getY());
 	}
 
-	public double getExactX() { return exactX;}
-	public double getExactY() { return exactY;}
-	public Point getPosition() {return position;}
-
-	public void moveTo(double newExactX, double newExactY){
-		exactX = newExactX;
-		exactY = newExactY;
+	public void moveTo(double newExactX, double newExactY) {
 		position.setLocation(newExactX, newExactY);
 	}
 }

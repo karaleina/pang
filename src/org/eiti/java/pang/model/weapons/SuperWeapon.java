@@ -2,7 +2,7 @@ package org.eiti.java.pang.model.weapons;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.ExtraObjectType;
@@ -19,7 +19,7 @@ public class SuperWeapon extends Weapon {
 		return 60;
 	}
 	
-	public SuperWeapon(Point position, Dimension gameWorldSize) {
+	public SuperWeapon(Point2D position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.superWeapon,
 			new Rectangle(
@@ -33,8 +33,8 @@ public class SuperWeapon extends Weapon {
 	public void draw(Graphics g) {
 		g.drawImage(
 			ImageLoader.superWeaponImage,
-			shape.getPosition().x,
-			shape.getPosition().y,
+			shape.getIntX(),
+			shape.getIntY(),
 			getWidth(),
 			getHeight(),
 			null);

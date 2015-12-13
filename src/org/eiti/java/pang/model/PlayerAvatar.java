@@ -2,7 +2,7 @@ package org.eiti.java.pang.model;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
@@ -25,7 +25,7 @@ public class PlayerAvatar extends GameObject {
 		return 160;
 	}
 	
-	public PlayerAvatar(Point position, int initialLives, Dimension gameWorldSize) {
+	public PlayerAvatar(Point2D position, int initialLives, Dimension gameWorldSize) {
 		super(new Rectangle(
 				position,
 				getWidth(),
@@ -80,8 +80,8 @@ public class PlayerAvatar extends GameObject {
 	public void draw(Graphics g) {
 		g.drawImage(
 			ImageLoader.playerAvatarImage,
-			shape.getPosition().x,
-			shape.getPosition().y,
+			shape.getIntX(),
+			shape.getIntY(),
 			getWidth(),
 			getHeight(),
 			null);

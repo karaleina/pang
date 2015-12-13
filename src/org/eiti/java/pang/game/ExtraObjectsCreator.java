@@ -1,7 +1,7 @@
 
 package org.eiti.java.pang.game;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,21 +48,21 @@ public class ExtraObjectsCreator {
 		}
 	}
 	
-	private Point calculateExtraObjectPosition(GameLevel level, int objectWidth, int objectHeight) {
+	private Point2D calculateExtraObjectPosition(GameLevel level, int objectWidth, int objectHeight) {
 		// choose random position at "floor level" that does not intersect with player avatar
 		PlayerAvatar avatar = level.getPlayerAvatar();
-		int avatarXPosition =  avatar.getRectangularShape().getPosition().x;
+		int avatarXPosition =  avatar.getRectangularShape().getIntX();
 		
 		int rangePivot = avatarXPosition - objectWidth;
 		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - PlayerAvatar.getWidth();
 		int randomPosition = Math.abs(randomGenerator.nextInt()) % rangeWidth;
 		
 		if(randomPosition < rangePivot) {
-			return new Point(
+			return new Point2D.Double(
 				randomPosition,
 				level.getGameWorldSize().height - objectHeight);
 		} else {
-			return new Point(
+			return new Point2D.Double(
 				objectWidth + PlayerAvatar.getWidth() + randomPosition,
 				level.getGameWorldSize().height - objectHeight);
 		}

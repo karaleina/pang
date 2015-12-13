@@ -1,7 +1,7 @@
 package org.eiti.java.pang.game;
 
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class Game {
 		level = null;
 		score = new GameScore();
 		playerAvatar = new PlayerAvatar(
-			new Point(
+			new Point2D.Double(
 				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
 				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
 			STARTING_LIVES,

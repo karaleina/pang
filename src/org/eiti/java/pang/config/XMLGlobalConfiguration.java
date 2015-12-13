@@ -1,15 +1,12 @@
 package org.eiti.java.pang.config;
 
-import org.w3c.dom.Node;
+import java.awt.Dimension;
+import java.io.FileInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.awt.*;
-import java.io.FileInputStream;
-import java.util.HashMap;
 
 /**
  * Created by Stefan Hennel on 26.11.15.
@@ -50,8 +47,4 @@ public class XMLGlobalConfiguration extends XMLParser {
 	public long getMinTimeBetweenShots() throws XPathExpressionException {
 		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
 	}
-
-    public String getBestScoresPath() throws XPathExpressionException {
-        return xpath.compile("//bestScoresPath").evaluate(xmlDocument);
-    }
 }

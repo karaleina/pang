@@ -1,8 +1,8 @@
 package org.eiti.java.pang.model;
 
-import org.eiti.java.pang.model.shapes.Shape;
+import java.awt.Dimension;
 
-import java.awt.*;
+import org.eiti.java.pang.model.shapes.Shape;
 
 public abstract class GameObject implements Drawable {
 	

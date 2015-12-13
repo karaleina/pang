@@ -1,22 +1,20 @@
 package org.eiti.java.pang.config;
 
 import java.awt.Dimension;
-import java.awt.Point;
-
-import org.eiti.java.pang.game.GameLevel;
-import org.eiti.java.pang.model.Ball;
-import org.eiti.java.pang.model.ExtraObjectType;
-import org.eiti.java.pang.model.PlayerAvatar;
-import org.w3c.dom.*;
-
-import javax.xml.parsers.*;
-import javax.xml.xpath.*;
-
-import java.io.*;
+import java.awt.geom.Point2D;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.eiti.java.pang.model.Ball;
+import org.eiti.java.pang.model.ExtraObjectType;
 
 /**
  * Moduł wczytujący pik XML opisujący poziom. Składnia według wzoru:
@@ -91,7 +89,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 			
 			ballList.add(
 				new Ball(
-					new Point(ballPositionX, ballPositionY),
+					new Point2D.Double(ballPositionX, ballPositionY),
 					ballLevel,
 					new double[] { ballSpeedX, ballSpeedY },
 					this.getGameWorldSize()));
