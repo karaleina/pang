@@ -124,36 +124,23 @@ public class GameWindow extends JFrame {
             nicknameDialog.setVisible(true);
         });
 
-		bestScores.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BestScoresDialog bestScoresDialog = new BestScoresDialog();
-				bestScoresDialog.setVisible(true);
-			}
-		});
+		bestScores.addActionListener(e -> {
+            BestScoresDialog bestScoresDialog = new BestScoresDialog();
+            bestScoresDialog.setVisible(true);
+        });
 
-		quitGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		quitGame.addActionListener(e -> this.dispose());  //e is an ActionListener
 
-			}
-		});
 
-		help.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
-				helpDialog.setVisible(true);
-			}
-		});
+		help.addActionListener(e -> {
+            HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
+            helpDialog.setVisible(true);
+        });
 
-		aboutPang.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				HelpDialog helpDialog = new HelpDialog("O programie");
-				helpDialog.setVisible(true);
-			}
-		});
+		aboutPang.addActionListener(e -> {
+            HelpDialog helpDialog = new HelpDialog("O programie");
+            helpDialog.setVisible(true);
+        });
 	}
 
 

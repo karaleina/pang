@@ -23,5 +23,7 @@ public class BestScoresDialog extends JDialog {
         JButton ok = new JButton("OK");
         panel.add(ok);
 
+        ok.addActionListener(e -> this.dispose());  //e is an ActionListener
+
     }
 }
