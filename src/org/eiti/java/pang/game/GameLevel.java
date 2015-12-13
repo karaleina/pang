@@ -2,6 +2,7 @@ package org.eiti.java.pang.game;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,12 +10,16 @@ import java.util.Set;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
+import org.eiti.java.pang.game.events.MissileWindowExitListener;
+import org.eiti.java.pang.globalConstants.GlobalConfigLoader;
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.Drawable;
 import org.eiti.java.pang.model.ExtraObject;
+import org.eiti.java.pang.model.GameObject;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.Missile;
+import org.eiti.java.pang.utils.KeyboardMonitor;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -26,10 +31,16 @@ public class GameLevel implements Drawable {
 	private int levelNumber;
 	private int timeLeft;
 	private Dimension gameWorldSize;
+	
 	private PlayerAvatar playerAvatar;
+	private long lastShotTimestamp;
+	
 	private Collection<Ball> balls;
-	private Collection<Missile> missiles;
 	private Collection<ExtraObject> extraObjects;
+	
+	private Collection<Missile> missiles;
+	private Set<Missile> missilesMarkedForRemoval = new HashSet<>();
+	
 	private ExtraObjectsCreator extraObjectsCreator;
 
 	private Set<GameLevelUpdateListener> changeListeners = new HashSet<>();
@@ -110,13 +121,58 @@ public class GameLevel implements Drawable {
 	}
 
 	public void update(double dt) {
-		for (Ball b : balls) {
+		for (GameObject b : balls) {
 			b.move(dt);
 		}
 		for (Missile m : missiles) {
 			m.move(dt);
 		}
+		removeMarkedMissiles();
+		shootMissile();
+		movePlayerAvatar(dt);
 		fireGameLevelChangedEvent();
+	}
+	
+	private void markForRemoval(Missile missile) {
+		missilesMarkedForRemoval.add(missile);
+	}
+	
+	private void removeMarkedMissiles() {
+		missiles.removeAll(missilesMarkedForRemoval);
+		missilesMarkedForRemoval.clear();
+	}
+	
+	private void shootMissile() {
+		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_SPACE)) {
+			long timestamp = System.currentTimeMillis();
+			if(timestamp - lastShotTimestamp >= GlobalConfigLoader.minTimeBetweenShots) {
+				final Missile shotMissile = playerAvatar.shoot();
+				shotMissile.addMissileWindowExitListener(new MissileWindowExitListener() {
+					@Override
+					public void onMissileWindowExit(Missile missile) {
+						shotMissile.removeMissileWindowExitListener(this);
+						// we mark missiles for removal to avoid
+						// ConcurrentModificationException in update()
+						markForRemoval(missile);
+					}
+				});
+				missiles.add(shotMissile);
+				lastShotTimestamp = timestamp;
+			}
+		}
+	}
+	
+	private void movePlayerAvatar(double dt) {
+		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT) &&
+				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT)) {
+			playerAvatar.setVelocity(-GlobalConfigLoader.playerVelocity);
+		} else if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT) &&
+				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT)) {
+			playerAvatar.setVelocity(GlobalConfigLoader.playerVelocity);
+		} else {
+			playerAvatar.setVelocity(0.0);
+		}
+		playerAvatar.move(dt);
 	}
 	
 	public void addGameLevelUpdatedListener(GameLevelUpdateListener listener) {
@@ -129,7 +185,9 @@ public class GameLevel implements Drawable {
 
 	@Override
 	public void draw(Graphics g) {
-		for(Ball b : balls) {
+		playerAvatar.draw(g);
+		
+		for(GameObject b : balls) {
 			b.draw(g);
 		}
 		for(Missile m : missiles) {
@@ -138,7 +196,6 @@ public class GameLevel implements Drawable {
 		for(ExtraObject e : extraObjects) {
 			e.draw(g);
 		}
-		playerAvatar.draw(g);
 		
 		drawLives(g);
 	}

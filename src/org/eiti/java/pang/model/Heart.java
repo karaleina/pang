@@ -1,5 +1,6 @@
 package org.eiti.java.pang.model;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -16,13 +17,14 @@ public class Heart extends ExtraObject {
 		return 60;
 	}
 	
-	public Heart(Point position) {
+	public Heart(Point position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.heart,
 			new Rectangle(
 				position,
 				getWidth(),
-				getHeight()));
+				getHeight()),
+			gameWorldSize);
 	}
 	
 

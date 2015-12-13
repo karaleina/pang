@@ -41,4 +41,12 @@ public class XMLGlobalConfiguration extends XMLParser {
     public double getGravity() throws XPathExpressionException {
         return Double.parseDouble(xpath.compile("//gravity").evaluate(xmlDocument));
     }
+
+	public double getPlayerVelocity() throws XPathExpressionException {
+		return Double.parseDouble(xpath.compile("//playerVelocity").evaluate(xmlDocument));
+	}
+
+	public long getMinTimeBetweenShots() throws XPathExpressionException {
+		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
+	}
 }

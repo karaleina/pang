@@ -15,6 +15,8 @@ public class GlobalConfigLoader {
 	public static Dimension gameWindowSize;
     public static int initialLives;
     public static double gravity;
+    public static double playerVelocity;
+    public static long minTimeBetweenShots;
 		
 	static {
 		try {
@@ -23,7 +25,8 @@ public class GlobalConfigLoader {
             gameWindowSize = configuration.getGameWindowSize();
             initialLives = configuration.getLives();
             gravity = configuration.getGravity();
-			
+			playerVelocity = configuration.getPlayerVelocity();
+			minTimeBetweenShots = configuration.getMinTimeBetweenShots();
 		} catch(Exception exc) {
 			exc.printStackTrace();
 		}

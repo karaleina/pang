@@ -1,25 +1,26 @@
 package org.eiti.java.pang.model.weapons;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
 import org.eiti.java.pang.globalConstants.ImageLoader;
-import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
+import org.eiti.java.pang.model.GameObject;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class SuperMissile extends Missile {
-	
-	public static int getWidth() {
-		return 7;
-	}
-	
-	public static int getHeight() {
-		return 30;
-	}
 
-	public SuperMissile(Point position) {
-		super(new Rectangle(position, getWidth(), getHeight()));
+	public final static int WIDTH = 7;
+	public final static int HEIGHT = 30;
+	
+	public SuperMissile(Point position, Dimension gameWorldSize) {
+		super(
+			new Rectangle(
+				position,
+				WIDTH,
+				HEIGHT),
+			gameWorldSize);
 	}
 
 	@Override
@@ -34,8 +35,23 @@ public class SuperMissile extends Missile {
 	}
 
 	@Override
-	public CollisionOutcome collisionOutcome(Ball b) {
+	public CollisionOutcome collisionOutcome(GameObject b) {
 		return CollisionOutcome.DESTROY;
+	}
+	
+	@Override
+	public double getVelocity() {
+		return 0.15;
+	}
+	
+	@Override
+	protected int getWidth() {
+		return 7;
+	}
+	
+	@Override
+	protected int getHeight() {
+		return 30;
 	}
 
 }

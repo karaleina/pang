@@ -8,8 +8,11 @@ public abstract class GameObject implements Drawable {
 	
 	protected Shape shape;
 	
-	protected GameObject(Shape shape) {
+	protected Dimension gameWorldSize;
+	
+	protected GameObject(Shape shape, Dimension gameWorldSize) {
 		this.shape = shape;
+		this.gameWorldSize = gameWorldSize;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package org.eiti.java.pang.model.weapons;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -18,13 +19,14 @@ public class SuperWeapon extends Weapon {
 		return 60;
 	}
 	
-	public SuperWeapon(Point position) {
+	public SuperWeapon(Point position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.superWeapon,
 			new Rectangle(
 				position,
 				getWidth(),
-				getHeight()));
+				getHeight()),
+			gameWorldSize);
 	}
 
 	@Override
@@ -43,8 +45,9 @@ public class SuperWeapon extends Weapon {
 		return new SuperMissile(
 			calculateMissilePosition(
 				shooter,
-				SuperMissile.getWidth(),
-				SuperMissile.getHeight()));
+				SuperMissile.WIDTH,
+				SuperMissile.HEIGHT),
+			gameWorldSize);
 	}
 
 }

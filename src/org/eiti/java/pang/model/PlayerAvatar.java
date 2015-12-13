@@ -1,8 +1,10 @@
 package org.eiti.java.pang.model;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import org.eiti.java.pang.globalConstants.GlobalConfigLoader;
 import org.eiti.java.pang.globalConstants.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.weapons.Missile;
@@ -13,6 +15,8 @@ public class PlayerAvatar extends GameObject {
 	
 	private int lives;
 	private Weapon weapon;
+	
+	private double velocity;
 
 	public static int getWidth() {
 		return 60;
@@ -22,14 +26,15 @@ public class PlayerAvatar extends GameObject {
 		return 160;
 	}
 	
-	public PlayerAvatar(Point position, int initialLives) {
+	public PlayerAvatar(Point position, int initialLives, Dimension gameWorldSize) {
 		super(new Rectangle(
 				position,
 				getWidth(),
-				getHeight()));
+				getHeight()),
+				gameWorldSize);
 		
 		this.lives = initialLives;
-		this.weapon = new StandardWeapon(position);
+		this.weapon = new StandardWeapon(position, gameWorldSize);
 	}
 
 	public int getLives() {
@@ -55,14 +60,21 @@ public class PlayerAvatar extends GameObject {
 	public Missile shoot() {
 		return weapon.shoot(this);
 	}
-
+	
+	public void setVelocity(double velocity) {
+		this.velocity = velocity;
+	}
+	
 	@Override
 	public void move(double dt) {
-		//TODO napisć
+		double newX = shape.getExactX() + velocity * dt;
+		if(newX >= 0 && newX <= gameWorldSize.getWidth() - getWidth()) {
+			moveTo(newX, shape.getExactY());
+		}
 	}
 
-	public void moveTo(double X, double Y) {
-		shape.moveTo(X, Y);
+	public void moveTo(double x, double y) {
+		shape.moveTo(x, y);
 	}
 
 	@Override

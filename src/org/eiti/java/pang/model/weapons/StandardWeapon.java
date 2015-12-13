@@ -1,5 +1,6 @@
 package org.eiti.java.pang.model.weapons;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -9,10 +10,11 @@ import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class StandardWeapon extends Weapon {
 	
-	public StandardWeapon(Point position) {
+	public StandardWeapon(Point position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.standardWeapon,
-			new Rectangle(position, 0, 0));
+			new Rectangle(position, 0, 0),
+			gameWorldSize);
 	}
 
 	@Override
@@ -25,8 +27,9 @@ public class StandardWeapon extends Weapon {
 		return new StandardMissile(
 			calculateMissilePosition(
 				shooter,
-				StandardMissile.getWidth(),
-				StandardMissile.getHeight()));
+				StandardMissile.WIDTH,
+				StandardMissile.HEIGHT),
+			gameWorldSize);
 	}
 
 }

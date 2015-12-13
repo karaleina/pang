@@ -36,9 +36,13 @@ public class ExtraObjectsCreator {
 	private ExtraObject createObject(ExtraObjectType type, GameLevel level) {
 		switch(type) {
 		case heart:
-			return new Heart(calculateExtraObjectPosition(level, Heart.getWidth(), Heart.getHeight()));
+			return new Heart(
+				calculateExtraObjectPosition(level, Heart.getWidth(), Heart.getHeight()),
+				Game.GAME_WORLD_SIZE);
 		case superWeapon:
-			return new SuperWeapon(calculateExtraObjectPosition(level, SuperWeapon.getWidth(), SuperWeapon.getHeight()));
+			return new SuperWeapon(
+				calculateExtraObjectPosition(level, SuperWeapon.getWidth(), SuperWeapon.getHeight()),
+				Game.GAME_WORLD_SIZE);
 		default:
 			throw new RuntimeException("Unexpected extra object type!");
 		}

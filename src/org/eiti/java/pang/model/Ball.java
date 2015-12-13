@@ -11,8 +11,6 @@ public class Ball extends GameObject {
 	private double[] speedVector;
 	double acceleration;				//gravitational acceleration (positive or negative)
 	private double radius;
-	private Dimension gameWorldSize; 	//please do _not_ call a GameLevel method
-	//double[] accesibleArea;			//[minX, maxX, minY, maxY]
 	
 	public Ball(
 			Point position,
@@ -20,7 +18,7 @@ public class Ball extends GameObject {
 			double[] initialSpeedVector,
 			Dimension gameWorldSize) {
 
-		super(new Sphere(position));
+		super(new Sphere(position), gameWorldSize);
 
 		this.ballLevel = ballLevel;
 		this.gameWorldSize = gameWorldSize;

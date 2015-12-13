@@ -35,7 +35,8 @@ public class Game {
 			new Point(
 				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
 				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
-			STARTING_LIVES);
+			STARTING_LIVES,
+			GAME_WORLD_SIZE);
 	}
 	
 	public GameStatus getStatus() {

@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
 import org.eiti.java.pang.game.Game;
+import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
  * Główne okno gry.
@@ -38,6 +40,27 @@ public class GameWindow extends JFrame {
 
 		game.nextLevel();
 		game.start();
+		
+		bindKeyboardEvents();
+	}
+	
+	private void bindKeyboardEvents() {
+		this.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				KeyboardMonitor.setKeyPressed(evt.getKeyCode());
+			}
+
+			@Override
+			public void keyReleased(KeyEvent evt) {
+				KeyboardMonitor.setKeyReleased(evt.getKeyCode());
+			}
+
+			@Override
+			public void keyTyped(KeyEvent evt) {}
+			
+		});
 	}
 
 	private void setupMenu() {
