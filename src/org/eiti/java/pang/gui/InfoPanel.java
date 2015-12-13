@@ -9,6 +9,7 @@ import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameLevel;
 import org.eiti.java.pang.game.ScoreChangedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
+import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 
 public class InfoPanel extends JPanel {
 	
@@ -21,11 +22,10 @@ public class InfoPanel extends JPanel {
 	private JLabel levelLabel;
 	
 	public InfoPanel(Game game) {
-		GameLevel level = game.getLevel();
 		
 		scoreLabel = createScoreLabel(game);
-		timeLabel = createTimeLabel(level);
-		levelLabel = createLevelLabel(level);
+		timeLabel = createTimeLabel();
+		levelLabel = createLevelLabel();
 		
 		FlowLayout panelLayout = new FlowLayout();
 		panelLayout.setHgap(50);
@@ -44,14 +44,14 @@ public class InfoPanel extends JPanel {
 		return scoreLabel;
 	}
 	
-	private JLabel createTimeLabel(GameLevel level) {
-		JLabel timeLabel = new JLabel("Time: " + getTimeString(level));
+	private JLabel createTimeLabel() {
+		JLabel timeLabel = new JLabel("Time:");
 		timeLabel.setFont(timeLabel.getFont().deriveFont(16.0f));
 		return timeLabel;
 	}
 	
-	private JLabel createLevelLabel(GameLevel level) {
-		JLabel levelLabel = new JLabel(getLevelString(level));
+	private JLabel createLevelLabel() {
+		JLabel levelLabel = new JLabel("Level:");
 		levelLabel.setFont(levelLabel.getFont().deriveFont(16.0f));
 		return levelLabel;
 	}
@@ -62,12 +62,12 @@ public class InfoPanel extends JPanel {
 	
 	private String getTimeString(GameLevel level) {
 		if(level == null) {
-			return "";
+			return "Time:";
 		}
 		int timeLeft = level.getTimeLeft();
 		int minutes = timeLeft / 60;
 		int seconds = timeLeft % 60;
-		return String.format("%02d:%02d", minutes, seconds);
+		return "Time: " + String.format("%02d:%02d", minutes, seconds);
 	}
 	
 	private String getLevelString(GameLevel level) {
@@ -83,8 +83,17 @@ public class InfoPanel extends JPanel {
 		});
 		game.addGameLevelChangedListener(new GameLevelChangedListener() {
 			@Override
-			public void onGameLevelChanged(GameLevel newLevel) {
+			public void onGameLevelChanged(final GameLevel newLevel) {
 				levelLabel.setText(getLevelString(newLevel));
+				timeLabel.setText(getTimeString(newLevel));
+				if(newLevel != null) {
+					newLevel.addTimeLeftChangedListener(new TimeLeftChangedListener() {
+						@Override
+						public void onTimeLeftChanged(int timeLeft) {
+							timeLabel.setText(getTimeString(newLevel));
+						}
+					});
+				}
 			}
 		});
 	}

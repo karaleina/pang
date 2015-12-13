@@ -17,6 +17,7 @@ import org.eiti.java.pang.game.events.MissileWindowExitListener;
 import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.game.events.NoBallsLeftListener;
+import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 import org.eiti.java.pang.game.events.PlayerHitByBallListener;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
@@ -33,7 +34,9 @@ import org.eiti.java.pang.utils.KeyboardMonitor;
 public class GameLevel implements Drawable {
 
 	private int levelNumber;
+	private int timeForLevel;
 	private int timeLeft;
+	
 	private Dimension gameWorldSize;
 	
 	private PlayerAvatar playerAvatar;
@@ -51,6 +54,7 @@ public class GameLevel implements Drawable {
 	private Set<NoBallsLeftListener> noBallsLeftListeners = new HashSet<>();
 	private Set<BallDestroyedListener> ballDestroyedListeners = new HashSet<>();
 	private Set<PlayerHitByBallListener> playerHitListeners = new HashSet<>();
+	private Set<TimeLeftChangedListener> noTimeLeftListeners = new HashSet<>();
 
 	public GameLevel(
 			int levelNumber,
@@ -60,7 +64,8 @@ public class GameLevel implements Drawable {
 		this.levelNumber = levelNumber; //TODO to też powinno być parsowane
 		
 		try {
-			timeLeft = configuration.getTimeForLevel();
+			timeForLevel = configuration.getTimeForLevel();
+			timeLeft = timeForLevel;
 			gameWorldSize = configuration.getGameWorldSize();
 			balls = configuration.getBalls();
 			this.playerAvatar = playerAvatar;
@@ -99,8 +104,19 @@ public class GameLevel implements Drawable {
 		return levelNumber;
 	}
 
+	public int getTimeForLevel() {
+		return timeForLevel;
+	}
+	
 	public int getTimeLeft() {
 		return timeLeft;
+	}
+	
+	public void setTimeLeft(int timeLeft) {
+		if(this.timeLeft != timeLeft) {
+			this.timeLeft = timeLeft;
+			fireTimeLeftChangedEvent();
+		}
 	}
 	
 	public Collection<Ball> getBalls() {
@@ -301,6 +317,20 @@ public class GameLevel implements Drawable {
 	private void firePlayerHitByBallEvent() {
 		for(PlayerHitByBallListener listener : playerHitListeners) {
 			listener.onPlayerHitByBall();
+		}
+	}
+	
+	public void addTimeLeftChangedListener(TimeLeftChangedListener listener) {
+		noTimeLeftListeners.add(listener);
+	}
+	
+	public void removeTimeLeftChangedListener(TimeLeftChangedListener listener) {
+		noTimeLeftListeners.remove(listener);
+	}
+	
+	private void fireTimeLeftChangedEvent() {
+		for(TimeLeftChangedListener listener : noTimeLeftListeners) {
+			listener.onTimeLeftChanged(timeLeft);
 		}
 	}
 

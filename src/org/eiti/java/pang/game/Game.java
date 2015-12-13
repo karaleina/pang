@@ -10,6 +10,7 @@ import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.NoBallsLeftListener;
+import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 import org.eiti.java.pang.game.events.PlayerHitByBallListener;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
@@ -117,6 +118,14 @@ public class Game {
 				} else {
 					resetLevel();
 					start();
+				}
+			}
+		});
+		level.addTimeLeftChangedListener(new TimeLeftChangedListener() {
+			@Override
+			public void onTimeLeftChanged(int timeLeft) {
+				if(timeLeft == 0) {
+					gameOver();
 				}
 			}
 		});
