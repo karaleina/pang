@@ -124,7 +124,7 @@ public class Game {
 					nextLevel();
 					start();
 				} catch(NoMoreLevelsException exc) {
-					gameFinished();
+					finish();
 				}
 			}
 		});
@@ -161,7 +161,7 @@ public class Game {
 		fireGameFinishedEvent(false);
 	}
 	
-	public void gameFinished() {
+	public void finish() {
 		gameThread.interrupt();
 		reset();
 		fireGameFinishedEvent(true);

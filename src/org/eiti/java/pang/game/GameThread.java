@@ -19,7 +19,7 @@ public class GameThread extends Thread {
 	@Override
 	public void run() {
 		try {
-		Thread.sleep(WARMUP_TIME_SECONDS * 1000);
+			Thread.sleep(WARMUP_TIME_SECONDS * 1000);
 			while(!isInterrupted()) {
 				long dt = getTimeDiff();
 				timeElapsed += dt;

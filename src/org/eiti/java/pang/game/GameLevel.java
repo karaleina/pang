@@ -160,7 +160,6 @@ public class GameLevel implements Drawable {
 		
 		checkForCollisions();
 		
-		removeMarkedMissiles();
 		shootMissile();
 		
 		movePlayerAvatar(dt);
@@ -176,6 +175,7 @@ public class GameLevel implements Drawable {
 		checkPlayerWithBallCollisions();
 		checkMissileWithBallCollisions();
 		checkPlayerWithExtraObjectCollisions();
+		removeMarkedMissiles();
 	}
 	
 	private void checkPlayerWithBallCollisions() {
