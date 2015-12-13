@@ -41,7 +41,7 @@ public class SuperMissile extends Missile {
 	
 	@Override
 	public double getVelocity() {
-		return 0.15;
+		return 0.4;
 	}
 	
 	@Override

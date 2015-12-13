@@ -31,8 +31,12 @@ public class Rectangle extends Shape {
 
 	@Override
 	public boolean collidesWith(Rectangle r) {
-		// TODO
-		return false;
+		return intervalIntersection(
+					getExactX(), getExactX() + getWidth(),
+					r.getExactX(), r.getExactX() + r.getWidth()) &&
+				intervalIntersection(
+					getExactY(), getExactY() + getHeight(),
+					r.getExactY(), r.getExactY() + r.getHeight());
 	}
 
 	@Override
