@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameLevel;
 import org.eiti.java.pang.game.ScoreChangedListener;
+import org.eiti.java.pang.game.events.GameLevelChangedListener;
 
 public class InfoPanel extends JPanel {
 	
@@ -50,7 +51,7 @@ public class InfoPanel extends JPanel {
 	}
 	
 	private JLabel createLevelLabel(GameLevel level) {
-		JLabel levelLabel = new JLabel("Level: " + getLevelString(level));
+		JLabel levelLabel = new JLabel(getLevelString(level));
 		levelLabel.setFont(levelLabel.getFont().deriveFont(16.0f));
 		return levelLabel;
 	}
@@ -70,7 +71,7 @@ public class InfoPanel extends JPanel {
 	}
 	
 	private String getLevelString(GameLevel level) {
-		return level == null ? "" : String.valueOf(level.getLevelNumber());
+		return "Level: " + (level == null ? "" : String.valueOf(level.getLevelNumber()));
 	}
 	
 	private void setupListeners(Game game) {
@@ -78,6 +79,12 @@ public class InfoPanel extends JPanel {
 			@Override
 			public void onScoreChanged(long newScore) {
 				scoreLabel.setText(getScoreString(newScore));
+			}
+		});
+		game.addGameLevelChangedListener(new GameLevelChangedListener() {
+			@Override
+			public void onGameLevelChanged(GameLevel newLevel) {
+				levelLabel.setText(getLevelString(newLevel));
 			}
 		});
 	}

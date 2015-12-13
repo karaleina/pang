@@ -11,10 +11,13 @@ import java.util.Set;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.game.events.MissileWindowExitListener;
 import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.global.ImageLoader;
+import org.eiti.java.pang.game.events.NoBallsLeftListener;
+import org.eiti.java.pang.game.events.PlayerHitByBallListener;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.CollisionOutcome;
 import org.eiti.java.pang.model.Drawable;
@@ -45,6 +48,9 @@ public class GameLevel implements Drawable {
 	private ExtraObjectsCreator extraObjectsCreator;
 
 	private Set<GameLevelUpdateListener> changeListeners = new HashSet<>();
+	private Set<NoBallsLeftListener> noBallsLeftListeners = new HashSet<>();
+	private Set<BallDestroyedListener> ballDestroyedListeners = new HashSet<>();
+	private Set<PlayerHitByBallListener> playerHitListeners = new HashSet<>();
 
 	public GameLevel(
 			int levelNumber,
@@ -128,14 +134,35 @@ public class GameLevel implements Drawable {
 		for (Missile m : missiles) {
 			m.move(dt);
 		}
+		
 		checkForCollisions();
+		
 		removeMarkedMissiles();
 		shootMissile();
+		
 		movePlayerAvatar(dt);
+		
 		fireGameLevelChangedEvent();
+		
+		if(balls.isEmpty()) {
+			fireNoBallsLeftEvent();
+		}
 	}
 	
 	private void checkForCollisions() {
+		checkPlayerWithBallCollisions();
+		checkMissileWithBallCollisions();
+	}
+	
+	private void checkPlayerWithBallCollisions() {
+		for(Ball b : balls) {
+			if(playerAvatar.collidesWith(b)) {
+				firePlayerHitByBallEvent();
+			}
+		}
+	}
+	
+	private void checkMissileWithBallCollisions() {
 		
 		Set<Ball> ballsForSplitting = new HashSet<>();
 		Set<Ball> ballsForRemoval = new HashSet<>();
@@ -160,6 +187,10 @@ public class GameLevel implements Drawable {
 		}
 		
 		balls.removeAll(ballsForRemoval);
+		for(Ball removedBall : ballsForRemoval) {
+			fireBallDestroyedEvent(removedBall);
+		}
+		
 		splitBalls(ballsForSplitting);
 		removeMarkedMissiles();
 	}
@@ -167,6 +198,7 @@ public class GameLevel implements Drawable {
 	private void splitBalls(Collection<Ball> ballsForSplitting) {
 		for(Ball baseBall : ballsForSplitting) {
 			balls.remove(baseBall);
+			fireBallDestroyedEvent(baseBall);
 			int baseBallLevel = baseBall.getBallLevel();
 			if(baseBallLevel > 1) {
 				balls.addAll(baseBall.split());
@@ -227,6 +259,48 @@ public class GameLevel implements Drawable {
 	private void fireGameLevelChangedEvent() {
 		for(GameLevelUpdateListener listener : changeListeners) {
 			listener.onGameLevelUpdated();
+		}
+	}
+	
+	public void addNoBallsLeftListener(NoBallsLeftListener listener) {
+		noBallsLeftListeners.add(listener);
+	}
+	
+	public void removeNoBallsLeftListener(NoBallsLeftListener listener) {
+		noBallsLeftListeners.remove(listener);
+	}
+	
+	private void fireNoBallsLeftEvent() {
+		for(NoBallsLeftListener listener : noBallsLeftListeners) {
+			listener.onNoBallsLeft();
+		}
+	}
+	
+	public void addBallDestroyedListener(BallDestroyedListener listener) {
+		ballDestroyedListeners.add(listener);
+	}
+	
+	public void removeBallDestroyedListener(BallDestroyedListener listener) {
+		ballDestroyedListeners.remove(listener);
+	}
+	
+	private void fireBallDestroyedEvent(Ball destroyedBall) {
+		for(BallDestroyedListener listener : ballDestroyedListeners) {
+			listener.onBallDestroyed(destroyedBall);
+		}
+	}
+	
+	public void addPlayerHitByBallListener(PlayerHitByBallListener listener) {
+		playerHitListeners.add(listener);
+	}
+	
+	public void removePlayerHitByBallListener(PlayerHitByBallListener listener) {
+		playerHitListeners.remove(listener);
+	}
+	
+	private void firePlayerHitByBallEvent() {
+		for(PlayerHitByBallListener listener : playerHitListeners) {
+			listener.onPlayerHitByBall();
 		}
 	}
 

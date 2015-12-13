@@ -18,7 +18,7 @@
 			<level>2</level>
 			<speed>
 				<x>0</x>
-				<y>-5</y>
+				<y>-0.12</y>
 			</speed>
 		</ball>
 		<ball>
@@ -28,8 +28,8 @@
 			</position>
 			<level>2</level>
 			<speed>
-				<x>10</x>
-				<y>-10</y>
+				<x>0.15</x>
+				<y>-0.13</y>
 			</speed>
 		</ball>
 	</balls>

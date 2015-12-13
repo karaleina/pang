@@ -4,29 +4,26 @@ public class GameThread extends Thread {
 	
 	private final GameLevel level;
 	
-	private final GameScore score;
-	
 	private long previousUpdateTimestamp;
 	
 	private static final int UPDATE_INTERVAL_MILIS = 25;
 	
-	public GameThread(GameLevel level, GameScore score) {
+	private static final int WARMUP_TIME_SECONDS = 3;
+	
+	public GameThread(GameLevel level) {
 		this.level = level;
-		this.score = score;
 	}
 	
 	@Override
 	public void run() {
-		while(!isInterrupted()) {
-			double dt = getTimeDiff();
-			score.updateScore(1);
-			level.update(dt);
-			try {
+		try {
+		Thread.sleep(WARMUP_TIME_SECONDS * 1000);
+			while(!isInterrupted()) {
+				double dt = getTimeDiff();
+				level.update(dt);
 				Thread.sleep(UPDATE_INTERVAL_MILIS);
-			} catch (InterruptedException e) {
-				break;
 			}
-		}
+		} catch(InterruptedException exc) {}
 	}
 	
 	private double getTimeDiff() {
