@@ -1,9 +1,13 @@
 package org.eiti.java.pang.config;
 
 import org.eiti.java.pang.global.GlobalConstantsLoader;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.FileInputStream;
@@ -14,7 +18,7 @@ import java.util.*;
  */
 public class XMLBestScoresIO extends XMLParser {
 
-    private short maxEntryNumber;        //how many entries are expected (upper limit)
+    private int maxEntryNumber;        //how many entries are expected (upper limit)
 
     public XMLBestScoresIO() throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -27,16 +31,16 @@ public class XMLBestScoresIO extends XMLParser {
         //będzie mialo duże znaczenie przy zapisie!
     }
 
-    public short getMaxEntryNumber() {return maxEntryNumber;}
+    public int getMaxEntryNumber() {return maxEntryNumber;}
 
     public ArrayList<String> getBestPlayers() throws XPathExpressionException {
         ArrayList<String> bestPlayers = new ArrayList<>();
         int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
 
         for (int i = 1; i <= entryNumber; i++) {
-            String nameXPath  = "//players/player[" + i + "]/name";
-            String name = xpath.compile(nameXPath).evaluate(xmlDocument);
-            bestPlayers.add(name);
+            String nicknameXPath  = "//players/player[" + i + "]/nickname";
+            String nickname = xpath.compile(nicknameXPath).evaluate(xmlDocument);
+            bestPlayers.add(nickname);
         }
         return bestPlayers;
     }
@@ -53,4 +57,35 @@ public class XMLBestScoresIO extends XMLParser {
         return bestScores;
     }
     //Wyświetamy "jak jest" ale za to zapisywać trzeba z sensem
+
+    public void update(String nickname, int score) throws XPathExpressionException {
+        int position;       //position of new score in the record table
+
+        int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
+        Node players = (Node) xpath.compile("//players").evaluate(xmlDocument, XPathConstants.NODE);
+
+        //Note: xmlDocument acts here as a creator, not a representation of the *.xml file
+        Element newPlayer   = xmlDocument.createElement("player");
+        Element newNickname = xmlDocument.createElement("nickname");
+        newNickname.setNodeValue(nickname);
+        Element newScore    = xmlDocument.createElement("score");
+        newScore.setNodeValue(String.valueOf(score));
+        newPlayer.appendChild(newNickname);
+        newPlayer.appendChild(newScore);
+
+        ArrayList<Integer> oldBestScores = getBestScores();
+        for (int i = 0; i < oldBestScores.size(); i++) {
+            if (oldBestScores.get(i) < score){
+                position = i;
+                break;
+            } else
+                position = i + 1;
+        }
+
+        if (entryNumber < maxEntryNumber) {
+
+        }
+    }
+
+
 }
