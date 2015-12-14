@@ -32,6 +32,8 @@ public class Game {
 	
 	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
 	private Set<GameFinishedListener> gameFinishedListeners = new HashSet<>();
+
+	private String nickname;
 	
 	private int startingLives = GlobalConstantsLoader.initialLives;
 	
@@ -166,6 +168,9 @@ public class Game {
 		reset();
 		fireGameFinishedEvent(true);
 	}
+
+
+	void setNickname(String n) { nickname = n;}
 	
 	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
 		gameLevelChangedListeners.add(listener);
@@ -207,4 +212,5 @@ public class Game {
 	private static class NoMoreLevelsException extends Exception {
 		private static final long serialVersionUID = 1L;
 	}
+
 }

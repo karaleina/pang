@@ -24,7 +24,11 @@ public class NicknameDialog extends JDialog {
         JButton cancel =new JButton("Cancel");
         panel.add(cancel);
 
-        ok.addActionListener(e -> {this.dispose();});  //e is an ActionListener
+        String nickname = nicknameField.getText();
+
+        ok.addActionListener(e -> { //e is an ActionListener
+            this.dispose();
+        });
         cancel.addActionListener(e -> this.dispose());  //e is an ActionListener
     }
 

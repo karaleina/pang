@@ -140,6 +140,7 @@ public class GameWindow extends JFrame {
 
 		nickname.addActionListener(e -> {		//e is an ActionListener
             NicknameDialog nicknameDialog = new NicknameDialog();
+			nicknameDialog.setLocationRelativeTo(this);
             nicknameDialog.setVisible(true);
         });
 
@@ -147,9 +148,11 @@ public class GameWindow extends JFrame {
 			BestScoresDialog bestScoresDialog = null;
 			try {
 				bestScoresDialog = new BestScoresDialog();
+				bestScoresDialog.setLocationRelativeTo(this);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			bestScoresDialog.setLocationRelativeTo(this);
 			bestScoresDialog.setVisible(true);
         });
 
@@ -158,11 +161,13 @@ public class GameWindow extends JFrame {
 
 		help.addActionListener(e -> {
             HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
+			helpDialog.setLocationRelativeTo(this);
             helpDialog.setVisible(true);
         });
 
 		aboutPang.addActionListener(e -> {
             HelpDialog helpDialog = new HelpDialog("O programie");
+			helpDialog.setLocationRelativeTo(this);
             helpDialog.setVisible(true);
         });
 	}
