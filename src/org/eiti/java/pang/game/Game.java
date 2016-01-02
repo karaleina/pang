@@ -8,7 +8,6 @@ import java.util.Set;
 import org.eiti.java.pang.config.ConfigurationProvider;
 import org.eiti.java.pang.config.LocalConfigurationProvider;
 import org.eiti.java.pang.config.NetworkConfigurationProvider;
-import org.eiti.java.pang.config.xml.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
@@ -16,7 +15,6 @@ import org.eiti.java.pang.game.events.NoBallsLeftListener;
 import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 import org.eiti.java.pang.game.events.PlayerHitByBallListener;
 import org.eiti.java.pang.global.GlobalConstantsLoader;
-import org.eiti.java.pang.gui.NicknameDialog;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
@@ -46,25 +44,14 @@ public class Game {
 	private int startingLives = GlobalConstantsLoader.initialLives;
 	
 	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
-	
-	/**
-	 * Local game.
-	 */
-	public Game() throws Exception {
-		configurationProvider = new LocalConfigurationProvider();
+
+	public Game() {
 		reset();
 	}
-	
-	/**
-	 * Network game.
-	 */
-	public Game(String serverAddress, int serverPort) throws Exception {
-		connection = new ServerConnection(serverAddress, serverPort);
-		configurationProvider = new NetworkConfigurationProvider(connection);
-		reset();
-	}
-	
-	public void reset() {
+
+	public void reset(GameInitParameters initParameters) throws Exception {
+		setupConnectionAndProvider(initParameters);
+		nickname = initParameters.getNickname();
 		status = GameStatus.NOT_STARTED;
 		level = null;
 		fireGameLevelChangedEvent();
@@ -75,6 +62,26 @@ public class Game {
 				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
 			startingLives,
 			GAME_WORLD_SIZE);
+	}
+
+	private void reset() {
+		try {
+			reset(GameInitParameters.local("Anonymous"));
+		} catch(Exception exc) {
+			throw new RuntimeException(exc);
+		}
+	}
+	
+	private void setupConnectionAndProvider(GameInitParameters initParameters) throws Exception {
+		if(initParameters.isLocal()) {
+			connection = null;
+			configurationProvider = new LocalConfigurationProvider();
+		} else {
+			connection = new ServerConnection(
+				initParameters.getServerAddress(),
+				initParameters.getServerPort());
+			configurationProvider = new NetworkConfigurationProvider(connection);
+		}
 	}
 	
 	public ConfigurationProvider getConfigurationProvider() {
@@ -193,9 +200,6 @@ public class Game {
 		reset();
 		fireGameFinishedEvent(true);
 	}
-
-
-	void setNickname(String n) { nickname = n;}
 	
 	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
 		gameLevelChangedListeners.add(listener);

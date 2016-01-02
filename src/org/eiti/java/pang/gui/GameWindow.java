@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import org.eiti.java.pang.game.Game;
+import org.eiti.java.pang.game.GameInitParameters;
 import org.eiti.java.pang.game.GameStatus;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
@@ -98,8 +99,6 @@ public class GameWindow extends JFrame {
 		gameMenu.add(pause);
 		gameMenu.addSeparator();
 
-		JMenuItem nickname = new JMenuItem("Nickname");     //byc moze trzeba bedzie usunac ta pozycje
-		gameMenu.add(nickname);
 		JMenuItem bestScores = new JMenuItem("Best Scores");
 		gameMenu.add(bestScores);
 		gameMenu.addSeparator();
@@ -132,26 +131,15 @@ public class GameWindow extends JFrame {
 		//actions
 		
 		newGame.addActionListener(e -> { 		//e is an ActionListener
-			if(game.getStatus().equals(GameStatus.NOT_STARTED) ||
-					game.getStatus().equals(GameStatus.FINISHED)) {
-				game.reset();
-				try {
-					game.nextLevel();
-					game.start();
-				} catch(Exception exc) {
-					JOptionPane.showMessageDialog(
-						GameWindow.this,
-						"Cannot load configuration for level 1!");
-					System.exit(1);
+			if(game.getStatus() == GameStatus.FINISHED || game.getStatus() == GameStatus.NOT_STARTED) {
+				NewGameDialog dlg = new NewGameDialog();
+				GameInitParameters initParameters = dlg.showDialog(GameWindow.this);
+				
+				if(initParameters != null) {
+					newGame(initParameters);
 				}
 			}
 		});
-
-		nickname.addActionListener(e -> {		//e is an ActionListener
-            NicknameDialog nicknameDialog = new NicknameDialog();
-			nicknameDialog.setLocationRelativeTo(this);
-            nicknameDialog.setVisible(true);
-        });
 
 		bestScores.addActionListener(e -> {
 			BestScoresDialog bestScoresDialog = null;
@@ -182,5 +170,17 @@ public class GameWindow extends JFrame {
         });
 	}
 
+	private void newGame(GameInitParameters initParameters) {
+		try {
+			game.reset(initParameters);
+			game.nextLevel();
+			game.start();
+		} catch(Exception exc) {
+			JOptionPane.showMessageDialog(
+				GameWindow.this,
+				"Cannot load configuration for level 1!");
+			System.exit(1);
+		}
+	}
 
 }
