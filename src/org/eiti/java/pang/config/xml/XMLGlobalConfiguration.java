@@ -1,7 +1,8 @@
-package org.eiti.java.pang.config;
+package org.eiti.java.pang.config.xml;
 
 import java.awt.Dimension;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,12 +14,9 @@ import javax.xml.xpath.XPathFactory;
  */
 public class XMLGlobalConfiguration extends XMLParser {
 
-
-
-    public XMLGlobalConfiguration(String configurationFilePath) throws Exception {
+    public XMLGlobalConfiguration(InputStream inputStream) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
-
+        xmlDocument = builder.parse(inputStream);
         xpath = XPathFactory.newInstance().newXPath();
     }
 

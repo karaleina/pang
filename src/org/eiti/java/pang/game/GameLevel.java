@@ -10,7 +10,7 @@ import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
 
-import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.config.xml.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.game.events.MissileWindowExitListener;

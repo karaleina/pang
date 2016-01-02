@@ -1,8 +1,9 @@
-package org.eiti.java.pang.config;
+package org.eiti.java.pang.config.xml;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,10 +56,9 @@ import org.w3c.dom.NodeList;
 
 public class XMLGameLevelConfiguration extends XMLParser {
 
-	public XMLGameLevelConfiguration(String configurationFilePath) throws Exception {
+	public XMLGameLevelConfiguration(InputStream inputStream) throws Exception {
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
-
+		xmlDocument = builder.parse(inputStream);
 		xpath = XPathFactory.newInstance().newXPath();
 	}
 

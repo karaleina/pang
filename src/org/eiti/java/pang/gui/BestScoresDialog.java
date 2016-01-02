@@ -1,7 +1,5 @@
 package org.eiti.java.pang.gui;
 
-import org.eiti.java.pang.config.XMLBestScoresIO;
-
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,18 +7,20 @@ import java.util.SortedMap;
 
 import javax.swing.*;
 
+import org.eiti.java.pang.config.xml.XMLBestScoresIO;
+
 /**
  * Created by S. H. on 17.11.15.
  */
 public class BestScoresDialog extends JDialog {
 
-    private XMLBestScoresIO bestScoresIO;
+    private XMLBestScoresIO bestScoresProvider;
 
-    public BestScoresDialog() throws Exception {
+    public BestScoresDialog(XMLBestScoresIO bestScoresProvider) throws Exception {
 
-        bestScoresIO = new XMLBestScoresIO();
-        ArrayList<String>  bestPlayers = bestScoresIO.getBestPlayers();
-        ArrayList<Integer> bestScores  = bestScoresIO.getBestScores();
+        this.bestScoresProvider = bestScoresProvider;
+        ArrayList<String>  bestPlayers = bestScoresProvider.getBestPlayers();
+        ArrayList<Integer> bestScores  = bestScoresProvider.getBestScores();
 
         setTitle("Best Scores");
         setSize(500, 500);

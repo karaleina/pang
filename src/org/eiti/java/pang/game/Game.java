@@ -5,7 +5,10 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eiti.java.pang.config.XMLGameLevelConfiguration;
+import org.eiti.java.pang.config.ConfigurationProvider;
+import org.eiti.java.pang.config.LocalConfigurationProvider;
+import org.eiti.java.pang.config.NetworkConfigurationProvider;
+import org.eiti.java.pang.config.xml.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
@@ -17,9 +20,14 @@ import org.eiti.java.pang.gui.NicknameDialog;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
+import org.eiti.java.pang.network.ServerConnection;
 
 public class Game {
 	
+	private ServerConnection connection;
+	
+	private ConfigurationProvider configurationProvider;
+
 	private GameStatus status;
 	
 	private GameLevel level;
@@ -39,7 +47,20 @@ public class Game {
 	
 	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
 	
-	public Game() {
+	/**
+	 * Local game.
+	 */
+	public Game() throws Exception {
+		configurationProvider = new LocalConfigurationProvider();
+		reset();
+	}
+	
+	/**
+	 * Network game.
+	 */
+	public Game(String serverAddress, int serverPort) throws Exception {
+		connection = new ServerConnection(serverAddress, serverPort);
+		configurationProvider = new NetworkConfigurationProvider(connection);
 		reset();
 	}
 	
@@ -54,6 +75,10 @@ public class Game {
 				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
 			startingLives,
 			GAME_WORLD_SIZE);
+	}
+	
+	public ConfigurationProvider getConfigurationProvider() {
+		return configurationProvider;
 	}
 	
 	public GameStatus getStatus() {
@@ -193,21 +218,16 @@ public class Game {
 	}
 	
 	private GameLevel getGameLevel(int levelNumber) throws NoMoreLevelsException {
+		// TODO treat exception here as an error and add a separate check for more levels
 		try {
-			String levelPath = "res/config/level";
-			levelPath += levelNumber;
-			levelPath += ".xml";
-
 			return new GameLevel(
 				levelNumber,
-				new XMLGameLevelConfiguration(levelPath),
+				configurationProvider.getLevelConfiguration(levelNumber),
 				playerAvatar);
 		} catch(Exception exc) {
 			throw new NoMoreLevelsException();
 		}
 	}
-
-	//TODO private GlobalVariables
 	
 	private static class NoMoreLevelsException extends Exception {
 		private static final long serialVersionUID = 1L;

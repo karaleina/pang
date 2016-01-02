@@ -11,5 +11,4 @@
     <playerVelocity>0.16</playerVelocity>
     <!-- milliseconds -->
     <minTimeBetweenShots>500</minTimeBetweenShots>
-    <bestScoresPath>res/config/bestScoresExample.xml</bestScoresPath>
 </global>

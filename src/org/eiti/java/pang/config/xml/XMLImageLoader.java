@@ -1,4 +1,4 @@
-package org.eiti.java.pang.config;
+package org.eiti.java.pang.config.xml;
 
 import java.io.FileInputStream;
 

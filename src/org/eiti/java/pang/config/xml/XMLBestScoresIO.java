@@ -1,17 +1,16 @@
-package org.eiti.java.pang.config;
+package org.eiti.java.pang.config.xml;
 
-import org.eiti.java.pang.global.GlobalConstantsLoader;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.FileInputStream;
-import java.util.*;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Created by Stefan Hennel on 13.12.15.
@@ -20,10 +19,10 @@ public class XMLBestScoresIO extends XMLParser {
 
     private int maxEntryNumber;        //how many entries are expected (upper limit)
 
-    public XMLBestScoresIO() throws Exception {
+    public XMLBestScoresIO(InputStream inputStream) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-        xmlDocument = builder.parse(new FileInputStream(GlobalConstantsLoader.bestScoresPath));
+        xmlDocument = builder.parse(inputStream);
 
         xpath = XPathFactory.newInstance().newXPath();
 

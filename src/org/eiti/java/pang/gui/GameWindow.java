@@ -35,7 +35,16 @@ public class GameWindow extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		game = new Game();
+		try {
+			game = new Game();
+		} catch(Exception exc) {
+			JOptionPane.showMessageDialog(
+				this,
+				"Failed to create a local game!\nReason: " + exc.getMessage(),
+				"Error",
+				JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
 
 		// TODO temporary, to show creation of extra objects
 		//game.getLevel().spawnExtraObjects();
@@ -147,7 +156,8 @@ public class GameWindow extends JFrame {
 		bestScores.addActionListener(e -> {
 			BestScoresDialog bestScoresDialog = null;
 			try {
-				bestScoresDialog = new BestScoresDialog();
+				bestScoresDialog = new BestScoresDialog(
+					game.getConfigurationProvider().getBestScores());
 				bestScoresDialog.setLocationRelativeTo(this);
 			} catch (Exception e1) {
 				e1.printStackTrace();

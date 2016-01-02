@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
 
-import org.eiti.java.pang.config.XMLImageLoader;
+import org.eiti.java.pang.config.xml.XMLImageLoader;
 
 public class ImageLoader {
 	
