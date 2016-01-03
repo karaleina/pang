@@ -1,10 +1,15 @@
 package org.eiti.java.pang.config.xml;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -21,7 +26,7 @@ public class XMLBestScoresIO extends XMLParser {
 
     public XMLBestScoresIO(InputStream inputStream) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-
+        
         xmlDocument = builder.parse(inputStream);
 
         xpath = XPathFactory.newInstance().newXPath();
@@ -58,17 +63,19 @@ public class XMLBestScoresIO extends XMLParser {
     //Wyświetamy "jak jest" ale za to zapisywać trzeba z sensem
 
     public void update(String nickname, int score) throws XPathExpressionException {
-        int position;       //position of new score in the record table
+        int position = maxEntryNumber;       //position of new score in the record table
 
         int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
         Node players = (Node) xpath.compile("//players").evaluate(xmlDocument, XPathConstants.NODE);
 
         //Note: xmlDocument acts here as a creator, not a representation of the *.xml file
         Element newPlayer   = xmlDocument.createElement("player");
+        
         Element newNickname = xmlDocument.createElement("nickname");
-        newNickname.setNodeValue(nickname);
+        newNickname.setTextContent(nickname);
         Element newScore    = xmlDocument.createElement("score");
-        newScore.setNodeValue(String.valueOf(score));
+        newScore.setTextContent(String.valueOf(score));
+        
         newPlayer.appendChild(newNickname);
         newPlayer.appendChild(newScore);
 
@@ -77,14 +84,25 @@ public class XMLBestScoresIO extends XMLParser {
             if (oldBestScores.get(i) < score){
                 position = i;
                 break;
-            } else
+            } else {
                 position = i + 1;
+            }
         }
 
-        if (entryNumber < maxEntryNumber) {
-
+        if(position < maxEntryNumber) {
+        	Node nextChild =  players.getChildNodes().item(position);
+        	players.insertBefore(newPlayer, nextChild);
+        	players.removeChild(players.getLastChild());
         }
     }
-
+    
+    public void save(OutputStream outputStream) throws Exception {
+    	TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(xmlDocument);
+        StreamResult result =  new StreamResult(outputStream);
+        transformer.transform(source, result);
+        outputStream.flush();
+    }
 
 }

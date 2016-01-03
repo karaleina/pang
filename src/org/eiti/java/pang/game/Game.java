@@ -8,6 +8,7 @@ import java.util.Set;
 import org.eiti.java.pang.config.ConfigurationProvider;
 import org.eiti.java.pang.config.LocalConfigurationProvider;
 import org.eiti.java.pang.config.NetworkConfigurationProvider;
+import org.eiti.java.pang.config.xml.XMLGlobalConfiguration;
 import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
@@ -51,10 +52,10 @@ public class Game {
 
 	public void reset(GameInitParameters initParameters) throws Exception {
 		setupConnectionAndProvider(initParameters);
+		updateGlobalConfiguration();
 		nickname = initParameters.getNickname();
 		status = GameStatus.NOT_STARTED;
-		level = null;
-		fireGameLevelChangedEvent();
+		clearBoard();
 		score.clear();
 		playerAvatar = new PlayerAvatar(
 			new Point2D.Double(
@@ -73,6 +74,9 @@ public class Game {
 	}
 	
 	private void setupConnectionAndProvider(GameInitParameters initParameters) throws Exception {
+		if(connection != null) {
+			connection.close();
+		}
 		if(initParameters.isLocal()) {
 			connection = null;
 			configurationProvider = new LocalConfigurationProvider();
@@ -82,6 +86,11 @@ public class Game {
 				initParameters.getServerPort());
 			configurationProvider = new NetworkConfigurationProvider(connection);
 		}
+	}
+	
+	private void updateGlobalConfiguration() throws Exception {
+		XMLGlobalConfiguration configuration = configurationProvider.getGlobalConfiguration();
+		GlobalConstantsLoader.setConstants(configuration);
 	}
 	
 	public ConfigurationProvider getConfigurationProvider() {
@@ -101,13 +110,24 @@ public class Game {
 	}
 	
 	public void nextLevel() throws NoMoreLevelsException {
-		if(level == null) {
-			level = getGameLevel(1);
-		} else {
-			level = getGameLevel(level.getLevelNumber() + 1);
-		}
+		int nextLevelNumber = (level == null) ? 1 : level.getLevelNumber() + 1;
+		checkLevelExistence(nextLevelNumber);
+		level = getGameLevel(nextLevelNumber);
 		setupLevel();
 		playerAvatar.setWeapon(new StandardWeapon(new Point2D.Double(0, 0), GAME_WORLD_SIZE));
+	}
+	
+	private void checkLevelExistence(int nextLevelNumber) throws NoMoreLevelsException {
+		try {
+			if(!configurationProvider.levelExists(nextLevelNumber)) {
+				throw new NoMoreLevelsException();
+			}
+		} catch(NoMoreLevelsException exc) {
+			throw exc;
+		}
+		catch(Exception exc) {
+			throw new RuntimeException(exc);
+		}
 	}
 	
 	private void setupLevel() {
@@ -133,7 +153,7 @@ public class Game {
 			@Override
 			public void onBallDestroyed(Ball b) {
 				int ballLevel = b.getBallLevel();
-				long pointsForBall = powerOf2(ballLevel);
+				int pointsForBall = powerOf2(ballLevel);
 				if(playerAvatar.getWeapon() instanceof StandardWeapon) {
 					// 2 ^ ballLevel * levelNumber
 					score.updateScore(pointsForBall * level.getLevelNumber());
@@ -141,13 +161,13 @@ public class Game {
 					// Ball was destroyed by super weapon, player gets all points he
 					// would get by destroying the ball and all its "children balls"
 					// plus some bonus.
-					long ballAndChildrenEquivalent = pointsForBall * ballLevel * level.getLevelNumber();
-					final long bonus = 10;
+					int ballAndChildrenEquivalent = pointsForBall * ballLevel * level.getLevelNumber();
+					final int bonus = 10;
 					score.updateScore(ballAndChildrenEquivalent + bonus);
 				}
 			}
 			
-			private long powerOf2(int x) {
+			private int powerOf2(int x) {
 				return 1 << x;
 			}
 		});
@@ -197,8 +217,23 @@ public class Game {
 	
 	public void finish() {
 		gameThread.interrupt();
-		reset();
+		clearBoard();
+		status = GameStatus.FINISHED;
+		updateBestScores();
 		fireGameFinishedEvent(true);
+	}
+	
+	private void clearBoard() {
+		level = null;
+		fireGameLevelChangedEvent();
+	}
+	
+	private void updateBestScores() {
+		try {
+			configurationProvider.updateBestScores(nickname, score.getNumericScore());
+		} catch(Exception exc) {
+			throw new RuntimeException(exc);
+		}
 	}
 	
 	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
@@ -221,15 +256,14 @@ public class Game {
 		}
 	}
 	
-	private GameLevel getGameLevel(int levelNumber) throws NoMoreLevelsException {
-		// TODO treat exception here as an error and add a separate check for more levels
+	private GameLevel getGameLevel(int levelNumber) {
 		try {
 			return new GameLevel(
 				levelNumber,
 				configurationProvider.getLevelConfiguration(levelNumber),
 				playerAvatar);
 		} catch(Exception exc) {
-			throw new NoMoreLevelsException();
+			throw new RuntimeException(exc);
 		}
 	}
 	

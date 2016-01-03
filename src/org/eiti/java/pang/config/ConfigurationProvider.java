@@ -8,6 +8,8 @@ public interface ConfigurationProvider {
 	
 	public XMLBestScoresIO getBestScores() throws Exception;
 	
+	public void updateBestScores(String nickname, int score) throws Exception;
+	
 	public XMLGlobalConfiguration getGlobalConfiguration() throws Exception;
 	
 	public boolean levelExists(int levelNumber) throws Exception;

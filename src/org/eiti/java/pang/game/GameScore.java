@@ -5,17 +5,17 @@ import java.util.Set;
 
 public class GameScore {
 	
-	private long score;
+	private int score;
 	
 	private Set<ScoreChangedListener> scoreChangedListeners = new HashSet<>();
 	
 	public GameScore() {}
 	
-	public GameScore(long score) {
+	public GameScore(int score) {
 		this.score = score;
 	}
 	
-	public void updateScore(long amountToAdd) {
+	public void updateScore(int amountToAdd) {
 		score += amountToAdd;
 		fireScoreChangedEvent();
 	}
@@ -25,7 +25,7 @@ public class GameScore {
 		fireScoreChangedEvent();
 	}
 	
-	public long getNumericScore() {
+	public int getNumericScore() {
 		return score;
 	}
 	

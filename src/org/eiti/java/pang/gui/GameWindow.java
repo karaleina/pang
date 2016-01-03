@@ -13,11 +13,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameInitParameters;
 import org.eiti.java.pang.game.GameStatus;
+import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
@@ -38,6 +40,7 @@ public class GameWindow extends JFrame {
 
 		try {
 			game = new Game();
+			setupGameEvents();
 		} catch(Exception exc) {
 			JOptionPane.showMessageDialog(
 				this,
@@ -55,6 +58,20 @@ public class GameWindow extends JFrame {
 
 		setupMenu();
 		bindKeyboardEvents();
+	}
+	
+	private void setupGameEvents() {
+		game.addGameFinishedListener(new GameFinishedListener() {
+			@Override
+			public void onGameFinished(boolean completed) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						showBestScores();
+					}
+				});
+			}
+		});
 	}
 	
 	private void bindKeyboardEvents() {
@@ -142,16 +159,7 @@ public class GameWindow extends JFrame {
 		});
 
 		bestScores.addActionListener(e -> {
-			BestScoresDialog bestScoresDialog = null;
-			try {
-				bestScoresDialog = new BestScoresDialog(
-					game.getConfigurationProvider().getBestScores());
-				bestScoresDialog.setLocationRelativeTo(this);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			bestScoresDialog.setLocationRelativeTo(this);
-			bestScoresDialog.setVisible(true);
+			showBestScores();
         });
 
 		quitGame.addActionListener(e -> this.dispose());  //e is an ActionListener
@@ -181,6 +189,19 @@ public class GameWindow extends JFrame {
 				"Cannot load configuration for level 1!");
 			System.exit(1);
 		}
+	}
+	
+	private void showBestScores() {
+		BestScoresDialog bestScoresDialog = null;
+		try {
+			bestScoresDialog = new BestScoresDialog(
+				game.getConfigurationProvider().getBestScores());
+			bestScoresDialog.setLocationRelativeTo(this);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		bestScoresDialog.setLocationRelativeTo(this);
+		bestScoresDialog.setVisible(true);
 	}
 
 }

@@ -14,11 +14,8 @@ import org.eiti.java.pang.config.xml.XMLBestScoresIO;
  */
 public class BestScoresDialog extends JDialog {
 
-    private XMLBestScoresIO bestScoresProvider;
-
     public BestScoresDialog(XMLBestScoresIO bestScoresProvider) throws Exception {
 
-        this.bestScoresProvider = bestScoresProvider;
         ArrayList<String>  bestPlayers = bestScoresProvider.getBestPlayers();
         ArrayList<Integer> bestScores  = bestScoresProvider.getBestScores();
 

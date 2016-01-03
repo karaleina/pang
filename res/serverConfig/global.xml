@@ -1,0 +1,14 @@
+<global>
+    <title>Pang</title>
+    <gameWindowSize>
+        <width>650</width>
+        <height>400</height>
+    </gameWindowSize>
+    <lives>3</lives>
+    <!-- pixels / ms^2 -->
+    <gravity>0.0001</gravity>
+    <!-- pixels / ms -->
+    <playerVelocity>0.3</playerVelocity>
+    <!-- milliseconds -->
+    <minTimeBetweenShots>500</minTimeBetweenShots>
+</global>

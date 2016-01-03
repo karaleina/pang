@@ -1,19 +1,14 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<bestScores>
+<?xml version="1.0" encoding="utf-8" standalone="no"?><bestScores>
     <maxEntryNumber>10</maxEntryNumber>
     <players>
         <player>
             <nickname>maurycy</nickname>
             <score>3000</score>
         </player>
-        <player>
+        <player><nickname>Anonymous</nickname><score>58</score></player><player>
             <nickname>julian</nickname>
             <score>2016</score>
         </player>
-        <player>
-            <nickname>krul</nickname>
-            <score>490</score>
-        </player>
-    </players>
+        </players>
 
 </bestScores>

@@ -11,6 +11,7 @@ public class ServerConnection {
 	
 	public ServerConnection(String host, int portNumber) throws IOException {
 		socket = new Socket(host, portNumber);
+		System.out.println("connected!");
 	}
 	
 	public void sendRequest(Request request) throws IOException {
@@ -25,6 +26,10 @@ public class ServerConnection {
 		} catch(Exception exc) {
 			throw new RuntimeException(exc);
 		}
+	}
+	
+	public void close() throws IOException {
+		socket.close();
 	}
 
 }
