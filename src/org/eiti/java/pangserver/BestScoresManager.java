@@ -9,7 +9,7 @@ import org.eiti.java.pang.config.xml.XMLBestScoresIO;
 
 public class BestScoresManager {
 	
-	private final static String xmlBestScoresPath = "res/serverConfig/bestScoresExample.xml";
+	private final static String xmlBestScoresPath = "res/serverConfig/bestScores.xml";
 
 	public static synchronized void sendBestScores(DataOutputStream outputStream) throws Exception {
 		FileSender.sendFile(

@@ -10,7 +10,7 @@ import org.eiti.java.pang.config.xml.XMLGlobalConfiguration;
 
 public class LocalConfigurationProvider implements ConfigurationProvider {
 
-	private final String bestScoresPath = "res/config/bestScoresExample.xml";
+	private final String bestScoresPath = "res/config/bestScores.xml";
 	
 	private final String globalConfigPath = "res/config/global.xml";
 

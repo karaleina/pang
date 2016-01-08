@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><bestScores>
+    <maxEntryNumber>10</maxEntryNumber>
+    <players>
+        <player>
+            <nickname>Player 10 (on server)</nickname>
+            <score>10</score>
+        </player>
+        <player>
+            <nickname>Player 9 (on server)</nickname>
+            <score>9</score>
+        </player>
+        <player>
+            <nickname>Player 8 (on server)</nickname>
+            <score>8</score>
+        </player>
+        <player>
+            <nickname>Player 7 (on server)</nickname>
+            <score>7</score>
+        </player>
+        <player>
+            <nickname>Player 6 (on server)</nickname>
+            <score>6</score>
+        </player>
+        <player>
+            <nickname>Player 5 (on server)</nickname>
+            <score>5</score>
+        </player>
+        <player>
+            <nickname>Player 4 (on server)</nickname>
+            <score>4</score>
+        </player>
+        <player>
+            <nickname>Player 3 (on server)</nickname>
+            <score>3</score>
+        </player>
+        <player>
+            <nickname>Player 2 (on server)</nickname>
+            <score>2</score>
+        </player>
+        <player>
+            <nickname>Player 1 (on server)</nickname>
+            <score>1</score>
+        </player>
+    </players>
+</bestScores>

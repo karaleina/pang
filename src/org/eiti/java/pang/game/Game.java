@@ -210,19 +210,22 @@ public class Game {
 	}
 	
 	public void gameOver() {
-		gameThread.interrupt();
-		reset();
+		cleanupAfterGame();
 		fireGameFinishedEvent(false);
 	}
 	
 	public void finish() {
+		cleanupAfterGame();
+		fireGameFinishedEvent(true);
+	}
+
+	private void cleanupAfterGame() {
 		gameThread.interrupt();
 		clearBoard();
 		status = GameStatus.FINISHED;
 		updateBestScores();
-		fireGameFinishedEvent(true);
 	}
-	
+
 	private void clearBoard() {
 		level = null;
 		fireGameLevelChangedEvent();

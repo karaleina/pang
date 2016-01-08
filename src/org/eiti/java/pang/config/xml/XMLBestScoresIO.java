@@ -3,6 +3,7 @@ package org.eiti.java.pang.config.xml;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,8 +15,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.eiti.java.pang.game.HighScoreEntry;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Created by Stefan Hennel on 13.12.15.
@@ -26,76 +29,80 @@ public class XMLBestScoresIO extends XMLParser {
 
     public XMLBestScoresIO(InputStream inputStream) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        
         xmlDocument = builder.parse(inputStream);
-
         xpath = XPathFactory.newInstance().newXPath();
-
-        maxEntryNumber = Short.parseShort(xpath.compile("//maxEntryNumber").evaluate(xmlDocument));
-        //będzie mialo duże znaczenie przy zapisie!
+        maxEntryNumber = Integer.parseInt(xpath.compile("//maxEntryNumber").evaluate(xmlDocument));
     }
 
-    public int getMaxEntryNumber() {return maxEntryNumber;}
-
-    public ArrayList<String> getBestPlayers() throws XPathExpressionException {
-        ArrayList<String> bestPlayers = new ArrayList<>();
+    public ArrayList<HighScoreEntry> getEntries() throws XPathExpressionException {
+        ArrayList<HighScoreEntry> entries = new ArrayList<>();
         int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
 
         for (int i = 1; i <= entryNumber; i++) {
             String nicknameXPath  = "//players/player[" + i + "]/nickname";
             String nickname = xpath.compile(nicknameXPath).evaluate(xmlDocument);
-            bestPlayers.add(nickname);
-        }
-        return bestPlayers;
-    }
-
-    public ArrayList<Integer> getBestScores() throws XPathExpressionException {
-        ArrayList<Integer> bestScores = new ArrayList<>();
-        int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
-
-        for (int i = 1; i <= entryNumber; i++) {
             String scoreXPath = "//players/player[" + i + "]/score";
             int score = Integer.parseInt(xpath.compile(scoreXPath).evaluate(xmlDocument));
-            bestScores.add(score);
+            entries.add(new HighScoreEntry(nickname, score));
         }
-        return bestScores;
+        return entries;
     }
-    //Wyświetamy "jak jest" ale za to zapisywać trzeba z sensem
 
     public void update(String nickname, int score) throws XPathExpressionException {
-        int position = maxEntryNumber;       //position of new score in the record table
+        List<HighScoreEntry> oldBestEntries = getEntries();
+        updateBestScores(oldBestEntries, nickname, score);
+        updateXML(oldBestEntries);
+    }
 
-        int entryNumber = xmlDocument.getElementsByTagName("player").getLength();
-        Node players = (Node) xpath.compile("//players").evaluate(xmlDocument, XPathConstants.NODE);
+    private void updateBestScores(List<HighScoreEntry> entries, String nickname, int score) {
+        int insertBeforeIndex = findPlaceForScore(entries, score);
+        if(insertBeforeIndex < maxEntryNumber) {
+            entries.add(insertBeforeIndex, new HighScoreEntry(nickname, score));
+        }
+        if(entries.size() > maxEntryNumber) {
+            entries.remove(entries.size() - 1);
+        }
+    }
 
-        //Note: xmlDocument acts here as a creator, not a representation of the *.xml file
-        Element newPlayer   = xmlDocument.createElement("player");
-        
+    private int findPlaceForScore(List<HighScoreEntry> entries, int score) {
+        int i = 0;
+        while(i < entries.size() && score <= entries.get(i).getScore()) {
+            i++;
+        }
+        return i;
+    }
+
+    private void updateXML(List<HighScoreEntry> entries) throws XPathExpressionException {
+        Node players = xmlDocument.getElementsByTagName("players").item(0);
+        removeChildNodes(players);
+        for (HighScoreEntry entry : entries) {
+            Element highScoreXMLElement = createXMLHighScoreEntry(entry);
+            players.appendChild(highScoreXMLElement);
+        }
+    }
+
+    private void removeChildNodes(Node node) {
+        NodeList children = node.getChildNodes();
+        int childrenToRemove = children.getLength();
+        for (int i = 0; i < childrenToRemove; i++) {
+            node.removeChild(children.item(0));
+        }
+    }
+
+    private Element createXMLHighScoreEntry(HighScoreEntry entry) {
+        Element newPlayer = xmlDocument.createElement("player");
         Element newNickname = xmlDocument.createElement("nickname");
-        newNickname.setTextContent(nickname);
-        Element newScore    = xmlDocument.createElement("score");
-        newScore.setTextContent(String.valueOf(score));
-        
+        Element newScore = xmlDocument.createElement("score");
+
+        newNickname.setTextContent(entry.getNickname());
+        newScore.setTextContent(String.valueOf(entry.getScore()));
+
         newPlayer.appendChild(newNickname);
         newPlayer.appendChild(newScore);
 
-        ArrayList<Integer> oldBestScores = getBestScores();
-        for (int i = 0; i < oldBestScores.size(); i++) {
-            if (oldBestScores.get(i) < score){
-                position = i;
-                break;
-            } else {
-                position = i + 1;
-            }
-        }
-
-        if(position < maxEntryNumber) {
-        	Node nextChild =  players.getChildNodes().item(position);
-        	players.insertBefore(newPlayer, nextChild);
-        	players.removeChild(players.getLastChild());
-        }
+        return newPlayer;
     }
-    
+
     public void save(OutputStream outputStream) throws Exception {
     	TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
