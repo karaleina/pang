@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 public class FileSender {
 
 	/**
-	 * Sends file size (long = 8 bytes) and then the file content.
+	 * Sends file size (int = 4 bytes) and then the file content.
 	 * 
 	 * @param file
 	 * @param outputStream

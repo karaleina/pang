@@ -20,7 +20,9 @@ public class MainThread extends Thread {
 	public void run() {
 		try {
 			ServerSocket socket = new ServerSocket(portNumber);
-			socket.setSoTimeout(500);
+			
+			// this allows to interrupt the thread
+			socket.setSoTimeout(500); 
 			
 			while(!isInterrupted()) {
 				try {
