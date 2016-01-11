@@ -21,7 +21,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Created by Stefan Hennel on 13.12.15.
+ * This class reads and writes best scores as an XML document entries. The document should fit to following template:
+ * <?xml version="1.0" encoding="utf-8"?>
+ * <bestScores>
+ *  <!-- max. number of saved scores-->
+ *   <maxEntryNumber>10</maxEntryNumber>
+ *   <players>
+ *   <player>
+ *       <nickname>Player 10</nickname>
+ *   <score>10</score></player>
+ *   <player>
+ *       <nickname>Player 9</nickname>
+ *       <score>9</score>
+ *   </player>
+ *   <player>
+ *       <nickname>Player 8</nickname>
+ *       <score>8</score>
+ *   </player>
+ *   <!-- etc. -->
+ * </bestScores>
+ *
  */
 public class XMLBestScoresIO extends XMLParser {
 

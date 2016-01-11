@@ -94,7 +94,6 @@ public class GameWindow extends JFrame {
 	}
 
 	private void setupMenu() {
-		//TODO Cała obsługa menu - później być może popakuje to w klasy, jedna oddzielna kasa MenuBar byłachybionym pomysłem.
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		JMenu gameMenu = new JMenu("Game");
@@ -158,11 +157,9 @@ public class GameWindow extends JFrame {
 			}
 		});
 
-		bestScores.addActionListener(e -> {
-			showBestScores();
-        });
+		bestScores.addActionListener((e) -> showBestScores());
 
-		quitGame.addActionListener(e -> this.dispose());  //e is an ActionListener
+		quitGame.addActionListener((e) -> this.dispose());  //e is an ActionListener
 
 
 		help.addActionListener(e -> {

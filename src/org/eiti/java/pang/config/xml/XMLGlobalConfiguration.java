@@ -10,7 +10,23 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 /**
- * Created by Stefan Hennel on 26.11.15.
+ * This class reads global configuration of the game from an XML document. The document should fit to following template:
+* <global>
+*     <title>Pang</title>
+*     <gameWindowSize>
+*     <width>650</width>
+*         <height>400</height>
+*         </gameWindowSize>
+*     <lives>5</lives>
+*     <!-- pixels / ms^2 -->
+*     <gravity>0.0001</gravity>
+*     <!-- pixels / ms -->
+*     <playerVelocity>0.16</playerVelocity>
+*     <!-- milliseconds -->
+*     <minTimeBetweenShots>500</minTimeBetweenShots>
+* </global>
+*
+*
  */
 public class XMLGlobalConfiguration extends XMLParser {
 

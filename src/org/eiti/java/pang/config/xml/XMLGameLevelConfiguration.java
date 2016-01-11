@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Moduł wczytujący pik XML opisujący poziom. Składnia według wzoru:
+ * This class reads level configuration from an XML document. The document should fit to following template:
  * 	<level>
  *		<number>1</number>
  *		<time>120</time>
@@ -64,6 +64,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 
 	/**
 	 * @return Wymiary planszy ("świata gry"). Wymiary poziomu wplywają na poziom trudności.
+	 *
      */
 	public Dimension getGameWorldSize() throws XPathExpressionException {
 
@@ -103,7 +104,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 
 	/**
 	 *
-	 * @param level
+	 *
      */
 	public String getPlayerAvatarPosition() throws XPathExpressionException {
 		return xpath.compile("//player/position").evaluate(xmlDocument);
