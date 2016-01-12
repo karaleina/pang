@@ -1,0 +1,8 @@
+<imagepaths>
+    <background>res/themes/moon/background.png</background>
+    <heartImage>res/themes/western/heart.png</heartImage>
+    <playerAvatarImage>res/themes/western/player.png</playerAvatarImage>
+    <standardMissileImage>res/themes/western/old-bullet.png</standardMissileImage>
+    <superMissileImage>res/themes/western/super-bullet.png</superMissileImage>
+    <superWeaponImage>res/themes/western/mauser.png</superWeaponImage>
+</imagepaths>

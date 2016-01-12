@@ -375,7 +375,7 @@ public class GameLevel implements Drawable {
 		final int offset = 5;
 		for(int i = 0; i < playerAvatar.getLives(); i++){
 			g.drawImage(
-				ImageLoader.heartImage,
+				ImageLoader.getInstance().heartImage,
 				gameWorldSize.width - (i + 1) * (heartSize + offset),
 				offset,
 				heartSize,

@@ -7,19 +7,13 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameInitParameters;
 import org.eiti.java.pang.game.GameStatus;
 import org.eiti.java.pang.game.events.GameFinishedListener;
+import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
@@ -30,6 +24,8 @@ public class GameWindow extends JFrame {
 	private static final long serialVersionUID = -8792460779215020552L;
 
 	private Game game;
+	private GamePanel gamePanel;
+	private InfoPanel infoPanel;
 
 	public GameWindow() {
 		setTitle("Pang");
@@ -53,8 +49,10 @@ public class GameWindow extends JFrame {
 		// TODO temporary, to show creation of extra objects
 		//game.getLevel().spawnExtraObjects();
 
-		getContentPane().add(new GamePanel(game), BorderLayout.CENTER);
-		getContentPane().add(new InfoPanel(game), BorderLayout.NORTH);
+		gamePanel = new GamePanel(game);
+		infoPanel = new InfoPanel(game);
+		getContentPane().add(gamePanel, BorderLayout.CENTER);
+		getContentPane().add(infoPanel, BorderLayout.NORTH);
 
 		setupMenu();
 		bindKeyboardEvents();
@@ -124,15 +122,23 @@ public class GameWindow extends JFrame {
 		quitGame.setAccelerator(ctrlQ);
 		gameMenu.add(quitGame);
 
-		JMenuItem theme1 = new JMenuItem("Theme 1");
+		ButtonGroup themes = new ButtonGroup();
+		JMenuItem theme1 = new JRadioButtonMenuItem("Solar theme", true);
+		themes.add(theme1);
 		settMenu.add(theme1);
-		JMenuItem theme2 = new JMenuItem("Theme 2");
+
+		JMenuItem theme2 = new JRadioButtonMenuItem("Lunar Theme", false);
+		themes.add(theme2);
 		settMenu.add(theme2);
 		settMenu.addSeparator();
 
-		JMenuItem standardMode = new JMenuItem("Standard Mode");
+		ButtonGroup modes = new ButtonGroup();
+		JMenuItem standardMode = new JRadioButtonMenuItem("Standard Mode", true);
+		modes.add(standardMode);
 		settMenu.add(standardMode);
-		JMenuItem viMode = new JMenuItem("VI Mode");
+
+		JMenuItem viMode = new JRadioButtonMenuItem("VI Mode", false);
+		modes.add(viMode);
 		settMenu.add(viMode);
 
 		JMenuItem help = new JMenuItem("Help");
@@ -161,6 +167,8 @@ public class GameWindow extends JFrame {
 
 		quitGame.addActionListener((e) -> this.dispose());  //e is an ActionListener
 
+		theme1.addActionListener((e) -> ImageLoader.getInstance().update("res/config/theme1.xml"));
+		theme2.addActionListener((e) -> ImageLoader.getInstance().update("res/config/theme2.xml"));
 
 		help.addActionListener(e -> {
             HelpDialog helpDialog = new HelpDialog("Tekst pomocy");

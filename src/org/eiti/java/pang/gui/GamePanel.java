@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
 			}
 		});
 	}
-	
+
 	public void setLevel(GameLevel level) {
 		if(this.level != null) {
 			this.level.removeGameLevelUpdatedListener(drawOnUpdateListener);
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.drawImage(
-			ImageLoader.background,
+			ImageLoader.getInstance().background,
 			0,
 			0,
 			getWidth(),
@@ -121,5 +121,7 @@ public class GamePanel extends JPanel {
 	private double getScaleY() {
 		return getHeight() / level.getGameWorldSize().getHeight();
 	}
+
+
 
 }

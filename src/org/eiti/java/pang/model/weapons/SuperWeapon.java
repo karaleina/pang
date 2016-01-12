@@ -32,7 +32,7 @@ public class SuperWeapon extends Weapon {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
-			ImageLoader.superWeaponImage,
+			ImageLoader.getInstance().superWeaponImage,
 			shape.getIntX(),
 			shape.getIntY(),
 			getWidth(),

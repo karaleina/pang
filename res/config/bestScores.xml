@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><bestScores>
     <maxEntryNumber>10</maxEntryNumber>
-    <players>
-        <player>
-            <nickname>Player 10</nickname>
-            <score>10</score></player>
-        <player>
-            <nickname>Player 9</nickname>
-            <score>9</score>
-        </player>
-        <player><nickname>Player 8</nickname><score>8</score></player><player><nickname>Player 7</nickname><score>7</score></player><player><nickname>Player 6</nickname><score>6</score></player><player><nickname>Player 5</nickname><score>5</score></player><player><nickname>Player 4</nickname><score>4</score></player><player><nickname>Player 3</nickname><score>3</score></player><player><nickname>Player 2</nickname><score>2</score></player><player><nickname>Player 1</nickname><score>1</score></player></players>
+    <players><player><nickname>Anonymous</nickname><score>80</score></player><player><nickname>Anonymous</nickname><score>58</score></player><player><nickname>Player 10</nickname><score>10</score></player><player><nickname>Player 9</nickname><score>9</score></player><player><nickname>Player 8</nickname><score>8</score></player><player><nickname>Player 7</nickname><score>7</score></player><player><nickname>Player 6</nickname><score>6</score></player><player><nickname>Player 5</nickname><score>5</score></player><player><nickname>Player 4</nickname><score>4</score></player><player><nickname>Player 3</nickname><score>3</score></player></players>
 </bestScores>

@@ -26,7 +26,7 @@ public class StandardMissile extends Missile {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
-			ImageLoader.standardMissileImage,
+			ImageLoader.getInstance().standardMissileImage,
 			shape.getIntX(),
 			shape.getIntY(),
 			getWidth(),

@@ -79,7 +79,7 @@ public class PlayerAvatar extends GameObject {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
-			ImageLoader.playerAvatarImage,
+			ImageLoader.getInstance().playerAvatarImage,
 			shape.getIntX(),
 			shape.getIntY(),
 			getWidth(),

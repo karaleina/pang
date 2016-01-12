@@ -31,7 +31,7 @@ public class Heart extends ExtraObject {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
-			ImageLoader.heartImage,
+			ImageLoader.getInstance().heartImage,
 			shape.getIntX(),
 			shape.getIntY(),
 			getWidth(),
