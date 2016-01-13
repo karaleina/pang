@@ -1,6 +1,5 @@
 package org.eiti.java.pang.game;
 
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +14,7 @@ import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.NoBallsLeftListener;
 import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 import org.eiti.java.pang.game.events.PlayerHitByBallListener;
-import org.eiti.java.pang.global.GlobalConstantsLoader;
+import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
@@ -33,8 +32,6 @@ public class Game {
 
 	private GameThread gameThread;
 	
-	private PlayerAvatar playerAvatar;
-	
 	private GameScore score = new GameScore();
 	
 	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
@@ -42,7 +39,7 @@ public class Game {
 
 	private String nickname;
 	
-	private int startingLives = GlobalConstantsLoader.initialLives;
+	private int startingLives = GlobalConstants.initialLives;
 
 
 	public Game() {
@@ -56,12 +53,6 @@ public class Game {
 		status = GameStatus.NOT_STARTED;
 		clearBoard();
 		score.clear();
-		playerAvatar = new PlayerAvatar(
-			new Point2D.Double(
-				GAME_WORLD_SIZE.width / 2 - playerAvatar.getWidth() / 2,
-				GAME_WORLD_SIZE.height - playerAvatar.getHeight()),
-			startingLives,
-			GAME_WORLD_SIZE);
 	}
 
 	private void reset() {
@@ -89,7 +80,7 @@ public class Game {
 	
 	private void updateGlobalConfiguration() throws Exception {
 		XMLGlobalConfiguration configuration = configurationProvider.getGlobalConfiguration();
-		GlobalConstantsLoader.setConstants(configuration);
+		GlobalConstants.setConstants(configuration);
 	}
 	
 	public ConfigurationProvider getConfigurationProvider() {
@@ -113,7 +104,8 @@ public class Game {
 		checkLevelExistence(nextLevelNumber);
 		level = getGameLevel(nextLevelNumber);
 		setupLevel();
-		playerAvatar.setWeapon(new StandardWeapon(new Point2D.Double(0, 0), GAME_WORLD_SIZE));
+		PlayerAvatar.getInstance().setWeapon(new StandardWeapon(new Point2D.Double(0, 0),
+				GlobalConstants.GAME_WORLD_SIZE));
 	}
 	
 	private void checkLevelExistence(int nextLevelNumber) throws NoMoreLevelsException {
@@ -153,7 +145,7 @@ public class Game {
 			public void onBallDestroyed(Ball b) {
 				int ballLevel = b.getBallLevel();
 				int pointsForBall = powerOf2(ballLevel);
-				if(playerAvatar.getWeapon() instanceof StandardWeapon) {
+				if(PlayerAvatar.getInstance().getWeapon() instanceof StandardWeapon) {
 					// 2 ^ ballLevel * levelNumber
 					score.updateScore(pointsForBall * level.getLevelNumber());
 				} else {
@@ -184,8 +176,8 @@ public class Game {
 		level.addPlayerHitByBallListener(new PlayerHitByBallListener() {
 			@Override
 			public void onPlayerHitByBall() {
-				playerAvatar.setLives(playerAvatar.getLives() - 1);
-				if(playerAvatar.getLives() <= 0) {
+				PlayerAvatar.getInstance().setLives(PlayerAvatar.getInstance().getLives() - 1);
+				if(PlayerAvatar.getInstance().getLives() <= 0) {
 					gameOver();
 				} else {
 					resetLevel();
@@ -263,7 +255,7 @@ public class Game {
 			return new GameLevel(
 				levelNumber,
 				configurationProvider.getLevelConfiguration(levelNumber),
-				playerAvatar);
+				PlayerAvatar.getInstance());
 		} catch(Exception exc) {
 			throw new RuntimeException(exc);
 		}

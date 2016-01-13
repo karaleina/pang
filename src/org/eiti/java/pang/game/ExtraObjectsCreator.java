@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.Heart;
@@ -38,11 +39,11 @@ public class ExtraObjectsCreator {
 		case heart:
 			return new Heart(
 				calculateExtraObjectPosition(level, Heart.getWidth(), Heart.getHeight()),
-				Game.GAME_WORLD_SIZE);
+				GlobalConstants.GAME_WORLD_SIZE);
 		case superWeapon:
 			return new SuperWeapon(
 				calculateExtraObjectPosition(level, SuperWeapon.getWidth(), SuperWeapon.getHeight()),
-				Game.GAME_WORLD_SIZE);
+				GlobalConstants.GAME_WORLD_SIZE);
 		default:
 			throw new RuntimeException("Unexpected extra object type!");
 		}
@@ -54,7 +55,7 @@ public class ExtraObjectsCreator {
 		int avatarXPosition =  avatar.getRectangularShape().getIntX();
 		
 		int rangePivot = avatarXPosition - objectWidth;
-		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - playerAvatar.getWidth();
+		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - PlayerAvatar.getInstance().getWidth();
 		int randomPosition = Math.abs(randomGenerator.nextInt()) % rangeWidth;
 		
 		if(randomPosition < rangePivot) {
@@ -63,7 +64,7 @@ public class ExtraObjectsCreator {
 				level.getGameWorldSize().height - objectHeight);
 		} else {
 			return new Point2D.Double(
-				objectWidth + playerAvatar.getWidth() + randomPosition,
+				objectWidth + PlayerAvatar.getInstance().getWidth() + randomPosition,
 				level.getGameWorldSize().height - objectHeight);
 		}
 	}

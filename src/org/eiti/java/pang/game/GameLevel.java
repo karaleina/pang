@@ -14,7 +14,7 @@ import org.eiti.java.pang.config.xml.XMLGameLevelConfiguration;
 import org.eiti.java.pang.game.events.BallDestroyedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.game.events.MissileWindowExitListener;
-import org.eiti.java.pang.global.GlobalConstantsLoader;
+import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.game.events.NoBallsLeftListener;
 import org.eiti.java.pang.game.events.TimeLeftChangedListener;
@@ -253,7 +253,7 @@ public class GameLevel implements Drawable {
 	private void shootMissile() {
 		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_SPACE)) {
 			long timestamp = System.currentTimeMillis();
-			if(timestamp - lastShotTimestamp >= GlobalConstantsLoader.minTimeBetweenShots) {
+			if(timestamp - lastShotTimestamp >= GlobalConstants.minTimeBetweenShots) {
 				final Missile shotMissile = playerAvatar.shoot();
 				shotMissile.addMissileWindowExitListener(new MissileWindowExitListener() {
 					@Override
@@ -273,10 +273,10 @@ public class GameLevel implements Drawable {
 	private void movePlayerAvatar(double dt) {
 		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT) &&
 				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT)) {
-			playerAvatar.setVelocity(-GlobalConstantsLoader.playerVelocity);
+			playerAvatar.setVelocity(-GlobalConstants.playerVelocity);
 		} else if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT) &&
 				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT)) {
-			playerAvatar.setVelocity(GlobalConstantsLoader.playerVelocity);
+			playerAvatar.setVelocity(GlobalConstants.playerVelocity);
 		} else {
 			playerAvatar.setVelocity(0.0);
 		}

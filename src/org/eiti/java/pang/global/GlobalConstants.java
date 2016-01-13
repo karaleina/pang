@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 
 import org.eiti.java.pang.config.xml.XMLGlobalConfiguration;
 
-public class GlobalConstantsLoader {
+public class GlobalConstants {
 	
 	public static String title;
 	public static Dimension gameWindowSize;

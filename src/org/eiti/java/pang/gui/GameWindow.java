@@ -1,6 +1,6 @@
 package org.eiti.java.pang.gui;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -14,6 +14,7 @@ import org.eiti.java.pang.game.GameInitParameters;
 import org.eiti.java.pang.game.GameStatus;
 import org.eiti.java.pang.game.events.GameFinishedListener;
 import org.eiti.java.pang.global.ImageLoader;
+import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
@@ -167,8 +168,16 @@ public class GameWindow extends JFrame {
 
 		quitGame.addActionListener((e) -> this.dispose());  //e is an ActionListener
 
-		theme1.addActionListener((e) -> ImageLoader.getInstance().update("res/config/theme1.xml"));
-		theme2.addActionListener((e) -> ImageLoader.getInstance().update("res/config/theme2.xml"));
+		theme1.addActionListener((e) -> {
+			ImageLoader.getInstance().update("res/config/theme1.xml");
+			PlayerAvatar.getInstance();
+			gamePanel.repaint();
+		});
+		theme2.addActionListener((e) ->{
+			ImageLoader.getInstance().update("res/config/theme2.xml");
+			PlayerAvatar.getInstance();
+			gamePanel.repaint();
+		});
 
 		help.addActionListener(e -> {
             HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
