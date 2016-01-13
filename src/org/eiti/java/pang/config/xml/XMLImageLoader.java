@@ -1,5 +1,6 @@
 package org.eiti.java.pang.config.xml;
 
+import java.awt.Dimension;
 import java.io.FileInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,26 +22,41 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	public String getBackgroundPath() throws XPathExpressionException {
-		return xpath.compile("//background").evaluate(xmlDocument);
+		return xpath.compile("//imagepaths/background").evaluate(xmlDocument);
 	}
 
 	public String getHeartImagePath() throws XPathExpressionException{
-		return xpath.compile("//heartImage").evaluate(xmlDocument);	}
+		return xpath.compile("//imagepaths/heartImage").evaluate(xmlDocument);	}
 
 	public String getPlayerAvatarImage() throws XPathExpressionException {
-		return xpath.compile("//playerAvatarImage").evaluate(xmlDocument);
+		return xpath.compile("//imagepaths/playerAvatarImage").evaluate(xmlDocument);
 	}
 
-	public String getStandardMissileImage() throws XPathExpressionException{
-		return xpath.compile("//standardMissileImage").evaluate(xmlDocument);
+	public String getStandardMissileImage() throws XPathExpressionException {
+		return xpath.compile("//imagepaths/standardMissileImage").evaluate(xmlDocument);
 	}
 
-	public String getSuperMissileImage() throws XPathExpressionException{
-		return xpath.compile("//superMissileImage").evaluate(xmlDocument);
+	public String getSuperMissileImage() throws XPathExpressionException {
+		return xpath.compile("//imagepaths/superMissileImage").evaluate(xmlDocument);
 	}
 
-	public String getSuperWeaponImage() throws XPathExpressionException{
-		return xpath.compile("//superWeaponImage").evaluate(xmlDocument);
+	public String getSuperWeaponImage() throws XPathExpressionException {
+		return xpath.compile("//imagepaths/superWeaponImage").evaluate(xmlDocument);
 	}
+
+	public Dimension getPlayerAvatarDim() throws XPathExpressionException {
+		int PAWidth  = Integer.parseInt(xpath.compile("//dimensions/playerAvatarWidth").evaluate(xmlDocument));
+		int PAHeight = Integer.parseInt(xpath.compile("//dimensions/playerAvatarHeight").evaluate(xmlDocument));
+		return new Dimension(PAWidth, PAHeight);
+	}
+
+	public int getPlayerAvatarWidth() throws  XPathExpressionException {
+		return Integer.parseInt(xpath.compile("//dimensions/playerAvatarWidth").evaluate(xmlDocument));
+	}
+
+	public int getPlayerAvatarHeight() throws  XPathExpressionException {
+		return Integer.parseInt(xpath.compile("//dimensions/playerAvatarHeight").evaluate(xmlDocument));
+	}
+
 
 }

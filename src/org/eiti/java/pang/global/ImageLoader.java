@@ -1,6 +1,7 @@
 package org.eiti.java.pang.global;
 
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,12 +14,15 @@ import org.eiti.java.pang.config.xml.XMLImageLoader;
 
 public class ImageLoader {
 	
-	public  BufferedImage background;
-	public  BufferedImage playerAvatarImage;
-	public  BufferedImage standardMissileImage;
-	public  BufferedImage superMissileImage;
-	public  BufferedImage superWeaponImage;
-	public  BufferedImage heartImage;
+	public BufferedImage background;
+	public BufferedImage playerAvatarImage;
+	public BufferedImage standardMissileImage;
+	public BufferedImage superMissileImage;
+	public BufferedImage superWeaponImage;
+	public BufferedImage heartImage;
+	public Dimension playerAvatarDimensions;
+	public int playerAvatarWidth;
+	public int playerAvatarHeight;
 
 	private static ImageLoader instance = null;	//a singleton
 	public static ImageLoader getInstance() {
@@ -35,13 +39,17 @@ public class ImageLoader {
 
 	public void update(String themeConfigPath) {
 		try {
-			XMLImageLoader paths = new XMLImageLoader(themeConfigPath);
-			background = ImageIO.read(new FileInputStream(paths.getBackgroundPath()));
-			heartImage = ImageIO.read(new FileInputStream(paths.getHeartImagePath()));
-			playerAvatarImage = ImageIO.read(new FileInputStream(paths.getPlayerAvatarImage()));
-			standardMissileImage = ImageIO.read(new FileInputStream(paths.getStandardMissileImage()));
-			superMissileImage = ImageIO.read(new FileInputStream(paths.getSuperMissileImage()));
-			superWeaponImage = ImageIO.read(new FileInputStream(paths.getSuperWeaponImage()));
+			XMLImageLoader config = new XMLImageLoader(themeConfigPath);
+			background = ImageIO.read(new FileInputStream(config.getBackgroundPath()));
+			heartImage = ImageIO.read(new FileInputStream(config.getHeartImagePath()));
+			playerAvatarImage = ImageIO.read(new FileInputStream(config.getPlayerAvatarImage()));
+			standardMissileImage = ImageIO.read(new FileInputStream(config.getStandardMissileImage()));
+			superMissileImage = ImageIO.read(new FileInputStream(config.getSuperMissileImage()));
+			superWeaponImage = ImageIO.read(new FileInputStream(config.getSuperWeaponImage()));
+
+			playerAvatarDimensions = config.getPlayerAvatarDim();
+			playerAvatarWidth = config.getPlayerAvatarWidth();
+			playerAvatarHeight = config.getPlayerAvatarHeight();
 
 		} catch (FileNotFoundException exc) {
 			exc.printStackTrace();

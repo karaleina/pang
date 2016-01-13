@@ -43,8 +43,7 @@ public class Game {
 	private String nickname;
 	
 	private int startingLives = GlobalConstantsLoader.initialLives;
-	
-	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
+
 
 	public Game() {
 		reset();
@@ -59,8 +58,8 @@ public class Game {
 		score.clear();
 		playerAvatar = new PlayerAvatar(
 			new Point2D.Double(
-				GAME_WORLD_SIZE.width / 2 - PlayerAvatar.getWidth() / 2,
-				GAME_WORLD_SIZE.height - PlayerAvatar.getHeight()),
+				GAME_WORLD_SIZE.width / 2 - playerAvatar.getWidth() / 2,
+				GAME_WORLD_SIZE.height - playerAvatar.getHeight()),
 			startingLives,
 			GAME_WORLD_SIZE);
 	}

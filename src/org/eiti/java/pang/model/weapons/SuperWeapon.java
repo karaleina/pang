@@ -24,8 +24,8 @@ public class SuperWeapon extends Weapon {
 			ExtraObjectType.superWeapon,
 			new Rectangle(
 				position,
-				getWidth(),
-				getHeight()),
+				new Dimension(getWidth(),	//TODO rewrite it more properly
+				getHeight())),
 			gameWorldSize);
 	}
 

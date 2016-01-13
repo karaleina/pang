@@ -18,8 +18,8 @@ public class StandardMissile extends Missile {
 		super(
 			new Rectangle(
 				position,
-				WIDTH,
-				HEIGHT),
+					new Dimension(WIDTH,	//TODO rewrite it more properly
+							HEIGHT)),
 			gameWorldSize);
 	}
 

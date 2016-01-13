@@ -14,6 +14,8 @@ public class GlobalConstantsLoader {
     public static double gravity;
     public static double playerVelocity;
     public static long minTimeBetweenShots;
+
+	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
 		
 	static {
 		try {

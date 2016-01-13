@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
+import org.eiti.java.pang.global.GlobalConstantsLoader;
 import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.weapons.Missile;
@@ -13,28 +14,39 @@ import org.eiti.java.pang.model.weapons.Weapon;
 public class PlayerAvatar extends GameObject {
 	
 	private int lives;
+	private int width;
+	private int height;
 	private Weapon weapon;
-	
 	private double velocity;
 
-	public static int getWidth() {
-		return 60;
+	private static PlayerAvatar instance = null;
+	public static  PlayerAvatar getInstance() {
+		if (instance == null) {
+			instance = new PlayerAvatar(
+					GlobalConstantsLoader.initialLives,
+					GlobalConstantsLoader.GAME_WORLD_SIZE,
+					ImageLoader.getInstance().playerAvatarWidth,
+					ImageLoader.getInstance().playerAvatarHeight);
+		}
+		return instance;
 	}
 
-	public static int getHeight() {
-		return 160;
-	}
-	
-	public PlayerAvatar(Point2D position, int initialLives, Dimension gameWorldSize) {
+	public PlayerAvatar(int initialLives, Dimension gameWorldSize, int width, int height) {
 		super(new Rectangle(
-				position,
-				getWidth(),
-				getHeight()),
+				new Point2D.Double(
+						GlobalConstantsLoader.GAME_WORLD_SIZE.width / 2 - width / 2,
+						GlobalConstantsLoader.GAME_WORLD_SIZE.height - height
+				),
+				ImageLoader.getInstance().playerAvatarDimensions),
 				gameWorldSize);
-		
+		this.width = (int) ImageLoader.getInstance().playerAvatarDimensions.getWidth();
+		this.height = (int) ImageLoader.getInstance().playerAvatarDimensions.getHeight();
 		this.lives = initialLives;
 		this.weapon = new StandardWeapon(position, gameWorldSize);
 	}
+
+	public int getWidth() {return width;}
+	public int getHeight() {return height;}
 
 	public int getLives() {
 		return lives;

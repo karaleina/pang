@@ -13,7 +13,7 @@ public class StandardWeapon extends Weapon {
 	public StandardWeapon(Point2D position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.standardWeapon,
-			new Rectangle(position, 0, 0),
+			new Rectangle(position, new Dimension(0, 0)			),
 			gameWorldSize);
 	}
 

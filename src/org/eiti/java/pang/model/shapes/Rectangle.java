@@ -1,27 +1,21 @@
 package org.eiti.java.pang.model.shapes;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.model.Collidable;
 
 public class Rectangle extends Shape {
 	
-	private int width;
-	private int height;
+	private Dimension dimension;
 
-	public Rectangle(Point2D position, int width, int height) {
+	public Rectangle(Point2D position, Dimension dim) {
 		super(position);
-		this.width = width;
-		this.height = height;
+		this.dimension = dim;
 	}
 	
-	public int getWidth() {
-		return width;
-	}
-	
-	public int getHeight() {
-		return height;
-	}
+	public int getWidth()  {return (int) dimension.getWidth(); }
+	public int getHeight() {return (int) dimension.getHeight();}
 
 	@Override
 	public boolean collidesWith(Collidable c) {

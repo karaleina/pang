@@ -93,15 +93,15 @@ public class GameLevel implements Drawable {
 		Dimension gameLevelSize = getGameWorldSize();
 
 		if(playerPosition.equals("left")) {
-			avatar.moveTo(0, gameLevelSize.height - PlayerAvatar.getHeight());
+			avatar.moveTo(0, gameLevelSize.height - playerAvatar.getHeight());
 		} else if(playerPosition.equals("center")) {
 			avatar.moveTo(
-					gameLevelSize.width / 2 - PlayerAvatar.getWidth() / 2,
-					gameLevelSize.height - PlayerAvatar.getHeight());
+					gameLevelSize.width / 2 - playerAvatar.getWidth() / 2,
+					gameLevelSize.height - playerAvatar.getHeight());
 		} else if(playerPosition.equals("right")) {
 			avatar.moveTo(
-					gameLevelSize.width - PlayerAvatar.getWidth(),
-					gameLevelSize.height - PlayerAvatar.getHeight());
+					gameLevelSize.width - playerAvatar.getWidth(),
+					gameLevelSize.height - playerAvatar.getHeight());
 		} else {
 			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
 		}

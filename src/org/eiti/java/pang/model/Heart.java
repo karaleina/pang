@@ -22,8 +22,8 @@ public class Heart extends ExtraObject {
 			ExtraObjectType.heart,
 			new Rectangle(
 				position,
-				getWidth(),
-				getHeight()),
+					new Dimension(getWidth(),	//TODO rewrite it more properly
+							getHeight())),
 			gameWorldSize);
 	}
 	

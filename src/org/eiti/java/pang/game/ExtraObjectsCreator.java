@@ -54,7 +54,7 @@ public class ExtraObjectsCreator {
 		int avatarXPosition =  avatar.getRectangularShape().getIntX();
 		
 		int rangePivot = avatarXPosition - objectWidth;
-		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - PlayerAvatar.getWidth();
+		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - playerAvatar.getWidth();
 		int randomPosition = Math.abs(randomGenerator.nextInt()) % rangeWidth;
 		
 		if(randomPosition < rangePivot) {
@@ -63,7 +63,7 @@ public class ExtraObjectsCreator {
 				level.getGameWorldSize().height - objectHeight);
 		} else {
 			return new Point2D.Double(
-				objectWidth + PlayerAvatar.getWidth() + randomPosition,
+				objectWidth + playerAvatar.getWidth() + randomPosition,
 				level.getGameWorldSize().height - objectHeight);
 		}
 	}

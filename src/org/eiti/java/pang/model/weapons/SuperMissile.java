@@ -18,8 +18,8 @@ public class SuperMissile extends Missile {
 		super(
 			new Rectangle(
 				position,
-				WIDTH,
-				HEIGHT),
+				new Dimension(WIDTH,
+				HEIGHT)),
 			gameWorldSize);
 	}
 
