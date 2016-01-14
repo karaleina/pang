@@ -10,5 +10,7 @@
     <dimensions>
         <playerAvatarWidth>60</playerAvatarWidth>
         <playerAvatarHeight>160</playerAvatarHeight>
+        <superWeaponWidth>90</superWeaponWidth>
+        <superWeaponHeight>60</superWeaponHeight>
     </dimensions>
 </theme>

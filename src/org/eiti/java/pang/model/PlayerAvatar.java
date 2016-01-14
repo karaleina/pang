@@ -28,7 +28,7 @@ public class PlayerAvatar extends GameObject {
 					ImageLoader.getInstance().playerAvatarWidth,
 					ImageLoader.getInstance().playerAvatarHeight);
 		}
-		instance.updateSize();
+		//instance.updateSize();
 		return instance;
 	}
 
@@ -40,13 +40,13 @@ public class PlayerAvatar extends GameObject {
 				),
 				ImageLoader.getInstance().playerAvatarDimensions),
 				gameWorldSize);
-		this.width = (int) ImageLoader.getInstance().playerAvatarDimensions.getWidth();
-		this.height = (int) ImageLoader.getInstance().playerAvatarDimensions.getHeight();
+		this.width  = ImageLoader.getInstance().playerAvatarWidth;
+		this.height = ImageLoader.getInstance().playerAvatarHeight;
 		this.lives = initialLives;
 		this.weapon = new StandardWeapon(new Point2D.Double(0,0), gameWorldSize);
 	}
 
-	private void updateSize(){
+	public void resize(){
 		this.width  = ImageLoader.getInstance().playerAvatarWidth;
 		this.height = ImageLoader.getInstance().playerAvatarHeight;
 	}

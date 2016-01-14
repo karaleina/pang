@@ -58,5 +58,14 @@ public class XMLImageLoader extends XMLParser{
 		return Integer.parseInt(xpath.compile("//dimensions/playerAvatarHeight").evaluate(xmlDocument));
 	}
 
+	public int getSuperWeaponWidth() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/superWeaponWidth").evaluate(xmlDocument));
+	}
+
+	public int getSuperWeaponHeight() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/superWeaponHeight").evaluate(xmlDocument));
+	}
+
+
 
 }

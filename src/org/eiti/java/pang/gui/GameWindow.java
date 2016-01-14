@@ -170,12 +170,12 @@ public class GameWindow extends JFrame {
 
 		theme1.addActionListener((e) -> {
 			ImageLoader.getInstance().update("res/config/theme1.xml");
-			PlayerAvatar.getInstance();
+			PlayerAvatar.getInstance().resize();
 			gamePanel.repaint();
 		});
 		theme2.addActionListener((e) ->{
 			ImageLoader.getInstance().update("res/config/theme2.xml");
-			PlayerAvatar.getInstance();
+			PlayerAvatar.getInstance().resize();
 			gamePanel.repaint();
 		});
 

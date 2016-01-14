@@ -23,6 +23,8 @@ public class ImageLoader {
 	public Dimension playerAvatarDimensions;
 	public int playerAvatarWidth;
 	public int playerAvatarHeight;
+	public int superWeaponWidth;
+	public int superWeaponHeight;
 
 	private static ImageLoader instance = null;	//a singleton
 	public static ImageLoader getInstance() {
@@ -48,8 +50,11 @@ public class ImageLoader {
 			superWeaponImage = ImageIO.read(new FileInputStream(config.getSuperWeaponImage()));
 
 			playerAvatarDimensions = config.getPlayerAvatarDim();
+
 			playerAvatarWidth = config.getPlayerAvatarWidth();
 			playerAvatarHeight = config.getPlayerAvatarHeight();
+			superWeaponWidth = config.getSuperWeaponWidth();
+			superWeaponHeight = config.getSuperWeaponHeight();
 
 		} catch (FileNotFoundException exc) {
 			exc.printStackTrace();

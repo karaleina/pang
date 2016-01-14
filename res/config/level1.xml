@@ -36,7 +36,7 @@
 	</balls>
 	<extraObjects>
 		<!-- probabilities of appearance per second -->
-		<heart>0.1</heart>
+		<heart>0.01</heart>
 		<superWeapon>0.1</superWeapon>
 	</extraObjects>
 </level>

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.eiti.java.pang.global.GlobalConstants;
+import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.ExtraObject;
 import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.Heart;
@@ -42,7 +43,12 @@ public class ExtraObjectsCreator {
 				GlobalConstants.GAME_WORLD_SIZE);
 		case superWeapon:
 			return new SuperWeapon(
-				calculateExtraObjectPosition(level, SuperWeapon.getWidth(), SuperWeapon.getHeight()),
+				calculateExtraObjectPosition(
+						level,
+						ImageLoader.getInstance().superWeaponWidth,
+						ImageLoader.getInstance().superWeaponHeight),
+				ImageLoader.getInstance().superWeaponWidth,
+				ImageLoader.getInstance().superWeaponHeight,
 				GlobalConstants.GAME_WORLD_SIZE);
 		default:
 			throw new RuntimeException("Unexpected extra object type!");
