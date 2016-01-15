@@ -58,19 +58,18 @@ public class GameLevel implements Drawable {
 
 	public GameLevel(
 			int levelNumber,
-			XMLGameLevelConfiguration configuration,
-			PlayerAvatar playerAvatar) {
+			XMLGameLevelConfiguration configuration) {
 		
-		this.levelNumber = levelNumber; //TODO to też powinno być parsowane
+		this.levelNumber = levelNumber;
 		
 		try {
 			timeForLevel = configuration.getTimeForLevel();
 			timeLeft = timeForLevel;
 			gameWorldSize = configuration.getGameWorldSize();
 			balls = configuration.getBalls();
-			this.playerAvatar = playerAvatar;
+			this.playerAvatar = PlayerAvatar.getInstance();
 			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
-			setupPayerAvatar(playerAvatarPosition, playerAvatar);
+			PlayerAvatar.getInstance().setPosition(playerAvatarPosition, gameWorldSize);
 			extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
 		} catch (XPathExpressionException e) {
 			String errorMessage = "invalid level" + levelNumber + ".xml file";
@@ -87,24 +86,6 @@ public class GameLevel implements Drawable {
 				extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(GameLevel.this));
 			}
 		});
-	}
-	private void setupPayerAvatar(String playerPosition, PlayerAvatar avatar) {
-
-		Dimension gameLevelSize = getGameWorldSize();
-
-		if(playerPosition.equals("left")) {
-			avatar.moveTo(0, gameLevelSize.height - playerAvatar.getHeight());
-		} else if(playerPosition.equals("center")) {
-			avatar.moveTo(
-					gameLevelSize.width / 2 - playerAvatar.getWidth() / 2,
-					gameLevelSize.height - playerAvatar.getHeight());
-		} else if(playerPosition.equals("right")) {
-			avatar.moveTo(
-					gameLevelSize.width - playerAvatar.getWidth(),
-					gameLevelSize.height - playerAvatar.getHeight());
-		} else {
-			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
-		}
 	}
 
 	public int getLevelNumber() {
@@ -143,7 +124,7 @@ public class GameLevel implements Drawable {
 	}
 	
 	public PlayerAvatar getPlayerAvatar() {
-		return playerAvatar;
+		return PlayerAvatar.getInstance();
 	}
 	
 	public void spawnExtraObjects() {

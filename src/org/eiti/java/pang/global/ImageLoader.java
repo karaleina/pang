@@ -15,14 +15,22 @@ import org.eiti.java.pang.config.xml.XMLImageLoader;
 public class ImageLoader {
 	
 	public BufferedImage background;
+	public BufferedImage heartImage;
 	public BufferedImage playerAvatarImage;
 	public BufferedImage standardMissileImage;
 	public BufferedImage superMissileImage;
 	public BufferedImage superWeaponImage;
-	public BufferedImage heartImage;
+
 	public Dimension playerAvatarDimensions;
+
+	public int heartWidth;
+	public int heartHeight;
 	public int playerAvatarWidth;
 	public int playerAvatarHeight;
+	public int standardMissileWidth;
+	public int standardMissileHeight;
+	public int superMissileWidth;
+	public int superMissileHeight;
 	public int superWeaponWidth;
 	public int superWeaponHeight;
 
@@ -51,8 +59,14 @@ public class ImageLoader {
 
 			playerAvatarDimensions = config.getPlayerAvatarDim();
 
+			heartWidth = config.getHeartWidth();
+			heartHeight = config.getHeartHeight();
 			playerAvatarWidth = config.getPlayerAvatarWidth();
 			playerAvatarHeight = config.getPlayerAvatarHeight();
+			standardMissileWidth = config.getStandardMissileWidth();
+			standardMissileHeight = config.getStandardMissileHeight();
+			superMissileWidth = config.getSuperMissileWidth();
+			superMissileHeight = config.getSuperMissileHeight();
 			superWeaponWidth = config.getSuperWeaponWidth();
 			superWeaponHeight = config.getSuperWeaponHeight();
 

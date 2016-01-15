@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import org.eiti.java.pang.model.shapes.Shape;
 
+
 public abstract class GameObject implements Drawable {
 	
 	protected Shape shape;
@@ -16,7 +17,7 @@ public abstract class GameObject implements Drawable {
 	}
 
 	/**
-	 * A game object can become moveable by overriding
+	 * A game object can become movable by overriding
 	 * this method. Method move(dt) should change object's
 	 * location after given time interval.
 	 * 

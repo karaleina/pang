@@ -8,12 +8,7 @@ import org.eiti.java.pang.config.ConfigurationProvider;
 import org.eiti.java.pang.config.LocalConfigurationProvider;
 import org.eiti.java.pang.config.NetworkConfigurationProvider;
 import org.eiti.java.pang.config.xml.XMLGlobalConfiguration;
-import org.eiti.java.pang.game.events.BallDestroyedListener;
-import org.eiti.java.pang.game.events.GameFinishedListener;
-import org.eiti.java.pang.game.events.GameLevelChangedListener;
-import org.eiti.java.pang.game.events.NoBallsLeftListener;
-import org.eiti.java.pang.game.events.TimeLeftChangedListener;
-import org.eiti.java.pang.game.events.PlayerHitByBallListener;
+import org.eiti.java.pang.game.events.*;
 import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.PlayerAvatar;
@@ -36,6 +31,7 @@ public class Game {
 	
 	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
 	private Set<GameFinishedListener> gameFinishedListeners = new HashSet<>();
+	private Set<GamePausedListener> gamePausedListeners = new HashSet<>();
 
 	private String nickname;
 	
@@ -230,18 +226,10 @@ public class Game {
 		}
 	}
 	
-	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
-		gameLevelChangedListeners.add(listener);
-	}
-	
 	private void fireGameLevelChangedEvent() {
 		for(GameLevelChangedListener listener : gameLevelChangedListeners) {
 			listener.onGameLevelChanged(level);
 		}
-	}
-	
-	public void addGameFinishedListener(GameFinishedListener listener) {
-		gameFinishedListeners.add(listener);
 	}
 	
 	private void fireGameFinishedEvent(boolean completed) {
@@ -254,8 +242,7 @@ public class Game {
 		try {
 			return new GameLevel(
 				levelNumber,
-				configurationProvider.getLevelConfiguration(levelNumber),
-				PlayerAvatar.getInstance());
+				configurationProvider.getLevelConfiguration(levelNumber));
 		} catch(Exception exc) {
 			throw new RuntimeException(exc);
 		}
@@ -265,4 +252,15 @@ public class Game {
 		private static final long serialVersionUID = 1L;
 	}
 
+	public void addGameFinishedListener(GameFinishedListener listener) {
+		gameFinishedListeners.add(listener);
+	}
+
+	public void addGameLevelChangedListener(GameLevelChangedListener listener) {
+		gameLevelChangedListeners.add(listener);
+	}
+
+	public void addGamePausedListener(GamePausedListener listener){
+		gamePausedListeners.add(listener);
+	}
 }

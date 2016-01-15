@@ -80,6 +80,23 @@ public class PlayerAvatar extends GameObject {
 	public void setVelocity(double velocity) {
 		this.velocity = velocity;
 	}
+
+	public void setPosition(String playerPosition, Dimension gameLevelSize) {
+
+		if(playerPosition.equals("left")) {
+			this.moveTo(0, gameLevelSize.height - this.height);
+		} else if(playerPosition.equals("center")) {
+			this.moveTo(
+					gameLevelSize.width / 2 - this.width / 2,
+					gameLevelSize.height - this.height);
+		} else if(playerPosition.equals("right")) {
+			this.moveTo(
+					gameLevelSize.width - this.width,
+					gameLevelSize.height - this.height);
+		} else {
+			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
+		}
+	}
 	
 	@Override
 	public void move(double dt) {

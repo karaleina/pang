@@ -11,25 +11,29 @@ import javax.xml.xpath.XPathFactory;
 
 /**
  * This class reads global configuration of the game from an XML document. The document should fit to following template:
-* <global>
-*     <title>Pang</title>
-*     <gameWindowSize>
-*     <width>650</width>
-*         <height>400</height>
-*         </gameWindowSize>
-*     <lives>5</lives>
-*     <!-- pixels / ms^2 -->
-*     <gravity>0.0001</gravity>
-*     <!-- pixels / ms -->
-*     <playerVelocity>0.16</playerVelocity>
-*     <!-- milliseconds -->
-*     <minTimeBetweenShots>500</minTimeBetweenShots>
-* </global>
-*
-*
+ * <global>
+ *     <title>Pang</title>
+ *     <gameWindowSize>
+ *     <width>650</width>
+ *         <height>400</height>
+ *         </gameWindowSize>
+ *     <lives>5</lives>
+ *     <!-- pixels / ms^2 -->
+ *     <gravity>0.0001</gravity>
+ *     <!-- pixels / ms -->
+ *     <playerVelocity>0.16</playerVelocity>
+ *     <!-- milliseconds -->
+ *     <minTimeBetweenShots>500</minTimeBetweenShots>
+ * </global>
+ *
  */
 public class XMLGlobalConfiguration extends XMLParser {
-
+    /**
+     *
+     * @param inputStream The input stream of bytes consist of an XML file,
+     *                    which either should lie under "res/config/global.xml" or should be sent by a server.
+     * @throws Exception An exception is thrown when file does not exists or is not correct in a sense of XML syntax
+     */
     public XMLGlobalConfiguration(InputStream inputStream) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         xmlDocument = builder.parse(inputStream);
@@ -61,8 +65,4 @@ public class XMLGlobalConfiguration extends XMLParser {
 	public long getMinTimeBetweenShots() throws XPathExpressionException {
 		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
 	}
-
-    public String getBestScoresPath() throws XPathExpressionException {
-        return xpath.compile("//bestScoresPath").evaluate(xmlDocument);
-    }
 }

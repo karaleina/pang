@@ -8,23 +8,19 @@ import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class Heart extends ExtraObject {
+
+	private int width;
+	private int height;
 	
-	public static int getWidth() {
-		return 60;
-	}
-	
-	public static int getHeight() {
-		return 60;
-	}
-	
-	public Heart(Point2D position, Dimension gameWorldSize) {
+	public Heart(Point2D position, int width, int height, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.heart,
 			new Rectangle(
-				position,
-					new Dimension(getWidth(),	//TODO rewrite it more properly
-							getHeight())),
+					position,
+					new Dimension(width, height)),
 			gameWorldSize);
+		this.width = width;
+		this.height = height;
 	}
 	
 
@@ -34,8 +30,8 @@ public class Heart extends ExtraObject {
 			ImageLoader.getInstance().heartImage,
 			shape.getIntX(),
 			shape.getIntY(),
-			getWidth(),
-			getHeight(),
+			width,
+			height,
 			null);
 	}
 

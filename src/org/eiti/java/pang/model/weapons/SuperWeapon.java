@@ -40,9 +40,11 @@ public class SuperWeapon extends Weapon {
 	public Missile shoot(PlayerAvatar shooter) {
 		return new SuperMissile(
 			calculateMissilePosition(
-				shooter,
-				SuperMissile.WIDTH,
-				SuperMissile.HEIGHT),
+						shooter,
+						ImageLoader.getInstance().superMissileWidth,
+						ImageLoader.getInstance().superMissileHeight),
+				ImageLoader.getInstance().superMissileWidth,
+				ImageLoader.getInstance().superMissileHeight,
 			gameWorldSize);
 	}
 

@@ -66,6 +66,29 @@ public class XMLImageLoader extends XMLParser{
 		return  Integer.parseInt(xpath.compile("//dimensions/superWeaponHeight").evaluate(xmlDocument));
 	}
 
+	public int getHeartWidth() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/heartWidth").evaluate(xmlDocument));
+	}
+
+	public int getHeartHeight() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/heartHeight").evaluate(xmlDocument));
+	}
+
+	public int getStandardMissileWidth() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/standardMissileWidth").evaluate(xmlDocument));
+	}
+
+	public int getStandardMissileHeight() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/standardMissileHeight").evaluate(xmlDocument));
+	}
+
+	public int getSuperMissileWidth() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/superMissileWidth").evaluate(xmlDocument));
+	}
+
+	public int getSuperMissileHeight() throws XPathExpressionException{
+		return  Integer.parseInt(xpath.compile("//dimensions/superMissileHeight").evaluate(xmlDocument));
+	}
 
 
 }

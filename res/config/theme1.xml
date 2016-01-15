@@ -8,9 +8,15 @@
         <superWeaponImage>res/themes/western/mauser.png</superWeaponImage>
     </imagepaths>
     <dimensions>
+        <heartWidth>60</heartWidth>
+        <heartHeight>60</heartHeight>
         <playerAvatarWidth>60</playerAvatarWidth>
         <playerAvatarHeight>160</playerAvatarHeight>
+        <standardMissileWidth>7</standardMissileWidth>
+        <standardMissileHeight>20</standardMissileHeight>
         <superWeaponWidth>90</superWeaponWidth>
         <superWeaponHeight>60</superWeaponHeight>
+        <superMissileWidth>7</superMissileWidth>
+        <superMissileHeight>30</superMissileHeight>
     </dimensions>
 </theme>

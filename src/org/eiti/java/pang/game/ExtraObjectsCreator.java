@@ -39,7 +39,12 @@ public class ExtraObjectsCreator {
 		switch(type) {
 		case heart:
 			return new Heart(
-				calculateExtraObjectPosition(level, Heart.getWidth(), Heart.getHeight()),
+				calculateExtraObjectPosition(
+						level,
+						ImageLoader.getInstance().heartWidth,
+						ImageLoader.getInstance().heartHeight),
+				ImageLoader.getInstance().heartWidth,
+				ImageLoader.getInstance().heartHeight,
 				GlobalConstants.GAME_WORLD_SIZE);
 		case superWeapon:
 			return new SuperWeapon(

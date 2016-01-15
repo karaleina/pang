@@ -11,16 +11,18 @@ import org.eiti.java.pang.model.shapes.Rectangle;
 
 public class SuperMissile extends Missile {
 
-	public final static int WIDTH = 7;
-	public final static int HEIGHT = 30;
+	private int width;
+	private int height;
 	
-	public SuperMissile(Point2D position, Dimension gameWorldSize) {
+	public SuperMissile(Point2D position, int width, int height, Dimension gameWorldSize) {
 		super(
 			new Rectangle(
 				position,
-				new Dimension(WIDTH,
-				HEIGHT)),
+				new Dimension(width,
+				height)),
 			gameWorldSize);
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
@@ -29,8 +31,8 @@ public class SuperMissile extends Missile {
 			ImageLoader.getInstance().superMissileImage,
 			shape.getIntX(),
 			shape.getIntY(),
-			getWidth(),
-			getHeight(),
+			width,
+			height,
 			null);
 	}
 
@@ -46,12 +48,12 @@ public class SuperMissile extends Missile {
 	
 	@Override
 	protected int getWidth() {
-		return 7;
+		return width;
 	}
 	
 	@Override
 	protected int getHeight() {
-		return 30;
+		return height;
 	}
 
 }
