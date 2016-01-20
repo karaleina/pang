@@ -23,6 +23,10 @@ public abstract class Shape implements Collidable {
 	public double getExactY() {
 		return position.getY();
 	}
+
+	public void setExactLocation(double X, double Y) {
+		position.setLocation(X,Y);
+	}
 	
 	public int getIntX() {
 		return (int) Math.round(position.getX());

@@ -7,6 +7,8 @@ public class GameThread extends Thread {
 	private long timeElapsed;
 	
 	private long previousUpdateTimestamp;
+
+	private boolean paused;
 	
 	private static final int UPDATE_INTERVAL_MILIS = 25;
 	
@@ -14,6 +16,7 @@ public class GameThread extends Thread {
 	
 	public GameThread(GameLevel level) {
 		this.level = level;
+		paused = false;
 	}
 	
 	@Override
@@ -22,6 +25,7 @@ public class GameThread extends Thread {
 			Thread.sleep(WARMUP_TIME_SECONDS * 1000);
 			while(!isInterrupted()) {
 				long dt = getTimeDiff();
+
 				timeElapsed += dt;
 				level.setTimeLeft(level.getTimeForLevel() - (int) (timeElapsed / 1000));
 				level.update((double) dt);
@@ -31,9 +35,11 @@ public class GameThread extends Thread {
 	}
 	
 	private long getTimeDiff() {
-		
+		//if (paused)
+		//	return 0;
+
 		long currentTimestamp = System.currentTimeMillis();
-		long dt = 0;
+		long dt;
 		
 		if(previousUpdateTimestamp == 0) {
 			dt = UPDATE_INTERVAL_MILIS;
@@ -44,4 +50,6 @@ public class GameThread extends Thread {
 		previousUpdateTimestamp = currentTimestamp;
 		return dt;
 	}
+
+
 }

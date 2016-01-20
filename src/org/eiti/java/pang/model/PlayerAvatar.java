@@ -49,6 +49,11 @@ public class PlayerAvatar extends GameObject {
 	public void resize(){
 		this.width  = ImageLoader.getInstance().playerAvatarWidth;
 		this.height = ImageLoader.getInstance().playerAvatarHeight;
+		shape = new Rectangle(
+				new Point2D.Double(
+						GlobalConstants.GAME_WORLD_SIZE.width / 2 - width / 2,
+						GlobalConstants.GAME_WORLD_SIZE.height - height	),
+				ImageLoader.getInstance().playerAvatarDimensions);
 	}
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
@@ -101,9 +106,12 @@ public class PlayerAvatar extends GameObject {
 	@Override
 	public void move(double dt) {
 		double newX = shape.getExactX() + velocity * dt;
-		if(newX >= 0 && newX <= gameWorldSize.getWidth() - getWidth()) {
+		if(newX >= 0 && newX <= gameWorldSize.getWidth() - this.width)
 			moveTo(newX, shape.getExactY());
-		}
+		else if(newX < 0)
+			moveTo(0, shape.getExactY());
+		else if(newX > gameWorldSize.getWidth() - this.width)
+			moveTo(gameWorldSize.getWidth() - this.width, shape.getExactY());
 	}
 
 	public void moveTo(double x, double y) {

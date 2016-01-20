@@ -31,7 +31,6 @@ public class Game {
 	
 	private Set<GameLevelChangedListener> gameLevelChangedListeners = new HashSet<>();
 	private Set<GameFinishedListener> gameFinishedListeners = new HashSet<>();
-	private Set<GamePausedListener> gamePausedListeners = new HashSet<>();
 
 	private String nickname;
 	
@@ -195,6 +194,16 @@ public class Game {
 		gameThread.start();
 		status = GameStatus.RUNNING;
 	}
+
+	/*public void pause() throws InterruptedException {
+		gameThread.togglePause();
+		status = GameStatus.PAUSED;
+	}
+
+	public void resume(){
+		gameThread.togglePause();
+		status = GameStatus.
+	}*/
 	
 	public void gameOver() {
 		cleanupAfterGame();
@@ -260,7 +269,4 @@ public class Game {
 		gameLevelChangedListeners.add(listener);
 	}
 
-	public void addGamePausedListener(GamePausedListener listener){
-		gamePausedListeners.add(listener);
-	}
 }

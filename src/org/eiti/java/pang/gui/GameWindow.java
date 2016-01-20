@@ -108,13 +108,17 @@ public class GameWindow extends JFrame {
 		KeyStroke ctrlN = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK);
 		newGame.setAccelerator(ctrlN);
 		gameMenu.add(newGame);
+
 		JMenuItem pause = new JMenuItem("Pause");
 		KeyStroke ctrlP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
 		pause.setAccelerator(ctrlP);
 		gameMenu.add(pause);
+
 		gameMenu.addSeparator();
 
 		JMenuItem bestScores = new JMenuItem("Best Scores");
+		KeyStroke ctrlB = KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK);
+		bestScores.setAccelerator(ctrlB);
 		gameMenu.add(bestScores);
 		gameMenu.addSeparator();
 
@@ -135,10 +139,12 @@ public class GameWindow extends JFrame {
 
 		ButtonGroup modes = new ButtonGroup();
 		JMenuItem standardMode = new JRadioButtonMenuItem("Standard Mode", true);
+		standardMode.setEnabled(false);
 		modes.add(standardMode);
 		settMenu.add(standardMode);
 
 		JMenuItem viMode = new JRadioButtonMenuItem("VI Mode", false);
+		viMode.setEnabled(false);
 		modes.add(viMode);
 		settMenu.add(viMode);
 
@@ -209,13 +215,15 @@ public class GameWindow extends JFrame {
 		BestScoresDialog bestScoresDialog = null;
 		try {
 			bestScoresDialog = new BestScoresDialog(
-				game.getConfigurationProvider().getBestScores());
+					game.getConfigurationProvider().getBestScores());
 			bestScoresDialog.setLocationRelativeTo(this);
+			bestScoresDialog.setVisible(true);
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(
+				GameWindow.this,
+				"Cannot load a list of best scores!");
 		}
-		bestScoresDialog.setLocationRelativeTo(this);
-		bestScoresDialog.setVisible(true);
 	}
 
 }
