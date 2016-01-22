@@ -1,6 +1,6 @@
 package org.eiti.java.pang.gui;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +21,9 @@ public class BestScoresDialog extends JDialog {
         List<HighScoreEntry> highScoreEntries = bestScoresProvider.getEntries();
 
         setTitle("Best Scores");
-        setSize(500, 500);
+        setSize(400, 280);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new GridLayout(1,2));
 
         JPanel panel = new JPanel();
         add(panel);
@@ -37,6 +37,9 @@ public class BestScoresDialog extends JDialog {
         }
         JTable table = new JTable(tableContent, columnNames);
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(380,200));
+
+        table.setFillsViewportHeight(true);
         panel.add(scrollPane);
 
         JButton ok = new JButton("OK");

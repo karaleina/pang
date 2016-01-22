@@ -173,15 +173,13 @@ public class GameWindow extends JFrame {
 		bestScores.addActionListener((e) -> showBestScores());
 
 		pause.addActionListener((e) -> {
-			try {
+			if (game.getStatus() == GameStatus.RUNNING) {
 				if (pause.isSelected())
 					game.pause();
 				else
 					game.resume();
-			} catch (InterruptedException ex){
-				System.out.print("IntrruptException occured while pausing/resuming");
-				ex.printStackTrace();
-			}
+			} else
+				pause.setSelected(false);
 		});
 
 		quitGame.addActionListener((e) -> this.dispose());  //e is an ActionListener

@@ -51,8 +51,8 @@ public class GameThread extends Thread {
 		return dt;
 	}
 
-	public void togglePause(){
-		paused = !paused;
+	public void setPause(boolean isPaused){
+		paused = isPaused;
 	}
 
 }
