@@ -35,13 +35,13 @@ public class GameThread extends Thread {
 	}
 	
 	private long getTimeDiff() {
-		//if (paused)
-		//	return 0;
 
 		long currentTimestamp = System.currentTimeMillis();
 		long dt;
-		
-		if(previousUpdateTimestamp == 0) {
+
+		if (paused) {
+			dt = 0;
+		} else if(previousUpdateTimestamp == 0) {
 			dt = UPDATE_INTERVAL_MILIS;
 		} else {
 			dt = currentTimestamp - previousUpdateTimestamp;
@@ -51,5 +51,8 @@ public class GameThread extends Thread {
 		return dt;
 	}
 
+	public void togglePause(){
+		paused = !paused;
+	}
 
 }

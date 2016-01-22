@@ -109,7 +109,7 @@ public class GameWindow extends JFrame {
 		newGame.setAccelerator(ctrlN);
 		gameMenu.add(newGame);
 
-		JMenuItem pause = new JMenuItem("Pause");
+		JMenuItem pause = new JCheckBoxMenuItem("Pause");
 		KeyStroke ctrlP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK);
 		pause.setAccelerator(ctrlP);
 		gameMenu.add(pause);
@@ -171,6 +171,18 @@ public class GameWindow extends JFrame {
 		});
 
 		bestScores.addActionListener((e) -> showBestScores());
+
+		pause.addActionListener((e) -> {
+			try {
+				if (pause.isSelected())
+					game.pause();
+				else
+					game.resume();
+			} catch (InterruptedException ex){
+				System.out.print("IntrruptException occured while pausing/resuming");
+				ex.printStackTrace();
+			}
+		});
 
 		quitGame.addActionListener((e) -> this.dispose());  //e is an ActionListener
 

@@ -195,15 +195,17 @@ public class Game {
 		status = GameStatus.RUNNING;
 	}
 
-	/*public void pause() throws InterruptedException {
+	public void pause() throws InterruptedException {
 		gameThread.togglePause();
-		status = GameStatus.PAUSED;
+		if (status == GameStatus.RUNNING)
+			status = GameStatus.PAUSED;
 	}
 
 	public void resume(){
 		gameThread.togglePause();
-		status = GameStatus.
-	}*/
+		if (status == GameStatus.PAUSED)
+			status = GameStatus.RUNNING;
+	}
 	
 	public void gameOver() {
 		cleanupAfterGame();
