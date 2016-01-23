@@ -65,4 +65,12 @@ public class XMLGlobalConfiguration extends XMLParser {
 	public long getMinTimeBetweenShots() throws XPathExpressionException {
 		return Long.parseLong(xpath.compile("//minTimeBetweenShots").evaluate(xmlDocument));
 	}
+
+    public String getHelpText() throws XPathExpressionException {
+        return xpath.compile("//helpText").evaluate(xmlDocument);
+    }
+
+    public String getAboutInfo() throws XPathExpressionException {
+        return xpath.compile("//aboutPang").evaluate(xmlDocument);
+    }
 }

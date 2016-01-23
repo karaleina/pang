@@ -11,4 +11,18 @@
     <playerVelocity>0.16</playerVelocity>
     <!-- milliseconds -->
     <minTimeBetweenShots>500</minTimeBetweenShots>
+    <helpText>
+        Celem gry jest likwidacja wszystkich piłek na każdym etapie. Zderzenie z piłką oraz przekroczenie czasu wyznaczonego na przejście etapu skutkuje utratą życia.&#10;&#10;
+        Sterowanie:&#10;
+        ←/→ – ruch&#10;
+        Spacja – strzał&#10;
+        CTRL+P – pauza&#10;
+        CTRL+N – nowa gra&#10;
+        CTRL+Q – wyjście&#10;
+    </helpText>
+    <aboutPang>
+        PROZE 15Z Pang&#10;
+        Karolina Walędzik&#10;
+        Stefan Hennel&#10;
+    </aboutPang>
 </global>

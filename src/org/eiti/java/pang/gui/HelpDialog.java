@@ -19,7 +19,7 @@ public class HelpDialog extends JFrame{
      */
     public HelpDialog(String helpText){
         setTitle("Help");
-        setSize(120, 100);
+        setSize(200, 200);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
@@ -28,7 +28,7 @@ public class HelpDialog extends JFrame{
         JLabel helpText1 = new JLabel(helpText, JLabel.CENTER);
         panel.add(helpText1, new GridLayout(2,1));
         JButton ok =new JButton("OK");
-        panel.add(ok, BorderLayout.SOUTH);
+        panel.add(ok);
 
         ok.addActionListener(e -> this.dispose());  //e is an ActionListener
 

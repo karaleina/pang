@@ -1,8 +1,6 @@
 package org.eiti.java.pang.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,6 +11,7 @@ import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameInitParameters;
 import org.eiti.java.pang.game.GameStatus;
 import org.eiti.java.pang.game.events.GameFinishedListener;
+import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.utils.KeyboardMonitor;
@@ -173,7 +172,7 @@ public class GameWindow extends JFrame {
 		bestScores.addActionListener((e) -> showBestScores());
 
 		pause.addActionListener((e) -> {
-			if (game.getStatus() == GameStatus.RUNNING) {
+			if (game.getStatus() == GameStatus.RUNNING || game.getStatus() == GameStatus.PAUSED) {
 				if (pause.isSelected())
 					game.pause();
 				else
@@ -196,13 +195,13 @@ public class GameWindow extends JFrame {
 		});
 
 		help.addActionListener(e -> {
-            HelpDialog helpDialog = new HelpDialog("Tekst pomocy");
+            HelpDialog helpDialog = new HelpDialog(GlobalConstants.helpText);
 			helpDialog.setLocationRelativeTo(this);
             helpDialog.setVisible(true);
         });
 
 		aboutPang.addActionListener(e -> {
-            HelpDialog helpDialog = new HelpDialog("O programie");
+            HelpDialog helpDialog = new HelpDialog(GlobalConstants.aboutPang);
 			helpDialog.setLocationRelativeTo(this);
             helpDialog.setVisible(true);
         });

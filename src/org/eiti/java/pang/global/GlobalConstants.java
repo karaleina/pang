@@ -14,6 +14,8 @@ public class GlobalConstants {
     public static double gravity;
     public static double playerVelocity;
     public static long minTimeBetweenShots;
+	public static String helpText;
+	public static String aboutPang;
 
 	public final static Dimension GAME_WORLD_SIZE = new Dimension(800, 450);
 		
@@ -34,6 +36,8 @@ public class GlobalConstants {
         gravity = configuration.getGravity();
 		playerVelocity = configuration.getPlayerVelocity();
 		minTimeBetweenShots = configuration.getMinTimeBetweenShots();
+		helpText = configuration.getHelpText();
+		aboutPang = configuration.getAboutInfo();
 	}
 	
 }
