@@ -62,8 +62,7 @@ public class ExtraObjectsCreator {
 	
 	private Point2D calculateExtraObjectPosition(GameLevel level, int objectWidth, int objectHeight) {
 		// choose random position at "floor level" that does not intersect with player avatar
-		PlayerAvatar avatar = level.getPlayerAvatar();
-		int avatarXPosition =  avatar.getRectangularShape().getIntX();
+		int avatarXPosition =  PlayerAvatar.getInstance().getRectangularShape().getIntX();
 		
 		int rangePivot = avatarXPosition - objectWidth;
 		int rangeWidth = level.getGameWorldSize().width - 2 * objectWidth - PlayerAvatar.getInstance().getWidth();

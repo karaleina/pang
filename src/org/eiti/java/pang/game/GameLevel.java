@@ -38,8 +38,6 @@ public class GameLevel implements Drawable {
 	private int timeLeft;
 	
 	private Dimension gameWorldSize;
-	
-	private PlayerAvatar playerAvatar;
 	private long lastShotTimestamp;
 	
 	private Collection<Ball> balls;
@@ -67,7 +65,6 @@ public class GameLevel implements Drawable {
 			timeLeft = timeForLevel;
 			gameWorldSize = configuration.getGameWorldSize();
 			balls = configuration.getBalls();
-			this.playerAvatar = PlayerAvatar.getInstance();
 			String playerAvatarPosition = configuration.getPlayerAvatarPosition();
 			PlayerAvatar.getInstance().setPosition(playerAvatarPosition, gameWorldSize);
 			extraObjectsCreator = new ExtraObjectsCreator(configuration.getExtraObjectsProbabilities());
@@ -122,10 +119,7 @@ public class GameLevel implements Drawable {
 	public Dimension getGameWorldSize() {
 		return gameWorldSize;
 	}
-	
-	public PlayerAvatar getPlayerAvatar() {
-		return PlayerAvatar.getInstance();
-	}
+
 	
 	public void spawnExtraObjects() {
 		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
@@ -161,7 +155,7 @@ public class GameLevel implements Drawable {
 	
 	private void checkPlayerWithBallCollisions() {
 		for(Ball b : balls) {
-			if(playerAvatar.collidesWith(b)) {
+			if(PlayerAvatar.getInstance().collidesWith(b)) {
 				firePlayerHitByBallEvent();
 			}
 		}
@@ -170,8 +164,8 @@ public class GameLevel implements Drawable {
 	private void checkPlayerWithExtraObjectCollisions() {
 		Set<ExtraObject> markedForRemoval = new HashSet<>();
 		for(ExtraObject extraObject : extraObjects) {
-			if(extraObject.collidesWith(playerAvatar)) {
-				extraObject.interactWith(playerAvatar);
+			if(extraObject.collidesWith(PlayerAvatar.getInstance())) {
+				extraObject.interactWith(PlayerAvatar.getInstance());
 				markedForRemoval.add(extraObject);
 			}
 		}
@@ -235,7 +229,7 @@ public class GameLevel implements Drawable {
 		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_SPACE)) {
 			long timestamp = System.currentTimeMillis();
 			if(timestamp - lastShotTimestamp >= GlobalConstants.minTimeBetweenShots) {
-				final Missile shotMissile = playerAvatar.shoot();
+				final Missile shotMissile = PlayerAvatar.getInstance().shoot();
 				shotMissile.addMissileWindowExitListener(new MissileWindowExitListener() {
 					@Override
 					public void onMissileWindowExit(Missile missile) {
@@ -254,14 +248,14 @@ public class GameLevel implements Drawable {
 	private void movePlayerAvatar(double dt) {
 		if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT) &&
 				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT)) {
-			playerAvatar.setVelocity(-GlobalConstants.playerVelocity);
+			PlayerAvatar.getInstance().setVelocity(-GlobalConstants.playerVelocity);
 		} else if(KeyboardMonitor.isKeyPressed(KeyEvent.VK_RIGHT) &&
 				!KeyboardMonitor.isKeyPressed(KeyEvent.VK_LEFT)) {
-			playerAvatar.setVelocity(GlobalConstants.playerVelocity);
+			PlayerAvatar.getInstance().setVelocity(GlobalConstants.playerVelocity);
 		} else {
-			playerAvatar.setVelocity(0.0);
+			PlayerAvatar.getInstance().setVelocity(0.0);
 		}
-		playerAvatar.move(dt);
+		PlayerAvatar.getInstance().move(dt);
 	}
 	
 	public void addGameLevelUpdatedListener(GameLevelUpdateListener listener) {
@@ -336,7 +330,7 @@ public class GameLevel implements Drawable {
 
 	@Override
 	public void draw(Graphics g) {
-		playerAvatar.draw(g);
+		PlayerAvatar.getInstance().draw(g);
 		
 		for(GameObject b : balls) {
 			b.draw(g);
@@ -354,7 +348,7 @@ public class GameLevel implements Drawable {
 	private void drawLives(Graphics g) {
 		final int heartSize = 25;
 		final int offset = 5;
-		for(int i = 0; i < playerAvatar.getLives(); i++){
+		for(int i = 0; i < PlayerAvatar.getInstance().getLives(); i++){
 			g.drawImage(
 				ImageLoader.getInstance().heartImage,
 				gameWorldSize.width - (i + 1) * (heartSize + offset),

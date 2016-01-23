@@ -195,7 +195,7 @@ public class Game {
 		status = GameStatus.RUNNING;
 	}
 
-	public void pause() /*throws InterruptedException */{
+	public void pause() {
 		if (status == GameStatus.RUNNING){
 			status = GameStatus.PAUSED;
 			gameThread.setPause(true);
@@ -224,6 +224,8 @@ public class Game {
 		gameThread.interrupt();
 		clearBoard();
 		status = GameStatus.FINISHED;
+		PlayerAvatar.getInstance().reload();
+
 		updateBestScores();
 	}
 

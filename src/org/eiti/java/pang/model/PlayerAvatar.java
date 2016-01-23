@@ -102,6 +102,14 @@ public class PlayerAvatar extends GameObject {
 			throw new RuntimeException("Unexpected player position in level config! Expected: left|center|right");
 		}
 	}
+
+	public void reload() {
+		instance = new PlayerAvatar(
+				GlobalConstants.initialLives,
+				GlobalConstants.GAME_WORLD_SIZE,
+				ImageLoader.getInstance().playerAvatarWidth,
+				ImageLoader.getInstance().playerAvatarHeight);
+	}
 	
 	@Override
 	public void move(double dt) {
