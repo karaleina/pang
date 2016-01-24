@@ -37,6 +37,10 @@ public class Line {
 		}
 	}
 	
+	/**
+	 * Construct a line from two points and set helping variables
+	 * that indicate whether the line is vertical, horizontal or diagonal.
+	 */
 	private Line(double a, double b, boolean vertical, boolean horizontal) {
 		this.a = a;
 		this.b = b;
@@ -44,6 +48,10 @@ public class Line {
 		this.horizontal = horizontal;
 	}
 	
+	/**
+	 * Return a line orthogonal to this line.
+	 * @param pointOnOrthogonal Any point that lies on the orthogonal line
+	 */
 	public Line getOrthogonalLine(Point2D pointOnOrthogonal) {
 		if(horizontal) {
 			return new Line(1.0, -pointOnOrthogonal.getX(), true, false);
@@ -75,6 +83,10 @@ public class Line {
 		}
 	}
 	
+	/**
+	 * Return intersection point between this line and given line,
+	 * if this line is vertical.
+	 */
 	private Point2D intersectionPointForVertical(Line line) {
 		assert(vertical && !line.vertical);
 		double xCoord = -b;
@@ -82,6 +94,10 @@ public class Line {
 		return new Point2D.Double(xCoord, yCoord);
 	}
 
+	/**
+	 * Return intersection point between this line and given line,
+	 * if this line is not vertical.
+	 */
 	private Point2D intersectionPointForNormal(Line line) {
 		assert(!vertical);
 		if(line.vertical) {
@@ -105,6 +121,10 @@ public class Line {
 		}
 	}
 	
+	/**
+	 * Return 0, 1 or 2 points of intersection between
+	 * this (vertical) line and given 2-dimensional sphere.
+	 */
 	private Point2D[] verticalLineIntersectionWithSphere(Sphere s) {
 		assert(vertical);
 		Point2D sphereCenter = s.getCenter();
@@ -128,6 +148,10 @@ public class Line {
 		}
 	}
 
+	/**
+	 * Return 0, 1 or 2 points of intersection between
+	 * this (non-vertical) line and given 2-dimensional sphere.
+	 */
 	private Point2D[] normalLineIntersectionWithSphere(Sphere s) {
 		assert(!vertical);
 		Point2D sphereCenter = s.getCenter();
@@ -151,6 +175,10 @@ public class Line {
 		}
 	}
 	
+	/**
+	 * Solve a * x^2 + b * x + c = 0
+	 * @return 0 or 2 results
+	 */
 	private double[] solveQuadraticEquation(double a, double b, double c) {
 		double delta = b * b - 4 * a * c;
 		if(delta < 0) {

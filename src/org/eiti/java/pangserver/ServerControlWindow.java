@@ -13,6 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * This is window, which allows to start/stop the server
+ * and set the port number.
+ * 
+ * @author Karolina
+ *
+ */
 public class ServerControlWindow extends JFrame {
 
 	/**
@@ -20,14 +27,29 @@ public class ServerControlWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 3912681666856825674L;
 	
+	/**
+	 * Button, which allows to start/stop the server.
+	 */
 	private JButton startStopButton = new JButton("start");
 	
+	/**
+	 * Label, which displays current server status (stopped/running + port number)
+	 */
 	private JLabel statusLabel = new JLabel();
 	
+	/**
+	 * Text field, which allows to set the port number for the server.
+	 */
 	private JTextField portNumberField = new JTextField("12345");
 	
+	/**
+	 * Pang server instance.
+	 */
 	private PangServer server = new PangServer();
 	
+	/**
+	 * Construct the widgets and initialize layout.
+	 */
 	public ServerControlWindow() {
 		setupWidgets();
 		setupLayout();
@@ -37,6 +59,9 @@ public class ServerControlWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Setup widget properties.
+	 */
 	private void setupWidgets() {
 		statusLabel.setFont(statusLabel.getFont().deriveFont(20.0f));
 		statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -44,6 +69,9 @@ public class ServerControlWindow extends JFrame {
 		updateLabels();
 	}
 	
+	/**
+	 * Setup window layout and alignment of widgets.
+	 */
 	private void setupLayout() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(startStopButton);
@@ -61,6 +89,9 @@ public class ServerControlWindow extends JFrame {
 		getContentPane().add(statusLabel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Bind events of widgets to code that performs actions.
+	 */
 	private void setupEvents() {
 		startStopButton.addActionListener(new ActionListener() {
 			@Override
@@ -75,6 +106,9 @@ public class ServerControlWindow extends JFrame {
 		});
 	}
 	
+	/**
+	 * Update labels after server start/stop.
+	 */
 	private void updateLabels() {
 		if(server.isRunning()) {
 			startStopButton.setText("stop");

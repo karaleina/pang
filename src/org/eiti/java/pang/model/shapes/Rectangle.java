@@ -5,24 +5,56 @@ import java.awt.geom.Point2D;
 
 import org.eiti.java.pang.model.Collidable;
 
+/**
+ * This class represents a rectangle.
+ * 
+ * @author Karolina
+ *
+ */
 public class Rectangle extends Shape {
 	
+	/**
+	 * Rectangle dimensions (width and height).
+	 */
 	private Dimension dimension;
 
+	/**
+	 * Construct a rectangle from top left point
+	 * and dimensions (width and height).
+	 * @param position Position of top left point of the rectangle
+	 * @param dim Width and height of the rectangle
+	 */
 	public Rectangle(Point2D position, Dimension dim) {
 		super(position);
 		this.dimension = dim;
 	}
 	
-	public int getWidth()  {return (int) dimension.getWidth(); }
-	public int getHeight() {return (int) dimension.getHeight();}
+	/**
+	 * Return width of the rectangle.
+	 */
+	public int getWidth() {
+		return (int) dimension.getWidth();
+	}
+	
+	/**
+	 * Return height of the rectangle.
+	 */
+	public int getHeight() {
+		return (int) dimension.getHeight();
+	}
 
+	/**
+	 * Check if this rectangle collides with another Collidable.
+	 */
 	@Override
 	public boolean collidesWith(Collidable c) {
 		// this trick allows to choose proper method without explicit type checking
 		return c.collidesWith(this);
 	}
 
+	/**
+	 * Check if this rectangle collides with given rectangle.
+	 */
 	@Override
 	public boolean collidesWith(Rectangle r) {
 		return intervalIntersection(
@@ -33,6 +65,9 @@ public class Rectangle extends Shape {
 					r.getExactY(), r.getExactY() + r.getHeight());
 	}
 
+	/**
+	 * Check if this rectangle collides with given sphere.
+	 */
 	@Override
 	public boolean collidesWith(Sphere s) {
 		Point2D topLeftCorner = getPosition();
@@ -47,6 +82,9 @@ public class Rectangle extends Shape {
 			sphereCollidesWithLineSegment(s, bottomLeftCorner, bottomRightCorner);
 	}
 
+	/**
+	 * Check if the center of given sphere lies inside this rectangle.
+	 */
 	private boolean sphereCenterInRectangle(Sphere s) {
 		double minX = getExactX();
 		double maxX = getExactX() + getWidth();
@@ -58,6 +96,9 @@ public class Rectangle extends Shape {
 				sphereCenter.getY() >= minY && sphereCenter.getY() <= maxY;
 	}
 	
+	/**
+	 * Check if given sphere collides with a line segment.
+	 */
 	private boolean sphereCollidesWithLineSegment(Sphere s, Point2D lineSegStart, Point2D lineSegEnd) {
 		// find a line through given points and find line's intersection with the sphere
 		Line lineThroughSegment = new Line(lineSegStart, lineSegEnd);
