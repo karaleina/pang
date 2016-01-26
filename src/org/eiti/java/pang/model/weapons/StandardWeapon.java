@@ -8,8 +8,20 @@ import org.eiti.java.pang.model.ExtraObjectType;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
+/**
+ * This class represents the standard weapon
+ * given at the beginning of every level.
+ * This weapon is invisible and enables to shoot.
+ * @author Karolina
+ *
+ */
 public class StandardWeapon extends Weapon {
 	
+	/**
+	 * Constructs the standard weapon.
+	 * @param position Position of standard weapon
+	 * @param gameWorldSize Abstract game world size
+	 */
 	public StandardWeapon(Point2D position, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.standardWeapon,
@@ -17,12 +29,20 @@ public class StandardWeapon extends Weapon {
 				//StandardWeapon is not visible, so we can give any number
 			gameWorldSize);
 	}
-
+	/**
+	 * Draws the standard weapon; 
+	 * This method should't be used,
+	 * because weapon is invisible.
+	 */
 	@Override
 	public void draw(Graphics g) {
 		throw new RuntimeException("Standard weapon should not be drawn!");
 	}
 
+	/**
+	 * This method is responsible for shooting; 
+	 * Returns new missile.
+	 */
 	@Override
 	public Missile shoot(PlayerAvatar shooter) {
 		return new StandardMissile(
@@ -30,7 +50,7 @@ public class StandardWeapon extends Weapon {
 				shooter,
 				StandardMissile.WIDTH,
 				StandardMissile.HEIGHT),
-			gameWorldSize);
+				gameWorldSize);
 	}
 
 }

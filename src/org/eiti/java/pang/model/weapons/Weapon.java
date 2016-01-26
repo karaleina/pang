@@ -9,19 +9,45 @@ import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.shapes.Rectangle;
 import org.eiti.java.pang.model.shapes.Shape;
 
+/**
+ * This class represents a weapon.
+ * @author Karolina
+ *
+ */
 public abstract class Weapon extends ExtraObject {
 
+	/**
+	 * Constructs a Weapon
+	 * @param type Type of the weapon
+	 * @param shape Shape of the weapon
+	 * @param gameWorldSize Abstract game world size
+	 */
 	protected Weapon(ExtraObjectType type, Shape shape, Dimension gameWorldSize) {
 		super(type, shape, gameWorldSize);
 	}
 	
+	/**
+	 * Sets the weapon to the player.
+	 */
 	@Override
 	public void interactWith(PlayerAvatar player) {
 		player.setWeapon(this);
 	}
 	
+	/**
+	 * Enables to shoot as a player
+	 * @param shooter Player
+	 * @return New missile
+	 */
 	public abstract Missile shoot(PlayerAvatar shooter);
 	
+	/**
+	 * Calculates initial position of the missile
+	 * @param shooter Player
+	 * @param missileWidth Missile's Width
+	 * @param missileHeight Missile's Height
+	 * @return Position of the missile
+	 */
 	protected Point2D calculateMissilePosition(
 			PlayerAvatar shooter, int missileWidth, int missileHeight) {
 		
