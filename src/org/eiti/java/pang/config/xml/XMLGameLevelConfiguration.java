@@ -62,10 +62,11 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		xpath = XPathFactory.newInstance().newXPath();
 	}
 
+
 	/**
-	 * @return Wymiary planszy ("świata gry"). Wymiary poziomu wplywają na poziom trudności.
-	 *
-     */
+	 * @return Dimensions of modeled "world of game". This parameter can vary from level to level.
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	public Dimension getGameWorldSize() throws XPathExpressionException {
 
 		int gameWorldWidth  = Integer.parseInt(xpath.compile("//gameWorldSize/width").evaluate(xmlDocument));
@@ -74,7 +75,10 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		return new Dimension(gameWorldWidth, gameWorldHeight);
 	}
 
-
+	/**
+	 * @return
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	public List<Ball> getBalls() throws XPathExpressionException {
 
         List<Ball> ballList = new ArrayList<>();
@@ -103,26 +107,26 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 	/**
-	 *
-	 *
-     */
+	 * @return
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	public String getPlayerAvatarPosition() throws XPathExpressionException {
 		return xpath.compile("//player/position").evaluate(xmlDocument);
 	}
 
 	/**
-	 *
 	 * @return
-     */
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	public int getTimeForLevel() throws XPathExpressionException {
 
 		return Integer.parseInt(xpath.compile("//time").evaluate(xmlDocument));
 	}
 
 	/**
-	 *
 	 * @return
-     */
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() throws XPathExpressionException {
 		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
 
@@ -142,7 +146,11 @@ public class XMLGameLevelConfiguration extends XMLParser {
 		
 		return probabilities;
 	}
-	
+
+	/**
+	 * @return
+	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
+	 */
 	private int getChildrenCountForUniqueTagName(Document document, String tagName) {
 		int counter = 0;
 		NodeList elementsWithTagName = document.getElementsByTagName(tagName);

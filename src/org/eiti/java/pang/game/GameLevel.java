@@ -29,7 +29,8 @@ import org.eiti.java.pang.model.weapons.Missile;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
- * Klasa rysująca dany poziom.
+ * This class contains instances of game objects and draws each level,
+ * i. e. every drawable object which exists ony in current level.
  */
 public class GameLevel implements Drawable {
 

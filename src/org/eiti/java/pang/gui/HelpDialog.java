@@ -1,13 +1,8 @@
 package org.eiti.java.pang.gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Okno HelpDialog wyświetla (krótki) tekst pomocy lub informacje o programie.
@@ -22,15 +17,18 @@ public class HelpDialog extends JFrame{
         setSize(200, 200);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
         add(panel);
 
-        JLabel helpText1 = new JLabel(helpText, JLabel.CENTER);
-        panel.add(helpText1, new GridLayout(2,1));
-        JButton ok =new JButton("OK");
-        panel.add(ok);
+        JTextArea helpTextArea = new JTextArea(helpText);
+        helpTextArea.setEditable(false);
+        helpTextArea.setMargin(new Insets(5,5,15,15));
+        panel.add(helpTextArea);
+        JButton ok  =new JButton("OK");
+        panel.add(ok, BorderLayout.SOUTH);
 
         ok.addActionListener(e -> this.dispose());  //e is an ActionListener
+        pack();
 
     }
 }
