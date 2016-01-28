@@ -7,11 +7,15 @@ import java.awt.geom.Point2D;
 import org.eiti.java.pang.global.ImageLoader;
 import org.eiti.java.pang.model.shapes.Rectangle;
 
+/**
+ * This class draws a heart, which can increment number of lives.
+ */
 public class Heart extends ExtraObject {
 
 	private int width;
 	private int height;
-	
+
+
 	public Heart(Point2D position, int width, int height, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.heart,

@@ -4,6 +4,9 @@ import java.awt.Dimension;
 
 import org.eiti.java.pang.model.shapes.Shape;
 
+/**
+ * ExtraObject is an object that appear during run of the game and can be collected by the player.
+ */
 public abstract class ExtraObject extends GameObject {
 	
 	private ExtraObjectType type;
@@ -14,9 +17,5 @@ public abstract class ExtraObject extends GameObject {
 	}
 
 	public abstract void interactWithPlayerAvatar();
-	
-	public ExtraObjectType getExtraObjectType() {
-		return type;
-	}
 
 }

@@ -56,6 +56,14 @@ public class PlayerAvatar extends GameObject {
 		this.weapon = new StandardWeapon(new Point2D.Double(0,0), gameWorldSize);
 	}
 
+	public void reload() {
+		instance = new PlayerAvatar(
+				GlobalConstants.initialLives,
+				GlobalConstants.GAME_WORLD_SIZE,
+				ImageLoader.getInstance().playerAvatarWidth,
+				ImageLoader.getInstance().playerAvatarHeight);
+	}
+
 	/**
 	 * This method should by only called when graphic theme has changed.
 	 */
@@ -86,7 +94,7 @@ public class PlayerAvatar extends GameObject {
 	}
 
 	/**
-	 * Loose (single) life.
+	 * Loose a (single) life.
 	 */
 	public void decrementLives(){
 		this.lives--;
@@ -101,7 +109,7 @@ public class PlayerAvatar extends GameObject {
 	}
 
 	/**
-	 * Set either StandardWeapon or SuperWeapon.
+	 * Set weapon as either StandardWeapon or SuperWeapon.
 	 * @param weapon
      */
 	public void setWeapon(Weapon weapon) {
@@ -113,13 +121,21 @@ public class PlayerAvatar extends GameObject {
 	}
 	
 	public Missile shoot() {
-		return weapon.shoot(this);
+		return weapon.shoot();
 	}
-	
+
+	/**
+	 * @param velocity
+     */
 	public void setVelocity(double velocity) {
 		this.velocity = velocity;
 	}
 
+	/**
+	 * This
+	 * @param playerPosition It must be "left", "center" or "right".
+	 * @param gameLevelSize Size of game level (can vary from one to another)
+     */
 	public void setPosition(String playerPosition, Dimension gameLevelSize) {
 
 		if(playerPosition.equals("left")) {
@@ -137,14 +153,10 @@ public class PlayerAvatar extends GameObject {
 		}
 	}
 
-	public void reload() {
-		instance = new PlayerAvatar(
-				GlobalConstants.initialLives,
-				GlobalConstants.GAME_WORLD_SIZE,
-				ImageLoader.getInstance().playerAvatarWidth,
-				ImageLoader.getInstance().playerAvatarHeight);
-	}
-	
+	/**
+	 * 
+	 * @param dt time interval (milliseconds)
+     */
 	@Override
 	public void move(double dt) {
 		double newX = shape.getExactX() + velocity * dt;

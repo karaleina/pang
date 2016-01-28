@@ -44,10 +44,9 @@ public class StandardWeapon extends Weapon {
 	 * Returns new missile.
 	 */
 	@Override
-	public Missile shoot(PlayerAvatar shooter) {
+	public Missile shoot() {
 		return new StandardMissile(
 			calculateMissilePosition(
-				shooter,
 				StandardMissile.WIDTH,
 				StandardMissile.HEIGHT),
 				gameWorldSize);

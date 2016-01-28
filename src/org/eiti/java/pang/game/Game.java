@@ -15,6 +15,9 @@ import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
 import org.eiti.java.pang.network.ServerConnection;
 
+/**
+ * This class
+ */
 public class Game {
 	
 	private ServerConnection connection;
@@ -33,8 +36,6 @@ public class Game {
 	private Set<GameFinishedListener> gameFinishedListeners = new HashSet<>();
 
 	private String nickname;
-	
-	private int startingLives = GlobalConstants.initialLives;
 
 
 	public Game() {
@@ -85,7 +86,11 @@ public class Game {
 	public GameStatus getStatus() {
 		return status;
 	}
-	
+
+	/**
+	 *
+	 * @return Current level object
+     */
 	public GameLevel getLevel() {
 		return level;
 	}

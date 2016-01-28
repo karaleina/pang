@@ -36,26 +36,23 @@ public abstract class Weapon extends ExtraObject {
 	
 	/**
 	 * Enables to shoot as a player
-	 * @param shooter Player
 	 * @return New missile
 	 */
-	public abstract Missile shoot(PlayerAvatar shooter);
+	public abstract Missile shoot();
 	
 	/**
 	 * Calculates initial position of the missile
-	 * @param shooter Player
 	 * @param missileWidth Missile's Width
 	 * @param missileHeight Missile's Height
 	 * @return Position of the missile
 	 */
-	protected Point2D calculateMissilePosition(
-			PlayerAvatar shooter, int missileWidth, int missileHeight) {
+	protected Point2D calculateMissilePosition( int missileWidth, int missileHeight) {
 		
 		// these offsets allow the bullet to appear in front of gun barrel
 		final int offsetX = -10;
 		final int offsetY = 17;
 		
-		Rectangle shooterRectangle = shooter.getRectangularShape();
+		Rectangle shooterRectangle = PlayerAvatar.getInstance().getRectangularShape();
 		int missileX = (int) shooterRectangle.getPosition().getX() +
 				shooterRectangle.getWidth() / 2 -
 				missileWidth / 2 + offsetX;

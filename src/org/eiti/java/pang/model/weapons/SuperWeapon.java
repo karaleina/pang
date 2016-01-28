@@ -62,10 +62,9 @@ public class SuperWeapon extends Weapon {
 	 * Enables to shoot with super-weapon.
 	 */
 	@Override
-	public Missile shoot(PlayerAvatar shooter) {
+	public Missile shoot() {
 		return new SuperMissile(
 			calculateMissilePosition(
-						shooter,
 						ImageLoader.getInstance().superMissileWidth,
 						ImageLoader.getInstance().superMissileHeight),
 				ImageLoader.getInstance().superMissileWidth,
