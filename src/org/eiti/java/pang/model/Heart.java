@@ -36,8 +36,8 @@ public class Heart extends ExtraObject {
 	}
 
 	@Override
-	public void interactWith(PlayerAvatar player) {
-		player.setLives(player.getLives() + 1);
+	public void interactWithPlayerAvatar() {
+		PlayerAvatar.getInstance().incrementLives();
 	}
 
 }

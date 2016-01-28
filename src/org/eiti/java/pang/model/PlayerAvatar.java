@@ -11,8 +11,11 @@ import org.eiti.java.pang.model.weapons.Missile;
 import org.eiti.java.pang.model.weapons.StandardWeapon;
 import org.eiti.java.pang.model.weapons.Weapon;
 
+/**
+ * This singleton class contains avatar properties (such as size and numbers of lives) and describe its move.
+ */
 public class PlayerAvatar extends GameObject {
-	
+
 	private int lives;
 	private int width;
 	private int height;
@@ -20,6 +23,10 @@ public class PlayerAvatar extends GameObject {
 	private double velocity;
 
 	private static PlayerAvatar instance = null;
+
+	/**
+	 * @return Access to the instance.
+     */
 	public static  PlayerAvatar getInstance() {
 		if (instance == null) {
 			instance = new PlayerAvatar(
@@ -32,7 +39,10 @@ public class PlayerAvatar extends GameObject {
 		return instance;
 	}
 
-	public PlayerAvatar(int initialLives, Dimension gameWorldSize, int width, int height) {
+	/**
+	 *	Private constructor. All parameters should be taken from GlobalConstants static class and the ImageLoader.
+     */
+	private PlayerAvatar(int initialLives, Dimension gameWorldSize, int width, int height) {
 		super(new Rectangle(
 				new Point2D.Double(
 						GlobalConstants.GAME_WORLD_SIZE.width / 2 - width / 2,
@@ -46,6 +56,9 @@ public class PlayerAvatar extends GameObject {
 		this.weapon = new StandardWeapon(new Point2D.Double(0,0), gameWorldSize);
 	}
 
+	/**
+	 * This method should by only called when graphic theme has changed.
+	 */
 	public void resize(){
 		this.width  = ImageLoader.getInstance().playerAvatarWidth;
 		this.height = ImageLoader.getInstance().playerAvatarHeight;
@@ -58,18 +71,39 @@ public class PlayerAvatar extends GameObject {
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
 
+	/**
+	 * @return Current number of lives.
+     */
 	public int getLives() {
 		return lives;
 	}
-	
-	public void setLives(int lives) {
-		this.lives = lives;
+
+	/**
+	 * Add a new life.
+	 */
+	public void incrementLives() {
+		this.lives++;
 	}
-	
+
+	/**
+	 * Loose (single) life.
+	 */
+	public void decrementLives(){
+		this.lives--;
+	}
+
+	/**
+	 *
+	 * @return Weapon, which is either StandardWeapon or SuperWeapon.
+     */
 	public Weapon getWeapon() {
 		return weapon;
 	}
-	
+
+	/**
+	 * Set either StandardWeapon or SuperWeapon.
+	 * @param weapon
+     */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
@@ -132,8 +166,8 @@ public class PlayerAvatar extends GameObject {
 			ImageLoader.getInstance().playerAvatarImage,
 			shape.getIntX(),
 			shape.getIntY(),
-			getWidth(),
-			getHeight(),
+			width,
+			height,
 			null);
 	}
 

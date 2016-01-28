@@ -166,7 +166,7 @@ public class GameLevel implements Drawable {
 		Set<ExtraObject> markedForRemoval = new HashSet<>();
 		for(ExtraObject extraObject : extraObjects) {
 			if(extraObject.collidesWith(PlayerAvatar.getInstance())) {
-				extraObject.interactWith(PlayerAvatar.getInstance());
+				extraObject.interactWithPlayerAvatar();
 				markedForRemoval.add(extraObject);
 			}
 		}

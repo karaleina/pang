@@ -9,20 +9,52 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 /**
- * Created by Stefan Hennel on 27.11.15.
+ * This class does not load image set itself, but a filepath and dimensions of each image in a given graphical theme.
+ * The document should fit to following template:
+ * <pre>
+ * {@code
+ *  <theme>
+ *     <imagepaths>
+ *         <background>res/themes/western/background.jpg</background>
+ *         <heartImage>res/themes/western/heart.png</heartImage>
+ *         <playerAvatarImage>res/themes/western/player.png</playerAvatarImage>
+ *         <standardMissileImage>res/themes/western/old-bullet.png</standardMissileImage>
+ *         <superMissileImage>res/themes/western/super-bullet.png</superMissileImage>
+ *         <superWeaponImage>res/themes/western/mauser.png</superWeaponImage>
+ *     </imagepaths>
+ *     <dimensions>
+ *         <heartWidth>60</heartWidth>
+ *         <heartHeight>60</heartHeight>
+ *         <playerAvatarWidth>60</playerAvatarWidth>
+ *         <playerAvatarHeight>160</playerAvatarHeight>
+ *         <standardMissileWidth>7</standardMissileWidth>
+ *         <standardMissileHeight>20</standardMissileHeight>
+ *         <superWeaponWidth>90</superWeaponWidth>
+ *         <superWeaponHeight>60</superWeaponHeight>
+ *         <superMissileWidth>7</superMissileWidth>
+ *         <superMissileHeight>30</superMissileHeight>
+ *     </dimensions>
+ * </theme>
+ * }
+ * </pre>
  */
 public class XMLImageLoader extends XMLParser{
 
+	/**
+	 *
+	 * @param configurationFilePath This configuration file should be stored locally.
+	 * @throws Exception is thrown when the configuration file is not accessible by given filepath.
+     */
 	public XMLImageLoader(String configurationFilePath) throws Exception {
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		xmlDocument = builder.parse(new FileInputStream(configurationFilePath));
+		xmlDocument = builder.parse(configurationFilePath);
 
 		xpath = XPathFactory.newInstance().newXPath();
 	}
 
 	/**
-	 * @return
+	 * This file should be sto
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getBackgroundPath() throws XPathExpressionException {
@@ -30,7 +62,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getHeartImagePath() throws XPathExpressionException{

@@ -13,7 +13,7 @@ public abstract class ExtraObject extends GameObject {
 		this.type = type;
 	}
 
-	public abstract void interactWith(PlayerAvatar player);
+	public abstract void interactWithPlayerAvatar();
 	
 	public ExtraObjectType getExtraObjectType() {
 		return type;

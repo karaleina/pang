@@ -10,6 +10,8 @@ import javax.xml.xpath.XPathFactory;
 
 /**
  * This class reads global configuration of the game from an XML document. The document should fit to following template:
+ * <pre>
+ * {@code
  * <global>
  *     <title>Pang</title>
  *     <gameWindowSize>
@@ -30,7 +32,8 @@ import javax.xml.xpath.XPathFactory;
  *         Year, authors etc
  *      </aboutPang>
  * </global>
- *
+ * }
+ * </pre>
  */
 public class XMLGlobalConfiguration extends XMLParser {
     /**

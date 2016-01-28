@@ -30,8 +30,8 @@ public abstract class Weapon extends ExtraObject {
 	 * Sets the weapon to the player.
 	 */
 	@Override
-	public void interactWith(PlayerAvatar player) {
-		player.setWeapon(this);
+	public void interactWithPlayerAvatar() {
+		PlayerAvatar.getInstance().setWeapon(this);
 	}
 	
 	/**

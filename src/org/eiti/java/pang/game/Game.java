@@ -171,7 +171,7 @@ public class Game {
 		level.addPlayerHitByBallListener(new PlayerHitByBallListener() {
 			@Override
 			public void onPlayerHitByBall() {
-				PlayerAvatar.getInstance().setLives(PlayerAvatar.getInstance().getLives() - 1);
+				PlayerAvatar.getInstance().decrementLives();
 				if(PlayerAvatar.getInstance().getLives() <= 0) {
 					gameOver();
 				} else {

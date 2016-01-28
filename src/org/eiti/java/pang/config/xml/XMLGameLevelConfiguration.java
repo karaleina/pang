@@ -2,7 +2,6 @@ package org.eiti.java.pang.config.xml;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,12 +15,11 @@ import javax.xml.xpath.XPathFactory;
 
 import org.eiti.java.pang.model.Ball;
 import org.eiti.java.pang.model.ExtraObjectType;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * This class reads level configuration from an XML document. The document should fit to following template:
+ * <pre>
+ * {@code
  * 	<level>
  *		<number>1</number>
  *		<time>120</time>
@@ -51,7 +49,9 @@ import org.w3c.dom.NodeList;
  *		 	<heart>1.0</heart>
  *			 <superWeapon>1.0</superWeapon>
  *		 </extraObjects>
- *		 </level>
+ * </level>
+ * }
+ * </pre>
  */
 
 public class XMLGameLevelConfiguration extends XMLParser {
@@ -76,7 +76,8 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 	/**
-	 * @return
+	 * Method reads initial properties of balls: position, speed and ball's internal level.
+	 * @return List of Ball objects.
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public List<Ball> getBalls() throws XPathExpressionException {
@@ -107,7 +108,8 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 	/**
-	 * @return
+	 * This function only read string from an XML document and does not care whether an entry is correct.
+	 * @return String that determine initial position of the player's avatar: "left", "center", "rigth".
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getPlayerAvatarPosition() throws XPathExpressionException {
@@ -115,7 +117,7 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 	/**
-	 * @return
+	 * @return Time prescribed to the level (in seconds)
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getTimeForLevel() throws XPathExpressionException {
@@ -124,45 +126,30 @@ public class XMLGameLevelConfiguration extends XMLParser {
 	}
 
 	/**
-	 * @return
+	 * Load probabilities of emergence of extra objects: Hearts and SuperWeapon
+	 * @return HashMap of extra objects type enumerations [ExtraObjectType] and their propabiities [Double].
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public Map<ExtraObjectType, Double> getExtraObjectsProbabilities() throws XPathExpressionException {
-		Map<ExtraObjectType, Double> probabilities = new HashMap<ExtraObjectType, Double>();
+		Map<ExtraObjectType, Double> probabilities = new HashMap<>();
 
-        int extraObjectsNumber = getChildrenCountForUniqueTagName(xmlDocument, "extraObjects");
-        for (int i = 1; i <= extraObjectsNumber; i++) {	//foreach loop does not work for NodeList interface
-			String i_thExtraObjectPath = "//extraObjects/*[" + i + "]";
+		String heartXPath = "//extraObjects/heart";
+		String superWeaponXPath = "//extraObjects/superWeapon";
 
-            double probability = Double.parseDouble(xpath.compile(i_thExtraObjectPath).evaluate(xmlDocument));
-			if(probability < 0.0 || probability > 1.0) {
-				throw new RuntimeException("Probability " + probability + " out of range [0, 1]!");
-			}
-            String extraObjectName = xpath.compile("name(" + i_thExtraObjectPath +")").evaluate(xmlDocument);
-			probabilities.put(
-				ExtraObjectType.valueOf(extraObjectName),
-				probability);
+		double heartsProbability = Double.parseDouble(xpath.compile(heartXPath).evaluate(xmlDocument));
+		if(heartsProbability < 0.0 || heartsProbability > 1.0) {
+			throw new RuntimeException("Probability " + heartsProbability + " out of range [0, 1]!");
 		}
+		probabilities.put(ExtraObjectType.heart, heartsProbability);
+
+		double superWeaponProbability = Double.parseDouble(xpath.compile(superWeaponXPath).evaluate(xmlDocument));
+		if(heartsProbability < 0.0 || heartsProbability > 1.0) {
+			throw new RuntimeException("Probability " + superWeaponProbability + " out of range [0, 1]!");
+		}
+		probabilities.put(ExtraObjectType.superWeapon, heartsProbability);
 		
 		return probabilities;
 	}
 
-	/**
-	 * @return
-	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
-	 */
-	private int getChildrenCountForUniqueTagName(Document document, String tagName) {
-		int counter = 0;
-		NodeList elementsWithTagName = document.getElementsByTagName(tagName);
-		assert(elementsWithTagName.getLength() == 1);
-		NodeList children = elementsWithTagName.item(0).getChildNodes();
-		for(int i = 0; i < children.getLength(); i++) {
-			Node child = children.item(i);
-			if(child.getNodeType() == Node.ELEMENT_NODE) {
-				counter++;
-			}
-		}
-		return counter;
-	}
 
 }

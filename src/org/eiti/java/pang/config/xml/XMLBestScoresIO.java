@@ -22,6 +22,8 @@ import org.w3c.dom.NodeList;
 
 /**
  * This class reads and writes best scores as an XML document entries. The document should fit to following template:
+ * <pre>
+ * {@code
  * <?xml version="1.0" encoding="utf-8"?>
  * <bestScores>
  *  <!-- max. number of saved scores-->
@@ -40,7 +42,9 @@ import org.w3c.dom.NodeList;
  *   </player>
  *   <!-- etc. -->
  * </bestScores>
- *
+ *  </literal>
+ * }
+ * </pre>
  */
 public class XMLBestScoresIO extends XMLParser {
 
