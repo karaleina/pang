@@ -12,7 +12,7 @@ import org.eiti.java.pang.model.weapons.StandardWeapon;
 import org.eiti.java.pang.model.weapons.Weapon;
 
 /**
- * This singleton class contains avatar properties (such as size and numbers of lives) and describe its move.
+ * This singleton class describe player's avatar properties (such as size and numbers of lives) and its move.
  */
 public class PlayerAvatar extends GameObject {
 
@@ -56,6 +56,9 @@ public class PlayerAvatar extends GameObject {
 		this.weapon = new StandardWeapon(new Point2D.Double(0,0), gameWorldSize);
 	}
 
+	/**
+	 * When the game is finished, information stored in the PlayerAvatar instance is no onger up-to-date and should be reload.
+	 */
 	public void reload() {
 		instance = new PlayerAvatar(
 				GlobalConstants.initialLives,
@@ -154,7 +157,7 @@ public class PlayerAvatar extends GameObject {
 	}
 
 	/**
-	 * 
+	 * In this method move is function of dt time and (implicitly) velocity of avatar.
 	 * @param dt time interval (milliseconds)
      */
 	@Override
@@ -168,10 +171,19 @@ public class PlayerAvatar extends GameObject {
 			moveTo(gameWorldSize.getWidth() - this.width, shape.getExactY());
 	}
 
-	public void moveTo(double x, double y) {
+	/**
+	 * Lower-level version of move() method, used by aformentioned and setPosition().
+	 * @param x
+	 * @param y
+     */
+	private void moveTo(double x, double y) {
 		shape.moveTo(x, y);
 	}
 
+	/**
+	 * Draws the player's avatar.
+	 * @param g Graphic context.
+	 */
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(

@@ -17,6 +17,9 @@ import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.GameLevelUpdateListener;
 import org.eiti.java.pang.global.ImageLoader;
 
+/**
+ * Element of main client window where actual game is drawn.
+ */
 public class GamePanel extends JPanel {
 
 	private static final long serialVersionUID = -3254787825789456722L;

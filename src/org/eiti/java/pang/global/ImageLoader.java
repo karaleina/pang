@@ -12,6 +12,9 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.eiti.java.pang.config.xml.XMLImageLoader;
 
+/**
+ * Stores images and its desired dimensions. Acces via getInstance() method (this is a singleton).
+ */
 public class ImageLoader {
 	
 	public BufferedImage background;
@@ -46,7 +49,10 @@ public class ImageLoader {
 	private ImageLoader() {
 	}
 
-
+	/**
+	 * Update should be done when graphic theme has been changed.
+	 * @param themeConfigPath
+     */
 	public void update(String themeConfigPath) {
 		try {
 			XMLImageLoader config = new XMLImageLoader(themeConfigPath);

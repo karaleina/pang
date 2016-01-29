@@ -12,7 +12,7 @@ import org.eiti.java.pang.config.xml.XMLBestScoresIO;
 import org.eiti.java.pang.game.HighScoreEntry;
 
 /**
- * Created by S. H. on 17.11.15.
+ * BestScoresDalog shows a list of best scores (stored locally or on a server).
  */
 public class BestScoresDialog extends JDialog {
 

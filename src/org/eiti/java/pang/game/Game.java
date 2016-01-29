@@ -16,7 +16,8 @@ import org.eiti.java.pang.model.weapons.StandardWeapon;
 import org.eiti.java.pang.network.ServerConnection;
 
 /**
- * This class
+ * This class contains the game tread, current game score and events listeners.
+ * It is also responsible for connecting client to the server in the network mode.
  */
 public class Game {
 	
@@ -37,11 +38,18 @@ public class Game {
 
 	private String nickname;
 
-
+	/**
+	 * Only invoke the reset() method.
+	 */
 	public Game() {
 		reset();
 	}
 
+	/**
+	 * Set up game on each start or restart (CTRL+N).
+	 * @param initParameters
+	 * @throws Exception
+     */
 	public void reset(GameInitParameters initParameters) throws Exception {
 		setupConnectionAndProvider(initParameters);
 		updateGlobalConfiguration();
@@ -87,10 +95,6 @@ public class Game {
 		return status;
 	}
 
-	/**
-	 *
-	 * @return Current level object
-     */
 	public GameLevel getLevel() {
 		return level;
 	}

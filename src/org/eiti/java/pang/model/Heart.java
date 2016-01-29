@@ -15,7 +15,13 @@ public class Heart extends ExtraObject {
 	private int width;
 	private int height;
 
-
+	/**
+	 *
+	 * @param position
+	 * @param width
+	 * @param height
+	 * @param gameWorldSize
+     */
 	public Heart(Point2D position, int width, int height, Dimension gameWorldSize) {
 		super(
 			ExtraObjectType.heart,
@@ -26,8 +32,11 @@ public class Heart extends ExtraObject {
 		this.width = width;
 		this.height = height;
 	}
-	
 
+	/**
+	 * Draws a heart
+	 * @param g Graphic context.
+     */
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(
@@ -39,6 +48,9 @@ public class Heart extends ExtraObject {
 			null);
 	}
 
+	/**
+	 * When a Heart interact with instance of PlayerAvatar (which is static), nubbers of PlayerAvatar's lives increments.
+	 */
 	@Override
 	public void interactWithPlayerAvatar() {
 		PlayerAvatar.getInstance().incrementLives();

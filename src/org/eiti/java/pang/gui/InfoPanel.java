@@ -7,10 +7,13 @@ import javax.swing.JPanel;
 
 import org.eiti.java.pang.game.Game;
 import org.eiti.java.pang.game.GameLevel;
-import org.eiti.java.pang.game.ScoreChangedListener;
+import org.eiti.java.pang.game.events.ScoreChangedListener;
 import org.eiti.java.pang.game.events.GameLevelChangedListener;
 import org.eiti.java.pang.game.events.TimeLeftChangedListener;
 
+/**
+ * InfoPanel shows players score, current level and remaining time (in seconds)
+ */
 public class InfoPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;

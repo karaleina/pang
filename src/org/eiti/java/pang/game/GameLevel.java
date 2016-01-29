@@ -126,6 +126,10 @@ public class GameLevel implements Drawable {
 		extraObjects.addAll(extraObjectsCreator.tryToCreateExtraObjects(this));
 	}
 
+	/**
+	 *
+	 * @param dt time in milliseconds
+     */
 	public void update(double dt) {
 		for (GameObject b : balls) {
 			b.move(dt);

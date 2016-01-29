@@ -15,7 +15,10 @@ public abstract class ExtraObject extends GameObject {
 		super(shape, gameWorldSize);
 		this.type = type;
 	}
-
+	/**
+	 * Heart increments lives number of the player.
+	 * Weapon sets the weapon to the player.
+	 */
 	public abstract void interactWithPlayerAvatar();
 
 }

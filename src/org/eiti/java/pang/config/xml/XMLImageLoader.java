@@ -69,7 +69,7 @@ public class XMLImageLoader extends XMLParser{
 		return xpath.compile("//imagepaths/heartImage").evaluate(xmlDocument);	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getPlayerAvatarImage() throws XPathExpressionException {
@@ -77,7 +77,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getStandardMissileImage() throws XPathExpressionException {
@@ -85,7 +85,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getSuperMissileImage() throws XPathExpressionException {
@@ -93,7 +93,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public String getSuperWeaponImage() throws XPathExpressionException {
@@ -101,7 +101,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public Dimension getPlayerAvatarDim() throws XPathExpressionException {
@@ -111,7 +111,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getPlayerAvatarWidth() throws  XPathExpressionException {
@@ -119,7 +119,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getPlayerAvatarHeight() throws  XPathExpressionException {
@@ -127,7 +127,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getSuperWeaponWidth() throws XPathExpressionException{
@@ -135,7 +135,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getSuperWeaponHeight() throws XPathExpressionException{
@@ -143,7 +143,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getHeartWidth() throws XPathExpressionException{
@@ -151,7 +151,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getHeartHeight() throws XPathExpressionException{
@@ -159,7 +159,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getStandardMissileWidth() throws XPathExpressionException{
@@ -167,7 +167,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getStandardMissileHeight() throws XPathExpressionException{
@@ -175,7 +175,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getSuperMissileWidth() throws XPathExpressionException{
@@ -183,7 +183,7 @@ public class XMLImageLoader extends XMLParser{
 	}
 
 	/**
-	 * @return
+	 *
 	 * @throws XPathExpressionException is thrown when the correct entry is not found in the XML document.
 	 */
 	public int getSuperMissileHeight() throws XPathExpressionException{

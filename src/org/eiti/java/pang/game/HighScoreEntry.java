@@ -1,7 +1,7 @@
 package org.eiti.java.pang.game;
 
 /**
- * Wpis na liście najlepszych wyników
+ * Class tht represents entry in best scores XML document; entry consist of score and nickname
  */
 public class HighScoreEntry {
 

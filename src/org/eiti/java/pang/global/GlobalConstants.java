@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 
 import org.eiti.java.pang.config.xml.XMLGlobalConfiguration;
 
+/**
+ * Stores global constants as pubic static fields.
+ */
 public class GlobalConstants {
 	
 	public static String title;

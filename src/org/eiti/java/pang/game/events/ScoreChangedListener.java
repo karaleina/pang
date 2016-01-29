@@ -1,4 +1,4 @@
-package org.eiti.java.pang.game;
+package org.eiti.java.pang.game.events;
 
 public interface ScoreChangedListener {
 	

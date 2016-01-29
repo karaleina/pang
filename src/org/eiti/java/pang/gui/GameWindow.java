@@ -17,7 +17,7 @@ import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.utils.KeyboardMonitor;
 
 /**
- * Główne okno gry.
+ * Main window of the client application.
  */
 public class GameWindow extends JFrame {
 

@@ -1,5 +1,7 @@
 package org.eiti.java.pang.game;
 
+import org.eiti.java.pang.game.events.ScoreChangedListener;
+
 import java.util.HashSet;
 import java.util.Set;
 

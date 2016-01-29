@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Okno HelpDialog wyświetla (krótki) tekst pomocy lub informacje o programie.
+ * HelpDialog shows short instructions for user or basic information about application.
  */
 public class HelpDialog extends JFrame{
     /**

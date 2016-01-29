@@ -10,19 +10,34 @@ import java.util.Collection;
 import org.eiti.java.pang.global.GlobalConstants;
 import org.eiti.java.pang.model.shapes.Sphere;
 
+/**
+ * Class which simply represents the ball.
+ * Important fields:
+ * int ballLevel; - ability to falling apart rather that being destroyed; it is aso proportional to bal's radius;
+ * double[] speedVector; - horizonta and vertica speed
+ * doube acceleration; - gravitational acceleration
+ */
 public class Ball extends GameObject {
 
+	private static double radiusForBallLevel = 20.0;
 	private int ballLevel;
 	private double[] speedVector;
-	double acceleration;				//gravitational acceleration (positive or negative)
-	
+	private double acceleration;				//gravitational acceleration (positive or negative)
+
+	/**
+	 *
+	 * @param position Initial position
+	 * @param ballLevel see above
+	 * @param initialSpeedVector
+	 * @param gameWorldSize
+     */
 	public Ball(
 			Point2D position,
 			int ballLevel,
 			double[] initialSpeedVector,
 			Dimension gameWorldSize) {
 
-		super(new Sphere(position, radiusForBallLevel(ballLevel)), gameWorldSize);
+		super(new Sphere(position, radiusForBallLevel*ballLevel), gameWorldSize);
 
 		this.ballLevel = ballLevel;
 		this.gameWorldSize = gameWorldSize;
@@ -30,6 +45,10 @@ public class Ball extends GameObject {
 		acceleration = GlobalConstants.gravity;
 	}
 
+	/**
+	 * Move of ball is based on Newtonian dynamics and rebounds are perfectly resilient.
+	 * @param dt time interval (milliseconds)
+     */
 	@Override
 	public void move(double dt) {
 
@@ -66,10 +85,14 @@ public class Ball extends GameObject {
 			}
 		}
 	}
-	
+
+	/**
+	 * Method called when a ball has been shot and is not destroyed
+	 * @return Two-element array of new balls
+     */
 	public Collection<Ball> split() {
 		Point2D baseBallPosition = getPosition();
-		double newBallsRadius = Ball.radiusForBallLevel(ballLevel - 1);
+		double newBallsRadius = Ball.radiusForBallLevel*(ballLevel - 1);
 		// left ball goes to upper left
 		Point2D leftBallPosition = new Point2D.Double(
 			baseBallPosition.getX(),
@@ -94,7 +117,11 @@ public class Ball extends GameObject {
 	public int getBallLevel() {
 		return ballLevel;
 	}
-	
+
+	/**
+	 *
+	 * @return Current position
+     */
 	public Point2D getPosition() {
 		return shape.getPosition();
 	}
@@ -102,7 +129,9 @@ public class Ball extends GameObject {
 	public double getRadius() {
 		return ((Sphere) shape).getRadius();
 	}
-
+	/**
+	 * @param g Graphic context.
+	 */
 	@Override
 	public void draw(Graphics g){
 		g.setColor(new Color(0x2020aa));
@@ -113,8 +142,5 @@ public class Ball extends GameObject {
 			(int) getRadius() * 2
 		);
 	}
-	
-	public static double radiusForBallLevel(int ballLevel) { 
-		return 20 * ballLevel;
-	}
+
 }

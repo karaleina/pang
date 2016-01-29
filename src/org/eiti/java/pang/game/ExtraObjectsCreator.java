@@ -15,6 +15,9 @@ import org.eiti.java.pang.model.Heart;
 import org.eiti.java.pang.model.PlayerAvatar;
 import org.eiti.java.pang.model.weapons.SuperWeapon;
 
+/**
+ * This class spawn extra objects (hearts, super-weapons) in the game world randomly.
+ */
 public class ExtraObjectsCreator {
 	
 	private Map<ExtraObjectType, Double> probabilitiesPerSecond;

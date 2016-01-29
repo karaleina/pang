@@ -25,7 +25,8 @@ import org.eiti.java.pang.game.GameInitParameters;
 public class NewGameDialog extends JDialog {
 
 	/**
-	 * 
+	 * User is required to give his nickname, chose if he wants to play locally or by network, and if last,
+	 * provide host adress and port number.
 	 */
 	private static final long serialVersionUID = 201813213204335205L;
 	
